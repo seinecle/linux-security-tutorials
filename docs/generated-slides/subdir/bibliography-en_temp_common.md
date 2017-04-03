@@ -18,11 +18,12 @@ last modified: {docdate}
 //ST: !
 - security checklist for a linux system administrator: http://www.slashroot.in/security-checklist-linux-system-administrator
 
-== Passwords
-//ST: Passwords
+== Passwords and keys
+//ST: Passwords and keys
 
 //ST: !
 - how to choose https://www.cs.cmu.edu/~help/security/choosing_passwords.html[good passwords]
+- how to create an https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows[SSH key with Puttygen on Windows]
 
 == the end
 //ST: The end!

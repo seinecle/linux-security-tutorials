@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
 <meta name="author" content="Clément Levallois">
-<title>References on Linux security</title>
+<title>Step-by-step guide to Linux security</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -512,17 +512,17 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article">
 <div id="header">
-<h1>References on Linux security</h1>
+<h1>Step-by-step guide to Linux security</h1>
 <div class="details">
 <span id="author" class="author">Clément Levallois</span><br>
 <span id="email" class="email"><a href="mailto:clementlevallois@gmail.com">clementlevallois@gmail.com</a></span><br>
-<span id="revdate">2017-04-01</span>
+<span id="revdate">2017-04-03</span>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_checklists">Checklists</a></li>
-<li><a href="#_passwords_and_keys">Passwords and keys</a></li>
+<li><a href="#_ordering_the_server">Ordering the server</a></li>
+<li><a href="#_disabling_password_authentication_enabling_ssh">Disabling password authentication, enabling SSH</a></li>
 <li><a href="#_the_end">the end</a></li>
 </ul>
 </div>
@@ -536,29 +536,51 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
-<h2 id="_checklists">Checklists</h2>
+<h2 id="_ordering_the_server">Ordering the server</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>security checklist for a linux system administrator: <a href="http://www.slashroot.in/security-checklist-linux-system-administrator" class="bare">http://www.slashroot.in/security-checklist-linux-system-administrator</a></p>
+<p>Server ordered on Hetzner.de</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_passwords_and_keys">Passwords and keys</h2>
+<h2 id="_disabling_password_authentication_enabling_ssh">Disabling password authentication, enabling SSH</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Password authentification is less secure than SSH public key. A password transits through the Internet for the auhtentication, it can be hacked at this step.</p>
+</div>
+<div class="paragraph">
+<p>A SSH private key is not transmitted on the wire. So, it can&#8217;t be hacked this way.</p>
+</div>
+<div class="paragraph">
+<p>A detailed explanation is <a href="https://security.stackexchange.com/questions/69407/why-is-using-an-ssh-key-more-secure-than-using-passwords">available here</a>.</p>
+</div>
+<div class="paragraph">
+<p>How to generate a SSH key?</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>how to choose <a href="https://www.cs.cmu.edu/~help/security/choosing_passwords.html">good passwords</a></p>
+<p>On Windows, use <a href="https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows">Puttygen</a>.</p>
 </li>
 <li>
-<p>how to create an <a href="https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows">SSH key with Puttygen on Windows</a></p>
+<p>On Mac, use <a href="https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-mac-os-x">the Terminal</a></p>
+</li>
+<li>
+<p>On Linux, use the <a href="https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html">ssh-keygen command</a></p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>How to disable password auth an enable SSH?</p>
+</div>
+<div class="paragraph">
+<p>&#8594; the server I rented on Hetzner asked it from the console right when renting it.
+&#8594; otherwise, this can be set up <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-linux-mac-disable-ssh-password-usage">this way</a>:</p>
 </div>
 </div>
 </div>
@@ -594,7 +616,7 @@ table.CodeRay td.code>pre{padding:0}
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2017-04-03 10:40:28 CEST
+Last updated 2017-04-03 13:48:38 CEST
 </div>
 </div>
 </body>

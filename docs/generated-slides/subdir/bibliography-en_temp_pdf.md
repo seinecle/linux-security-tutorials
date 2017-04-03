@@ -20,10 +20,16 @@ last modified: {docdate}
 - security checklist for a linux system administrator: http://www.slashroot.in/security-checklist-linux-system-administrator
 
 == Passwords
+//ST: Passwords
 
+//ST: !
 - how to choose https://www.cs.cmu.edu/~help/security/choosing_passwords.html[good passwords]
 
 == the end
 //ST: The end!
 
+//ST: !
+
 Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
+
+All tutorials on linux security: https://seinecle.github.io/linux-security-tutorials/
