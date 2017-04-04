@@ -49,8 +49,6 @@ UsePAM no
  service sshd restart
 
 
-
-
 == the end
 //ST: The end!
 
@@ -58,4 +56,4 @@ UsePAM no
 
 Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
 
-All tutorials on linux security: https://seinecle.github.io/linux-security-tutorials/
+All resources on linux security: https://seinecle.github.io/linux-security-tutorials/

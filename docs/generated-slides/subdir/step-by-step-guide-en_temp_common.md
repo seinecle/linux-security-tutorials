@@ -86,7 +86,7 @@ We add a rule to block all incoming traffic, except for SSH connections through 
  ufw default deny incoming
  ufw allow 1234/tcp
 
- //ST: !
+//ST: !
 
 Now, we can activate the firewall
 

@@ -108,9 +108,8 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph"><p>The firewall is now installed, but is is not active yet.</p></div></section>
 <section><div class="paragraph"><p>We add a rule to block all incoming traffic, except for SSH connections through the port we defined:</p></div>
 <div class="literalblock"><div class="content"><pre>ufw default deny incoming
-ufw allow 1234/tcp</pre></div></div>
-<div class="literalblock"><div class="content"><pre>//ST: !</pre></div></div>
-<div class="paragraph"><p>Now, we can activate the firewall</p></div>
+ufw allow 1234/tcp</pre></div></div></section>
+<section><div class="paragraph"><p>Now, we can activate the firewall</p></div>
 <div class="literalblock"><div class="content"><pre>ufw enable</pre></div></div></section>
 <section id="_creating_users_and_disabling_ssh_connections_for_root"><h2>Creating users and disabling SSH connections for root</h2><div class="paragraph"><p>We should now disable root login via SSH. Why? Because attackers would know that a "root" user is available to log in, and it just remains to attack its password.</p></div>
 <div class="paragraph"><p>With the root user disabled at the SSH login step, the attackers must guess <strong>both</strong> the username and its password to access the connection, and that&#8217;s much harder.</p></div>
