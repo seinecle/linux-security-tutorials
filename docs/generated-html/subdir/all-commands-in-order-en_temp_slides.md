@@ -1,4 +1,4 @@
-= Step-by-step guide to Linux security
+= Just the commands - fast setup for a secure Linux server
 Clément Levallois <clementlevallois@gmail.com>
 2017-04-03
 
@@ -11,6 +11,15 @@ last modified: {docdate}
 :example-caption!:
 
 ==  'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
+
+==== What?
+
+- Debian jessie 8.7
+- vi
+
+-> change for your favorite text editor, and probably valid for Ubuntu as well.
+
+
 
 ==== Make sure you have the latest version of all packages:
 
@@ -63,9 +72,10 @@ When SSH key login works, go back to `/etc/ssh/sshd_config` and do:
 
 PasswordAuthentication no
 
-then:  service sshd restart
+then:  `service sshd restart`
 
 Things will not work the first time, useful tips:
+
 - http://askubuntu.com/a/306832
 - http://stackoverflow.com/a/20923212/798502
 

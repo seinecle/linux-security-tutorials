@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="Clément Levallois" /><title>Step-by-step guide to Linux security</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js-3.1.0/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js-3.1.0/css/theme/white.css" id="theme" /><style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="Clément Levallois" /><title>Just the commands - fast setup for a secure Linux server</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js-3.1.0/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js-3.1.0/css/theme/white.css" id="theme" /><style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
 /*pre.CodeRay {background-color:#f7f7f8;}*/
 .CodeRay .line-numbers{border-right:1px solid #d8d8d8;padding:0 0.5em 0 .25em}
 .CodeRay span.line-numbers{display:inline-block;margin-right:.5em;color:rgba(0,0,0,.3)}
@@ -86,8 +86,10 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .insert .insert{color:#080}
 .CodeRay .delete .delete{color:#800}
 .CodeRay .change .change{color:#66f}
-.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.1.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.1.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Step-by-step guide to Linux security</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-04-04</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
-<section id="__escape_or_o_to_see_all_sides_f11_for_full_screen_s_for_speaker_notes"><h2>'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes</h2><h3>Make sure you have the latest version of all packages:</h3><div class="literalblock"><div class="content"><pre>sudo apt-get update &amp;&amp; sudo apt-get upgrade</pre></div></div>
+.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.1.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.1.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Just the commands - fast setup for a secure Linux server</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-04-04</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
+<section id="__escape_or_o_to_see_all_sides_f11_for_full_screen_s_for_speaker_notes"><h2>'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes</h2><h3>What?</h3><div class="ulist"><ul><li><p>Debian jessie 8.7</p></li><li><p>vi</p></li></ul></div>
+<div class="paragraph"><p>&#8594; change for your favorite text editor, and probably valid for Ubuntu as well.</p></div>
+<h3>Make sure you have the latest version of all packages:</h3><div class="literalblock"><div class="content"><pre>sudo apt-get update &amp;&amp; sudo apt-get upgrade</pre></div></div>
 <h3>Network Time Protocol</h3><div class="literalblock"><div class="content"><pre>aptitude install ntp</pre></div></div>
 <div class="paragraph"><p>Then define your time zone (the one where your server is located):</p></div>
 <div class="literalblock"><div class="content"><pre>dpkg-reconfigure tzdata</pre></div></div>
@@ -104,10 +106,9 @@ table.CodeRay td.code>pre{padding:0}
 <div class="ulist"><ul><li><p>you have put the keys in <code>/home/myUser/.ssd/authorized_keys</code> (not just in the root user folder)</p></li><li><p>your key starts with "the "ssh-rsa" (the first "s" might be missing &#8230;&#8203;)</p></li><li><p>the key doesn&#8217;t break in several lines</p></li><li><p>do <code>chmod 700 ~/.ssh</code> on the home folder</p></li><li><p>use  <code>tail -f /var/log/auth.log</code> for debugging</p></li></ul></div>
 <div class="paragraph"><p>When SSH key login works, go back to <code>/etc/ssh/sshd_config</code> and do:</p></div>
 <div class="paragraph"><p>PasswordAuthentication no</p></div>
-<div class="paragraph"><p>then:  service sshd restart</p></div>
-<div class="paragraph"><p>Things will not work the first time, useful tips:
-- <a href="http://askubuntu.com/a/306832" class="bare">http://askubuntu.com/a/306832</a>
-- <a href="http://stackoverflow.com/a/20923212/798502" class="bare">http://stackoverflow.com/a/20923212/798502</a></p></div>
+<div class="paragraph"><p>then:  <code>service sshd restart</code></p></div>
+<div class="paragraph"><p>Things will not work the first time, useful tips:</p></div>
+<div class="ulist"><ul><li><p><a href="http://askubuntu.com/a/306832" class="bare">http://askubuntu.com/a/306832</a></p></li><li><p><a href="http://stackoverflow.com/a/20923212/798502" class="bare">http://stackoverflow.com/a/20923212/798502</a></p></li></ul></div>
 <h3>installing the undifficult firewall</h3><div class="literalblock"><div class="content"><pre>sudo apt-get update</pre></div></div>
 <div class="literalblock"><div class="content"><pre>apt-get install ufw</pre></div></div>
 <h3>denying all incoming traffic except for SSH port</h3><div class="literalblock"><div class="content"><pre>ufw default deny incoming</pre></div></div>

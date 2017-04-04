@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.4">
 <meta name="author" content="Clément Levallois">
-<title>Step-by-step guide to Linux security</title>
+<title>Just the commands - fast setup for a secure Linux server</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -512,7 +512,7 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article">
 <div id="header">
-<h1>Step-by-step guide to Linux security</h1>
+<h1>Just the commands - fast setup for a secure Linux server</h1>
 <div class="details">
 <span id="author" class="author">Clément Levallois</span><br>
 <span id="email" class="email"><a href="mailto:clementlevallois@gmail.com">clementlevallois@gmail.com</a></span><br>
@@ -521,6 +521,7 @@ table.CodeRay td.code>pre{padding:0}
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel3">
+<li><a href="#_what">What?</a></li>
 <li><a href="#_make_sure_you_have_the_latest_version_of_all_packages">Make sure you have the latest version of all packages:</a></li>
 <li><a href="#_network_time_protocol">Network Time Protocol</a></li>
 <li><a href="#_changing_ssh_port">changing SSH port</a></li>
@@ -539,6 +540,22 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph">
 <p>last modified: 2017-04-04</p>
 </div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_what">What?</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Debian jessie 8.7</p>
+</li>
+<li>
+<p>vi</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>&#8594; change for your favorite text editor, and probably valid for Ubuntu as well.</p>
 </div>
 </div>
 <div class="sect3">
@@ -649,12 +666,20 @@ table.CodeRay td.code>pre{padding:0}
 <p>PasswordAuthentication no</p>
 </div>
 <div class="paragraph">
-<p>then:  service sshd restart</p>
+<p>then:  <code>service sshd restart</code></p>
 </div>
 <div class="paragraph">
-<p>Things will not work the first time, useful tips:
-- <a href="http://askubuntu.com/a/306832" class="bare">http://askubuntu.com/a/306832</a>
-- <a href="http://stackoverflow.com/a/20923212/798502" class="bare">http://stackoverflow.com/a/20923212/798502</a></p>
+<p>Things will not work the first time, useful tips:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://askubuntu.com/a/306832" class="bare">http://askubuntu.com/a/306832</a></p>
+</li>
+<li>
+<p><a href="http://stackoverflow.com/a/20923212/798502" class="bare">http://stackoverflow.com/a/20923212/798502</a></p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect3">
@@ -790,7 +815,7 @@ iptables -A FORWARD -j LOG</pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2017-04-04 23:30:54 CEST
+Last updated 2017-04-04 23:39:00 CEST
 </div>
 </div>
 </body>
