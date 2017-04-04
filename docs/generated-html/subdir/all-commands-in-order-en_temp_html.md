@@ -1,6 +1,6 @@
-= References on Linux security
+= Step-by-step guide to Linux security
 Clément Levallois <clementlevallois@gmail.com>
-2017-04-01
+2017-04-03
 
 last modified: {docdate}
 
@@ -13,26 +13,43 @@ last modified: {docdate}
 
 //ST: 'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
 
-== General books on Linux
-//ST: General books on Linux
+==== changing SSH port
+ vi /etc/ssh/sshd_config
 
-//ST: !
+ Text to change in the file: change port SSH 22 by a new port (*let's say 1234*), write the new port down somewhere
 
-- Soyinka, Wale (2015). _Linux Administration: A Beginner’s Guide_, McGraw-Hill Education. 7th edition.
--  Ward, Brian (2014). _How Linux Works: What Every Superuser Should Know_, No Starch Press. 2nd edition.
+ service sshd restart
 
-== Checklists
-//ST: Checklists
+==== installing the undifficult firewall
 
-//ST: !
-- security checklist for a linux system administrator: http://www.slashroot.in/security-checklist-linux-system-administrator
+ sudo apt-get update
 
-== Passwords and keys
-//ST: Passwords and keys
+ apt-get install ufw
 
-//ST: !
-- how to choose https://www.cs.cmu.edu/~help/security/choosing_passwords.html[good passwords]
-- how to create an https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows[SSH key with Puttygen on Windows]
+==== denying all incoming traffic except for SSH port
+
+ ufw default deny incoming
+
+ sudo ufw allow 1234/tcp
+
+ ufw enable
+
+==== disabling clear password auth
+
+ vi /etc/ssh/sshd_config
+
+Text to change in the file:
+
+ChallengeResponseAuthentication no
+
+PasswordAuthentication no
+
+UsePAM no
+
+ service sshd restart
+
+
+
 
 == the end
 //ST: The end!

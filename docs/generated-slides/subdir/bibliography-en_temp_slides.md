@@ -12,6 +12,13 @@ last modified: {docdate}
 
 ==  'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
 
+==  General books on Linux
+
+==  !
+
+- Soyinka, Wale (2015). _Linux Administration: A Beginner’s Guide_, McGraw-Hill Education. 7th edition.
+-  Ward, Brian (2014). _How Linux Works: What Every Superuser Should Know_, No Starch Press. 2nd edition.
+
 ==  Checklists
 
 ==  !

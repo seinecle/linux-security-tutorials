@@ -86,17 +86,35 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .insert .insert{color:#080}
 .CodeRay .delete .delete{color:#800}
 .CodeRay .change .change{color:#66f}
-.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.1.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.1.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Step-by-step guide to Linux security</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-04-03</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
+.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.1.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.1.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Step-by-step guide to Linux security</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-04-04</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
 <section id="__escape_or_o_to_see_all_sides_f11_for_full_screen_s_for_speaker_notes"><h2>'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes</h2></section>
-<section id="_ordering_the_server"><h2>Ordering the server</h2><div class="ulist"><ul><li><p>Server ordered on Hetzner.de</p></li></ul></div></section>
-<section id="_disabling_password_authentification_enabling_ssh"><h2>Disabling password authentification, enabling SSH</h2><div class="paragraph"><p>Password authentification is less secure than SSH public key. A password transits through the Internet for the auhtentication, it can be hacked at this step.</p></div>
+<section id="_ordering_the_server"><h2>Ordering the server</h2><div class="ulist"><ul><li><p>Server ordered on Hetzner.de</p></li><li><p>I use Debian, version 8.7</p></li><li><p>Vi is used as a text editor in the following</p></li><li><p>we are logged as root first</p></li></ul></div></section>
+<section id="_disabling_password_authentication_enabling_ssh"><h2>Disabling password authentication, enabling SSH</h2><div class="paragraph"><p>Password authentication is less secure than SSH public key. A password transits through the Internet for the auhtentication, it can be hacked at this step.</p></div>
 <div class="paragraph"><p>A SSH private key is not transmitted on the wire. So, it can&#8217;t be hacked this way.</p></div>
 <div class="paragraph"><p>A detailed explanation is <a href="https://security.stackexchange.com/questions/69407/why-is-using-an-ssh-key-more-secure-than-using-passwords">available here</a>.</p></div></section>
-<section><div class="paragraph"><p>How to generate a SSH key?</p></div>
-<div class="ulist"><ul><li><p>On Windows, use <a href="https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows">Puttygen</a>.</p></li><li><p>On Mac, use <a href="https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-mac-os-x">the Terminal</a></p></li><li><p>On Linux, use the <a href="https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html">ssh-keygen command</a></p></li></ul></div></section>
-<section><div class="paragraph"><p>How to disable password auth an enable SSH?</p></div>
-<div class="paragraph"><p>&#8594; the server I rented on Hetzner asked it from the console right when renting it.
-&#8594; otherwise, this can be set up <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-linux-mac-disable-ssh-password-usage">this way</a>:</p></div></section>
+<section><h3>How to generate a SSH key?</h3><div class="ulist"><ul><li><p>On Windows, use <a href="https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows">Puttygen</a>.</p></li><li><p>On Mac, use <a href="https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-mac-os-x">the Terminal</a></p></li><li><p>On Linux, use the <a href="https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html">ssh-keygen command</a></p></li></ul></div></section>
+<section><h3>How to disable password auth and enable SSH?</h3><div class="paragraph"><p>&#8594; the server I rented on Hetzner asked it from the console right when renting it.
+&#8594; otherwise, this can be set up manually <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/virtual-machines-linux-mac-disable-ssh-password-usage">this way</a>.</p></div>
+<div class="paragraph"><p>(see also the "all commands in order" tutorial for precise instructions)</p></div></section>
+<section><h3>Changing the SSH port</h3><div class="paragraph"><p>By default, loggging to the server via SSH is done on the port 22. Knowing that, attackers scan the port 22. Changing the port to a different one makes the attacker&#8217;s job more difficult. To do that:</p></div>
+<div class="literalblock"><div class="content"><pre>vi /etc/ssh/sshd_config</pre></div></div>
+<div class="paragraph"><p>Text to change in the file: change port SSH 22 by a new port (<strong>let&#8217;s say 1234</strong>), write the new port down somewhere</p></div>
+<div class="literalblock"><div class="content"><pre>service sshd restart</pre></div></div></section>
+<section id="_setting_up_a_firewall"><h2>Setting up a firewall</h2><div class="paragraph"><p>A firewall gives you control on what can enter and leave your server.</p></div></section>
+<section><h3>ip tables</h3><div class="paragraph"><p>The rules for setting up ip tables are logical <a href="https://help.ubuntu.com/community/IptablesHowTo">but quite complicated</a>. Using an <a href="https://www.perturb.org/content/iptables-rules.html">ip tables generator</a> could help.</p></div>
+<div class="paragraph"><p>But there is an even easier alternative.</p></div>
+<h3>better: uncomplicated firewall</h3><div class="paragraph"><p>Following <a href="https://twitter.com/mgilbir" class="bare">https://twitter.com/mgilbir</a>@mgilbir]'s advice, I&#8217;ll use <a href="https://wiki.debian.org/Uncomplicated%20Firewall%20%28ufw%29">ufw: a linux package for "uncomplicated firewall"</a>. To install it:</p></div>
+<div class="literalblock"><div class="content"><pre>apt-get install ufw</pre></div></div>
+<div class="paragraph"><p>The firewall is now installed, but is is not active yet.</p></div></section>
+<section><div class="paragraph"><p>We add a rule to block all incoming traffic, except for SSH connections through the port we defined:</p></div>
+<div class="literalblock"><div class="content"><pre>ufw default deny incoming
+ufw allow 1234/tcp</pre></div></div>
+<div class="paragraph"><p>Now, we can activate the firewall</p></div>
+<div class="literalblock"><div class="content"><pre>ufw enable</pre></div></div></section>
+<section id="_creating_users_and_disabling_ssh_connections_for_root"><h2>Creating users and disabling SSH connections for root</h2><div class="paragraph"><p>We should now disable root login via SSH. Why? Because attackers would know that a "root" user is available to log in, and it just remains to attack its password.</p></div>
+<div class="paragraph"><p>With the root user disabled at the SSH login step, the attackers must guess <strong>both</strong> the username and its password to access the connection, and that&#8217;s much harder.</p></div>
+<div class="paragraph"><p>Of course, an attacker who aims at you or your server specifically (a "targeted" attack) would expect a series of usernames (in my case "seinecle", the name I use on all social media), so don&#8217;t use it either.</p></div></section>
+<section></section>
 <section id="_the_end"><h2>The end!</h2></section>
 <section><div class="paragraph"><p>Author of this tutorial: <a href="https://twitter.com/seinecle">Clement Levallois</a></p></div>
 <div class="paragraph"><p>All tutorials on linux security: <a href="https://seinecle.github.io/linux-security-tutorials/" class="bare">https://seinecle.github.io/linux-security-tutorials/</a>
