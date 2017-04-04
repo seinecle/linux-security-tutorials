@@ -21,11 +21,15 @@ last modified: {docdate}
 - Soyinka, Wale (2015). _Linux Administration: A Beginner’s Guide_, McGraw-Hill Education. 7th edition.
 -  Ward, Brian (2014). _How Linux Works: What Every Superuser Should Know_, No Starch Press. 2nd edition.
 
+
+
+
 == Checklists
 //ST: Checklists
 
 //ST: !
 - security checklist for a linux system administrator: http://www.slashroot.in/security-checklist-linux-system-administrator
+- a step-by-step guide to setting up / securing a Debian server: http://www.pontikis.net/blog/debian-wheezy-web-server-setup
 
 == Passwords and keys
 //ST: Passwords and keys
@@ -41,4 +45,4 @@ last modified: {docdate}
 
 Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
 
-All tutorials on linux security: https://seinecle.github.io/linux-security-tutorials/
+All resources on linux security: https://seinecle.github.io/linux-security-tutorials/
