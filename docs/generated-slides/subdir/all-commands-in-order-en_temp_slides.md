@@ -48,15 +48,13 @@ UsePAM no
  service sshd restart
 
 
-
-
 ==  The end!
 
 ==  !
 
 Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
 
-All tutorials on linux security: https://seinecle.github.io/linux-security-tutorials/
+All resources on linux security: https://seinecle.github.io/linux-security-tutorials/
 pass:[    <!-- Start of StatCounter Code for Default Guide -->
     <script type="text/javascript">
         var sc_project = 11304288;

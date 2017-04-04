@@ -70,9 +70,11 @@ The rules for setting up ip tables are logical https://help.ubuntu.com/community
 
 But there is an even easier alternative.
 
+//ST: !
+
 ==== better: uncomplicated firewall
 
-Following https://twitter.com/mgilbir[]@mgilbir]'s advice, I'll use https://wiki.debian.org/Uncomplicated%20Firewall%20%28ufw%29[ufw: a linux package for "uncomplicated firewall"]. To install it:
+Following https://twitter.com/mgilbir[@mgilbir]'s advice, I'll use https://wiki.debian.org/Uncomplicated%20Firewall%20%28ufw%29[ufw: a linux package for "uncomplicated firewall"]. To install it:
 
  apt-get install ufw
 
@@ -83,6 +85,8 @@ We add a rule to block all incoming traffic, except for SSH connections through 
 
  ufw default deny incoming
  ufw allow 1234/tcp
+
+ //ST: !
 
 Now, we can activate the firewall
 
@@ -109,4 +113,4 @@ Of course, an attacker who aims at you or your server specifically (a "targeted"
 
 Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
 
-All tutorials on linux security: https://seinecle.github.io/linux-security-tutorials/
+All resources on linux security: https://seinecle.github.io/linux-security-tutorials/
