@@ -533,7 +533,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_installing_the_undifficult_firewall">installing the undifficult firewall</a></li>
 <li><a href="#_denying_all_incoming_traffic_except_for_ssh_port">denying all incoming traffic except for SSH port</a></li>
 <li><a href="#_install_and_config_of_psad">install and config of Psad</a></li>
-<li><a href="#_disabling_clear_password_auth">disabling clear password auth</a></li>
+<li><a href="#_to_be_continued">to be continued</a></li>
 <li><a href="#_the_end">the end</a></li>
 </ul>
 </div>
@@ -594,12 +594,25 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="paragraph">
-<p>Text to change in the file: change port SSH 22 by a new port (<strong>let&#8217;s say 1234</strong>), write the new port down somewhere</p>
+<p>Text to change in the file:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>change port SSH 22 by a new port (<strong>let&#8217;s say 1234</strong>), write the new port down somewhere</p>
+</li>
+<li>
+<p>ChallengeResponseAuthentication no</p>
+</li>
+<li>
+<p>UsePAM no</p>
 <div class="literalblock">
 <div class="content">
 <pre>service sshd restart</pre>
 </div>
+</div>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect3">
@@ -644,20 +657,16 @@ table.CodeRay td.code>pre{padding:0}
 <pre>vi /etc/ssh/sshd_config</pre>
 </div>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>Text to change in the file:</pre>
-</div>
+<div class="paragraph">
+<p>Text to change in the file:</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>PermitRootLogin no</pre>
 </div>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>From there on, you cannot login to the server from root, only from myUser.</pre>
-</div>
+<div class="paragraph">
+<p>From there on, you cannot login to the server from root, only from myUser.</p>
 </div>
 <div class="paragraph">
 <p>To switch to root privileges:</p>
@@ -808,7 +817,7 @@ iptables -A FORWARD -j LOG</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Here are some options I modified: <a href="../../resources/psad.config.txt">my psad config file</a></p>
+<p>Here are some options I modified: <a href="resources/psad-config.txt">my psad config file</a></p>
 </div>
 <div class="paragraph">
 <p>Then we whitelist our own server:</p>
@@ -829,29 +838,8 @@ iptables -A FORWARD -j LOG</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_disabling_clear_password_auth">disabling clear password auth</h4>
-<div class="literalblock">
-<div class="content">
-<pre>vi /etc/ssh/sshd_config</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Text to change in the file:</p>
-</div>
-<div class="paragraph">
-<p>ChallengeResponseAuthentication no</p>
-</div>
-<div class="paragraph">
-<p>PasswordAuthentication no</p>
-</div>
-<div class="paragraph">
-<p>UsePAM no</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>service sshd restart</pre>
-</div>
-</div>
+<h4 id="_to_be_continued">to be continued</h4>
+
 </div>
 <div class="sect1">
 <h2 id="_the_end">the end</h2>
@@ -885,7 +873,7 @@ iptables -A FORWARD -j LOG</pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2017-04-04 23:51:47 CEST
+Last updated 2017-04-04 23:58:35 CEST
 </div>
 </div>
 </body>

@@ -39,7 +39,11 @@ Then define your time zone (the one where your server is located):
 ==== changing SSH port
  vi /etc/ssh/sshd_config
 
-Text to change in the file: change port SSH 22 by a new port (*let's say 1234*), write the new port down somewhere
+Text to change in the file:
+
+- change port SSH 22 by a new port (*let's say 1234*), write the new port down somewhere
+- ChallengeResponseAuthentication no
+- UsePAM no
 
  service sshd restart
 
@@ -69,11 +73,11 @@ Then restart the SSH service:
 
   vi /etc/ssh/sshd_config
 
- Text to change in the file:
+Text to change in the file:
 
  PermitRootLogin no
 
- From there on, you cannot login to the server from root, only from myUser.
+From there on, you cannot login to the server from root, only from myUser.
 
 To switch to root privileges:
 
@@ -153,7 +157,7 @@ Then modify some options in the config file, which is situated here:
 
  vi /etc/psad/psad.conf
 
-Here are some options I modified: link:../../resources/psad.config.txt[my psad config file]
+Here are some options I modified: link:resources/psad-config.txt[my psad config file]
 
 //ST: !
 Then we whitelist our own server:
@@ -167,19 +171,8 @@ where I put just 2 values:
 xx.xx.xxx.xxx    0; # Server IP (replace xx.xx.xxx.xxx by your actual server IP)
 
 //ST: !
-==== disabling clear password auth
+==== to be continued
 
- vi /etc/ssh/sshd_config
-
-Text to change in the file:
-
-ChallengeResponseAuthentication no
-
-PasswordAuthentication no
-
-UsePAM no
-
- service sshd restart
 
 //ST: !
 == the end

@@ -95,8 +95,8 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph"><p>Then define your time zone (the one where your server is located):</p></div>
 <div class="literalblock"><div class="content"><pre>dpkg-reconfigure tzdata</pre></div></div></section>
 <section><h3>changing SSH port</h3><div class="literalblock"><div class="content"><pre>vi /etc/ssh/sshd_config</pre></div></div>
-<div class="paragraph"><p>Text to change in the file: change port SSH 22 by a new port (<strong>let&#8217;s say 1234</strong>), write the new port down somewhere</p></div>
-<div class="literalblock"><div class="content"><pre>service sshd restart</pre></div></div></section>
+<div class="paragraph"><p>Text to change in the file:</p></div>
+<div class="ulist"><ul><li><p>change port SSH 22 by a new port (<strong>let&#8217;s say 1234</strong>), write the new port down somewhere</p></li><li><p>ChallengeResponseAuthentication no</p></li><li><p>UsePAM no</p><div class="literalblock"><div class="content"><pre>service sshd restart</pre></div></div></li></ul></div></section>
 <section><h3>Installing the sudo command:</h3><div class="literalblock"><div class="content"><pre>apt-get install sudo</pre></div></div></section>
 <section><h3>Adding a new user (let&#8217;s call it "myUser")</h3><div class="literalblock"><div class="content"><pre>adduser myUser</pre></div></div></section>
 <section><h3>Enabling server connections via myUser</h3><div class="literalblock"><div class="content"><pre>vi /etc/ssh/sshd_config</pre></div></div>
@@ -104,9 +104,9 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph"><p>Then restart the SSH service:</p></div>
 <div class="literalblock"><div class="content"><pre>service sshd restart</pre></div></div></section>
 <section><h3>Disabling connection through root</h3><div class="literalblock"><div class="content"><pre>vi /etc/ssh/sshd_config</pre></div></div>
-<div class="literalblock"><div class="content"><pre>Text to change in the file:</pre></div></div>
+<div class="paragraph"><p>Text to change in the file:</p></div>
 <div class="literalblock"><div class="content"><pre>PermitRootLogin no</pre></div></div>
-<div class="literalblock"><div class="content"><pre>From there on, you cannot login to the server from root, only from myUser.</pre></div></div>
+<div class="paragraph"><p>From there on, you cannot login to the server from root, only from myUser.</p></div>
 <div class="paragraph"><p>To switch to root privileges:</p></div>
 <div class="literalblock"><div class="content"><pre>su -</pre></div></div></section>
 <section><h3>enable SSH key auth</h3><div class="ulist"><ul><li><p>Generate a key with puttygen (SSH-2 RSA 1024).</p></li><li><p>Parameters to change in <code>/etc/ssh/sshd_config</code>:</p></li></ul></div>
@@ -133,18 +133,13 @@ iptables -A FORWARD -j LOG</pre></div></div>
 <div class="literalblock"><div class="content"><pre>apt-get install psad</pre></div></div></section>
 <section><div class="paragraph"><p>Then modify some options in the config file, which is situated here:</p></div>
 <div class="literalblock"><div class="content"><pre>vi /etc/psad/psad.conf</pre></div></div>
-<div class="paragraph"><p>Here are some options I modified: <a href="../../resources/psad.config.txt">my psad config file</a></p></div></section>
+<div class="paragraph"><p>Here are some options I modified: <a href="resources/psad-config.txt">my psad config file</a></p></div></section>
 <section><div class="paragraph"><p>Then we whitelist our own server:</p></div>
 <div class="literalblock"><div class="content"><pre>vi /etc/psad/auto_dl</pre></div></div>
 <div class="paragraph"><p>where I put just 2 values:</p></div>
 <div class="paragraph"><p>127.0.0.1    0;  # localhost</p></div>
 <div class="paragraph"><p>xx.xx.xxx.xxx    0; # Server IP (replace xx.xx.xxx.xxx by your actual server IP)</p></div></section>
-<section><h3>disabling clear password auth</h3><div class="literalblock"><div class="content"><pre>vi /etc/ssh/sshd_config</pre></div></div>
-<div class="paragraph"><p>Text to change in the file:</p></div>
-<div class="paragraph"><p>ChallengeResponseAuthentication no</p></div>
-<div class="paragraph"><p>PasswordAuthentication no</p></div>
-<div class="paragraph"><p>UsePAM no</p></div>
-<div class="literalblock"><div class="content"><pre>service sshd restart</pre></div></div></section>
+<section><h3>to be continued</h3></section>
 <section></section>
 <section id="_the_end"><h2>The end!</h2></section>
 <section><div class="paragraph"><p>Author of this tutorial: <a href="https://twitter.com/seinecle">Clement Levallois</a></p></div>
