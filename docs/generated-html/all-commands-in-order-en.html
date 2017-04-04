@@ -523,14 +523,6 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel3">
 <li><a href="#_what">What?</a></li>
 <li><a href="#_make_sure_you_have_the_latest_version_of_all_packages">Make sure you have the latest version of all packages:</a></li>
-<li><a href="#_network_time_protocol">Network Time Protocol</a></li>
-<li><a href="#_changing_ssh_port">changing SSH port</a></li>
-<li><a href="#_enable_ssh_key_auth">enable SSH key auth</a></li>
-<li><a href="#_installing_the_undifficult_firewall">installing the undifficult firewall</a></li>
-<li><a href="#_denying_all_incoming_traffic_except_for_ssh_port">denying all incoming traffic except for SSH port</a></li>
-<li><a href="#_install_and_config_of_psad">install and config of Psad</a></li>
-<li><a href="#_disabling_clear_password_auth">disabling clear password auth</a></li>
-<li><a href="#_the_end">the end</a></li>
 </ul>
 </div>
 </div>
@@ -565,9 +557,12 @@ table.CodeRay td.code>pre{padding:0}
 <pre>sudo apt-get update &amp;&amp; sudo apt-get upgrade</pre>
 </div>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+==== Network Time Protocol</pre>
 </div>
-<div class="sect3">
-<h4 id="_network_time_protocol">Network Time Protocol</h4>
+</div>
 <div class="literalblock">
 <div class="content">
 <pre>aptitude install ntp</pre>
@@ -581,12 +576,11 @@ table.CodeRay td.code>pre{padding:0}
 <pre>dpkg-reconfigure tzdata</pre>
 </div>
 </div>
-</div>
-<div class="sect3">
-<h4 id="_changing_ssh_port">changing SSH port</h4>
 <div class="literalblock">
 <div class="content">
-<pre>vi /etc/ssh/sshd_config</pre>
+<pre> //ST: !
+==== changing SSH port
+ vi /etc/ssh/sshd_config</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -597,9 +591,90 @@ table.CodeRay td.code>pre{padding:0}
 <pre>service sshd restart</pre>
 </div>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+==== Installing the sudo command:</pre>
 </div>
-<div class="sect3">
-<h4 id="_enable_ssh_key_auth">enable SSH key auth</h4>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>apt-get install sudo</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+==== Adding a new user (let's call it "myUser")</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>adduser myUser</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+==== Enabling server connections via myUser</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>vi /etc/ssh/sshd_config</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>AllowUsers myUser</p>
+</div>
+<div class="paragraph">
+<p>Then restart the SSH service:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>service sshd restart</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+====  Disabling connection through root</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>vi /etc/ssh/sshd_config</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Text to change in the file:</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>PermitRootLogin no</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>From there on, you cannot login to the server from root, only from myUser.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To switch to root privileges:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>su -</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+==== enable SSH key auth</pre>
+</div>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -619,8 +694,11 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph">
 <p>UsePAM no</p>
 </div>
-<div class="paragraph">
-<p>LogLevel DEBUG3 (this should be added, the parameter is not listed by default)</p>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+LogLevel DEBUG3 (this should be added, the parameter is not listed by default)</pre>
+</div>
 </div>
 <div class="ulist">
 <ul>
@@ -634,14 +712,13 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li>
 <p>Add your public key to <code>/home/myUser/.ssd/authorized_keys</code></p>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+Make sure that:</pre>
+</div>
+</div>
 </li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Make sure that:</p>
-</div>
-<div class="ulist">
-<ul>
 <li>
 <p>you have put the keys in <code>/home/myUser/.ssd/authorized_keys</code> (not just in the root user folder)</p>
 </li>
@@ -656,11 +733,14 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li>
 <p>use  <code>tail -f /var/log/auth.log</code> for debugging</p>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+When SSH key login works, go back to `/etc/ssh/sshd_config` and do:</pre>
+</div>
+</div>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>When SSH key login works, go back to <code>/etc/ssh/sshd_config</code> and do:</p>
 </div>
 <div class="paragraph">
 <p>PasswordAuthentication no</p>
@@ -668,8 +748,11 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph">
 <p>then:  <code>service sshd restart</code></p>
 </div>
-<div class="paragraph">
-<p>Things will not work the first time, useful tips:</p>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+Things will not work the first time, useful tips:</pre>
+</div>
 </div>
 <div class="ulist">
 <ul>
@@ -678,12 +761,12 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li>
 <p><a href="http://stackoverflow.com/a/20923212/798502" class="bare">http://stackoverflow.com/a/20923212/798502</a></p>
-</li>
-</ul>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+==== installing the undifficult firewall</pre>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_installing_the_undifficult_firewall">installing the undifficult firewall</h4>
 <div class="literalblock">
 <div class="content">
 <pre>sudo apt-get update</pre>
@@ -694,9 +777,12 @@ table.CodeRay td.code>pre{padding:0}
 <pre>apt-get install ufw</pre>
 </div>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+==== denying all incoming traffic except for SSH port</pre>
 </div>
-<div class="sect3">
-<h4 id="_denying_all_incoming_traffic_except_for_ssh_port">denying all incoming traffic except for SSH port</h4>
+</div>
 <div class="literalblock">
 <div class="content">
 <pre>ufw default deny incoming</pre>
@@ -712,9 +798,15 @@ table.CodeRay td.code>pre{padding:0}
 <pre>ufw enable</pre>
 </div>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+==== install and config of Psad</pre>
 </div>
-<div class="sect3">
-<h4 id="_install_and_config_of_psad">install and config of Psad</h4>
+</div>
+</li>
+</ul>
+</div>
 <div class="paragraph">
 <p>First, making sure the firewall logs the traffic:</p>
 </div>
@@ -729,8 +821,11 @@ iptables -A FORWARD -j LOG</pre>
 <pre>apt-get install psad</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Then modify some options in the config file, which is situated here:</p>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+Then modify some options in the config file, which is situated here:</pre>
+</div>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -740,8 +835,11 @@ iptables -A FORWARD -j LOG</pre>
 <div class="paragraph">
 <p>Here are some options I modified: <a href="../../resources/psad.config.txt">my psad config file</a></p>
 </div>
-<div class="paragraph">
-<p>Then we whitelist our own server:</p>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+Then we whitelist our own server:</pre>
+</div>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -757,9 +855,12 @@ iptables -A FORWARD -j LOG</pre>
 <div class="paragraph">
 <p>xx.xx.xxx.xxx    0; # Server IP (replace xx.xx.xxx.xxx by your actual server IP)</p>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+==== disabling clear password auth</pre>
 </div>
-<div class="sect3">
-<h4 id="_disabling_clear_password_auth">disabling clear password auth</h4>
+</div>
 <div class="literalblock">
 <div class="content">
 <pre>vi /etc/ssh/sshd_config</pre>
@@ -782,10 +883,13 @@ iptables -A FORWARD -j LOG</pre>
 <pre>service sshd restart</pre>
 </div>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+== the end
+//ST: The end!</pre>
 </div>
-<div class="sect1">
-<h2 id="_the_end">the end</h2>
-<div class="sectionbody">
+</div>
 <div class="paragraph">
 <p>Author of this tutorial: <a href="https://twitter.com/seinecle">Clement Levallois</a></p>
 </div>
@@ -811,11 +915,10 @@ iptables -A FORWARD -j LOG</pre>
 </div>
 </div>
 </div>
-</div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2017-04-04 23:39:00 CEST
+Last updated 2017-04-04 23:48:30 CEST
 </div>
 </div>
 </body>

@@ -1,4 +1,4 @@
-= Step-by-step guide to Linux security
+= Step-by-step guide to Linux security for beginners
 Clément Levallois <clementlevallois@gmail.com>
 2017-04-03
 
