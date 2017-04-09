@@ -35,6 +35,14 @@ Then define your time zone (the one where your server is located):
 
  dpkg-reconfigure tzdata
 
+ //ST: !
+==== harden the kernel
+ vi /etc/sysctl.d/local.conf
+
+ - Paste the contents of link:resources/kernel_config.txt[this file]:
+ - Close the file
+ - reboot the server
+
 //ST: !
 ==== changing SSH port
  vi /etc/ssh/sshd_config

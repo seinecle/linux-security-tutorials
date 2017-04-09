@@ -522,11 +522,10 @@ table.CodeRay td.code>pre{padding:0}
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_ordering_the_server">Ordering the server</a></li>
-<li><a href="#_make_sure_you_have_the_latest_version_of_all_packages">Make sure you have the latest version of all packages:</a>
-<ul class="sectlevel3">
-<li><a href="#_changing_the_ssh_port">Changing the SSH port</a></li>
-</ul>
-</li>
+<li><a href="#_get_the_latest_versions_of_all_packages">Get the latest versions of all packages</a></li>
+<li><a href="#_harden_the_kernel">Harden the kernel</a></li>
+<li><a href="#_forward_root_mail">Forward root mail</a></li>
+<li><a href="#_change_the_ssh_port">Change the SSH port</a></li>
 <li><a href="#_creating_a_user_and_disabling_logging_for_root">Creating a user and disabling logging for root</a>
 <ul class="sectlevel3">
 <li><a href="#_1_installing_the_sudo_command">1. Installing the sudo command:</a></li>
@@ -547,8 +546,13 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_better_uncomplicated_firewall">better: uncomplicated firewall</a></li>
 </ul>
 </li>
-<li><a href="#_use_psad">use Psad</a></li>
-<li><a href="#_use_fail2ban">use fail2ban</a></li>
+<li><a href="#_use_anti_intrusion_defenses_and_audit_systems">Use anti-intrusion defenses and audit systems</a>
+<ul class="sectlevel3">
+<li><a href="#_psad">Psad</a></li>
+<li><a href="#_fail2ban">fail2ban</a></li>
+<li><a href="#_lynis">Lynis</a></li>
+</ul>
+</li>
 <li><a href="#_the_end">the end</a></li>
 </ul>
 </div>
@@ -557,7 +561,7 @@ table.CodeRay td.code>pre{padding:0}
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>last modified: 2017-04-04</p>
+<p>last modified: 2017-04-07</p>
 </div>
 </div>
 </div>
@@ -583,7 +587,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
-<h2 id="_make_sure_you_have_the_latest_version_of_all_packages">Make sure you have the latest version of all packages:</h2>
+<h2 id="_get_the_latest_versions_of_all_packages">Get the latest versions of all packages</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Do:</p>
@@ -629,8 +633,73 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph">
 <p>This step helps when your server needs to be synchronized with other servers.</p>
 </div>
-<div class="sect3">
-<h4 id="_changing_the_ssh_port">Changing the SSH port</h4>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_harden_the_kernel">Harden the kernel</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Source: <a href="http://www.pontikis.net/blog/debian-wheezy-web-server-setup" class="bare">http://www.pontikis.net/blog/debian-wheezy-web-server-setup</a></p>
+</div>
+<div class="paragraph">
+<p>The kernel is the software at the closest of the machine: it is provided by the Linux distribution you use.</p>
+</div>
+<div class="paragraph">
+<p>A configuration file offers parameters which tune the kernel to make things harder for an intruder. Here I rely exactly on the tutorial by <a href="http://www.pontikis.net/blog/debian-wheezy-web-server-setup">Pontikis</a>:</p>
+</div>
+<div class="paragraph">
+<p>Create a new file, so as to preserver / not to mess up the original file:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>vi /etc/sysctl.d/local.conf</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Paste the contents of <a href="resources/kernel_config.txt">this file</a>:</p>
+</li>
+<li>
+<p>Close the file</p>
+</li>
+<li>
+<p>reboot the server</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_forward_root_mail">Forward root mail</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Source: <a href="http://www.pontikis.net/blog/debian-wheezy-web-server-setup" class="bare">http://www.pontikis.net/blog/debian-wheezy-web-server-setup</a></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>vi /etc/aliases</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add this line if not already present:</p>
+</div>
+<div class="paragraph">
+<p>root:youraddress@email.com</p>
+</div>
+<div class="paragraph">
+<p>Then, rebuild aliases:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>newaliases</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_change_the_ssh_port">Change the SSH port</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>By default, loggging to the server via SSH is done on the port 22. Knowing that, attackers scan the port 22. Changing the port to a different one makes the attacker&#8217;s job more difficult. To do that:</p>
 </div>
@@ -645,7 +714,6 @@ table.CodeRay td.code>pre{padding:0}
 <div class="literalblock">
 <div class="content">
 <pre>service sshd restart</pre>
-</div>
 </div>
 </div>
 </div>
@@ -830,10 +898,10 @@ table.CodeRay td.code>pre{padding:0}
 <div class="ulist">
 <ul>
 <li>
-<p>make sure you have put the keys in /home/myUser/.ssd/authorized_keys (not just in the root user folder)</p>
+<p>make sure you have put the public key in /home/myUser/.ssd/authorized_keys (not just in the root user folder)</p>
 </li>
 <li>
-<p>make sure your key starts with "the "ssh-rsa" (the first "s" might be missing &#8230;&#8203;)</p>
+<p>make sure your key starts with "the "ssh-rsa" (with a space after it, check the first "s" might be missing &#8230;&#8203;)</p>
 </li>
 <li>
 <p>triple check the key doesn&#8217;t break in several lines</p>
@@ -953,8 +1021,10 @@ ufw allow 1234/tcp</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_use_psad">use Psad</h2>
+<h2 id="_use_anti_intrusion_defenses_and_audit_systems">Use anti-intrusion defenses and audit systems</h2>
 <div class="sectionbody">
+<div class="sect3">
+<h4 id="_psad">Psad</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">INFO</dt>
@@ -1012,10 +1082,8 @@ xx.xx.xxx.xxx    0; # Server IP (replace xx.xx.xxx.xxx by your actual server IP)
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_use_fail2ban">use fail2ban</h2>
-<div class="sectionbody">
+<div class="sect3">
+<h4 id="_fail2ban">fail2ban</h4>
 <div class="paragraph">
 <p>This is an app which bans users which fail to login after a number of times - typically bots trying to break in.</p>
 </div>
@@ -1027,6 +1095,40 @@ xx.xx.xxx.xxx    0; # Server IP (replace xx.xx.xxx.xxx by your actual server IP)
 </div>
 <div class="paragraph">
 <p>Documentation on failtoban: <a href="http://www.pontikis.net/blog/fail2ban-install-config-debian-wheezy" class="bare">http://www.pontikis.net/blog/fail2ban-install-config-debian-wheezy</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_lynis">Lynis</h4>
+<div class="paragraph">
+<p>This is an application running on your machine, generating security audits and making suggestions.</p>
+</div>
+<div class="paragraph">
+<p>Install it:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>apt-get install lynis</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+Run it: (from any directory)</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>lynis audit system</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The report will appear on screen (hit Enter to move on), and in this file:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>/var/log/lynis-report.dat</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1062,7 +1164,7 @@ xx.xx.xxx.xxx    0; # Server IP (replace xx.xx.xxx.xxx by your actual server IP)
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2017-04-04 23:36:31 CEST
+Last updated 2017-04-07 15:48:23 CEST
 </div>
 </div>
 </body>

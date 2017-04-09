@@ -542,7 +542,7 @@ table.CodeRay td.code>pre{padding:0}
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>last modified: 2017-04-04</p>
+<p>last modified: 2017-04-05</p>
 </div>
 </div>
 </div>
@@ -584,6 +584,26 @@ table.CodeRay td.code>pre{padding:0}
 <div class="content">
 <pre>dpkg-reconfigure tzdata</pre>
 </div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+==== harden the kernel
+ vi /etc/sysctl.d/local.conf</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Paste the contents of <a href="resources/kernel_config.txt">this file</a>:</p>
+</li>
+<li>
+<p>Close the file</p>
+</li>
+<li>
+<p>reboot the server</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect3">
@@ -873,7 +893,7 @@ iptables -A FORWARD -j LOG</pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2017-04-04 23:58:35 CEST
+Last updated 2017-04-05 11:52:29 CEST
 </div>
 </div>
 </body>

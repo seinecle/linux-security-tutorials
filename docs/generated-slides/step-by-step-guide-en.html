@@ -86,10 +86,11 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .insert .insert{color:#080}
 .CodeRay .delete .delete{color:#800}
 .CodeRay .change .change{color:#66f}
-.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.1.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.1.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Step-by-step guide to Linux security for beginners</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-04-04</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
+.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.1.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.1.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Step-by-step guide to Linux security for beginners</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-04-07</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
 <section id="__escape_or_o_to_see_all_sides_f11_for_full_screen_s_for_speaker_notes"><h2>'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes</h2></section>
-<section id="_ordering_the_server"><h2>Ordering the server</h2><div class="ulist"><ul><li><p>Server ordered on Hetzner.de (based in Germany, dirt cheap, but without management.)</p></li><li><p>I use Debian, version 8.7 (<a href="http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server">why?</a>)</p></li><li><p>Vi is used as a text editor in the following</p></li><li><p>we are logged as root first</p></li></ul></div>
-<div class="paragraph"><p>Do:</p></div>
+<section id="_ordering_the_server"><h2>Ordering the server</h2><div class="ulist"><ul><li><p>Server ordered on Hetzner.de (based in Germany, dirt cheap, but without management.)</p></li><li><p>I use Debian, version 8.7 (<a href="http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server">why?</a>)</p></li><li><p>Vi is used as a text editor in the following</p></li><li><p>we are logged as root first</p></li></ul></div></section>
+<section></section>
+<section id="_get_the_latest_versions_of_all_packages"><h2>Get the latest versions of all packages</h2><div class="paragraph"><p>Do:</p></div>
 <div class="literalblock"><div class="content"><pre>sudo apt-get update &amp;&amp; sudo apt-get upgrade</pre></div></div>
 <div class="paragraph"><p>Because:</p></div></section>
 <section><div class="literalblock"><div class="content"><pre>apt-get update</pre></div></div>
@@ -101,7 +102,22 @@ table.CodeRay td.code>pre{padding:0}
 <div class="literalblock"><div class="content"><pre>aptitude install ntp</pre></div></div>
 <div class="paragraph"><p>Then define your time zone (the one where your server is located).</p></div>
 <div class="paragraph"><p>This step helps when your server needs to be synchronized with other servers.</p></div></section>
-<section><h3>Changing the SSH port</h3><div class="paragraph"><p>By default, loggging to the server via SSH is done on the port 22. Knowing that, attackers scan the port 22. Changing the port to a different one makes the attacker&#8217;s job more difficult. To do that:</p></div>
+<section></section>
+<section id="_harden_the_kernel"><h2>Harden the kernel</h2><div class="paragraph"><p>Source: <a href="http://www.pontikis.net/blog/debian-wheezy-web-server-setup" class="bare">http://www.pontikis.net/blog/debian-wheezy-web-server-setup</a></p></div>
+<div class="paragraph"><p>The kernel is the software at the closest of the machine: it is provided by the Linux distribution you use.</p></div>
+<div class="paragraph"><p>A configuration file offers parameters which tune the kernel to make things harder for an intruder. Here I rely exactly on the tutorial by <a href="http://www.pontikis.net/blog/debian-wheezy-web-server-setup">Pontikis</a>:</p></div></section>
+<section><div class="paragraph"><p>Create a new file, so as to preserver / not to mess up the original file:</p></div>
+<div class="literalblock"><div class="content"><pre>vi /etc/sysctl.d/local.conf</pre></div></div>
+<div class="ulist"><ul><li><p>Paste the contents of <a href="resources/kernel_config.txt">this file</a>:</p></li><li><p>Close the file</p></li><li><p>reboot the server</p></li></ul></div></section>
+<section></section>
+<section id="_forward_root_mail"><h2>Forward root mail</h2><div class="paragraph"><p>Source: <a href="http://www.pontikis.net/blog/debian-wheezy-web-server-setup" class="bare">http://www.pontikis.net/blog/debian-wheezy-web-server-setup</a></p></div>
+<div class="literalblock"><div class="content"><pre>vi /etc/aliases</pre></div></div>
+<div class="paragraph"><p>Add this line if not already present:</p></div>
+<div class="paragraph"><p>root:youraddress@email.com</p></div></section>
+<section><div class="paragraph"><p>Then, rebuild aliases:</p></div>
+<div class="literalblock"><div class="content"><pre>newaliases</pre></div></div></section>
+<section></section>
+<section id="_change_the_ssh_port"><h2>Change the SSH port</h2><div class="paragraph"><p>By default, loggging to the server via SSH is done on the port 22. Knowing that, attackers scan the port 22. Changing the port to a different one makes the attacker&#8217;s job more difficult. To do that:</p></div>
 <div class="literalblock"><div class="content"><pre>vi /etc/ssh/sshd_config</pre></div></div>
 <div class="paragraph"><p>Text to change in the file: change port SSH 22 by a new port (<strong>let&#8217;s say 1234</strong>), write the new port down somewhere</p></div>
 <div class="literalblock"><div class="content"><pre>service sshd restart</pre></div></div></section>
@@ -142,7 +158,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph"><p>LogLevel DEBUG3 (this should be added, the parameter is not listed by default)</p></div>
 <div class="paragraph"><p>Save the file, then:</p></div>
 <div class="literalblock"><div class="content"><pre>service sshd restart</pre></div></div></section>
-<section><div class="olist arabic"><ol class="arabic" start="2"><li><p>Add your public key to <code>/home/myUser/.ssd/authorized_keys</code></p><div class="ulist"><ul><li><p>make sure you have put the keys in /home/myUser/.ssd/authorized_keys (not just in the root user folder)</p></li><li><p>make sure your key starts with "the "ssh-rsa" (the first "s" might be missing &#8230;&#8203;)</p></li><li><p>triple check the key doesn&#8217;t break in several lines</p></li><li><p>do <code>chmod 700 ~/.ssh</code> on the home folder</p><div class="literalblock"><div class="content"><pre>//ST: !</pre></div></div>
+<section><div class="olist arabic"><ol class="arabic" start="2"><li><p>Add your public key to <code>/home/myUser/.ssd/authorized_keys</code></p><div class="ulist"><ul><li><p>make sure you have put the public key in /home/myUser/.ssd/authorized_keys (not just in the root user folder)</p></li><li><p>make sure your key starts with "the "ssh-rsa" (with a space after it, check the first "s" might be missing &#8230;&#8203;)</p></li><li><p>triple check the key doesn&#8217;t break in several lines</p></li><li><p>do <code>chmod 700 ~/.ssh</code> on the home folder</p><div class="literalblock"><div class="content"><pre>//ST: !</pre></div></div>
 <div class="olist arabic"><ol class="arabic" start="3"><li><p>What will probably happen:</p></li></ol></div></li></ul></div></li></ol></div>
 <div class="paragraph"><p>Your private key will probably not be recognized the first time because of some problems above not completely fixed.</p></div>
 <div class="paragraph"><p>Keep trying to log with your SSH key. To find the cause of your issues, inspect the log for auth operations:</p></div>
@@ -165,7 +181,9 @@ table.CodeRay td.code>pre{padding:0}
 ufw allow 1234/tcp</pre></div></div></section>
 <section><div class="paragraph"><p>Now, we can activate the firewall</p></div>
 <div class="literalblock"><div class="content"><pre>ufw enable</pre></div></div></section>
-<section><div class="dlist"><dl><dt class="hdlist1">INFO</dt><dd><p>this part builds on: <a href="http://www.pontikis.net/blog/psad-install-config-debian-wheezy" class="bare">http://www.pontikis.net/blog/psad-install-config-debian-wheezy</a></p></dd></dl></div>
+<section></section>
+<section id="_use_anti_intrusion_defenses_and_audit_systems"><h2>use anti-intrusion defenses and audit systems</h2></section>
+<section><h3>Psad</h3><div class="dlist"><dl><dt class="hdlist1">INFO</dt><dd><p>this part builds on: <a href="http://www.pontikis.net/blog/psad-install-config-debian-wheezy" class="bare">http://www.pontikis.net/blog/psad-install-config-debian-wheezy</a></p></dd></dl></div>
 <div class="paragraph"><p>Psad is an app which bans users which scan ports. Before installing it, we need to make sure the firewall logs traffic:</p></div>
 <div class="literalblock"><div class="content"><pre>iptables -A INPUT -j LOG
 iptables -A FORWARD -j LOG</pre></div></div>
@@ -179,11 +197,19 @@ iptables -A FORWARD -j LOG</pre></div></div>
 <div class="literalblock"><div class="content"><pre>vi /etc/psad/auto_dl</pre></div></div>
 <div class="paragraph"><p>where I put just 2 values:</p></div>
 <div class="literalblock"><div class="content"><pre>127.0.0.1    0;  # localhost
-xx.xx.xxx.xxx    0; # Server IP (replace xx.xx.xxx.xxx by your actual server IP)</pre></div></div>
-<div class="paragraph"><p>This is an app which bans users which fail to login after a number of times - typically bots trying to break in.</p></div>
+xx.xx.xxx.xxx    0; # Server IP (replace xx.xx.xxx.xxx by your actual server IP)</pre></div></div></section>
+<section><h3>fail2ban</h3><div class="paragraph"><p>This is an app which bans users which fail to login after a number of times - typically bots trying to break in.</p></div>
 <div class="paragraph"><p>fail2ban can actually scan logs from a list of apps you decide (MongoDB, Apache server, GlassFish, etc.) and ban ips mentioned in logs showing a failed access. You need to setup a regex rule specific for each log format, though.</p></div>
 <div class="paragraph"><p>I&#8217;ll cover it later, when I&#8217;ll have MongoDB and GlassFish installed.</p></div>
 <div class="paragraph"><p>Documentation on failtoban: <a href="http://www.pontikis.net/blog/fail2ban-install-config-debian-wheezy" class="bare">http://www.pontikis.net/blog/fail2ban-install-config-debian-wheezy</a></p></div></section>
+<section><h3>Lynis</h3><div class="paragraph"><p>This is an application running on your machine, generating security audits and making suggestions.</p></div>
+<div class="paragraph"><p>Install it:</p></div>
+<div class="literalblock"><div class="content"><pre>apt-get install lynis</pre></div></div>
+<div class="literalblock"><div class="content"><pre> //ST: !
+Run it: (from any directory)</pre></div></div>
+<div class="literalblock"><div class="content"><pre>lynis audit system</pre></div></div>
+<div class="paragraph"><p>The report will appear on screen (hit Enter to move on), and in this file:</p></div>
+<div class="literalblock"><div class="content"><pre>/var/log/lynis-report.dat</pre></div></div></section>
 <section id="_the_end"><h2>The end!</h2></section>
 <section><div class="paragraph"><p>Author of this tutorial: <a href="https://twitter.com/seinecle">Clement Levallois</a></p></div>
 <div class="paragraph"><p>All resources on linux security: <a href="https://seinecle.github.io/linux-security-tutorials/" class="bare">https://seinecle.github.io/linux-security-tutorials/</a>

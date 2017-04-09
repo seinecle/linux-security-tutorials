@@ -21,7 +21,9 @@ last modified: {docdate}
 - Vi is used as a text editor in the following
 - we are logged as root first
 
-== Make sure you have the latest version of all packages:
+//ST: !
+== Get the latest versions of all packages
+//ST: Get the latest versions of all packages
 
 Do:
 
@@ -51,9 +53,48 @@ Then define your time zone (the one where your server is located).
 
 This step helps when your server needs to be synchronized with other servers.
 
+//ST: !
+== Harden the kernel
+//ST: Harden the kernel
+
+Source: http://www.pontikis.net/blog/debian-wheezy-web-server-setup
+
+The kernel is the software at the closest of the machine: it is provided by the Linux distribution you use.
+
+A configuration file offers parameters which tune the kernel to make things harder for an intruder. Here I rely exactly on the tutorial by http://www.pontikis.net/blog/debian-wheezy-web-server-setup[Pontikis]:
 
 //ST: !
-==== Changing the SSH port
+
+Create a new file, so as to preserver / not to mess up the original file:
+
+ vi /etc/sysctl.d/local.conf
+
+- Paste the contents of link:resources/kernel_config.txt[this file]:
+- Close the file
+- reboot the server
+
+
+//ST: !
+== Forward root mail
+//ST: Forward root mail
+
+Source: http://www.pontikis.net/blog/debian-wheezy-web-server-setup
+
+ vi /etc/aliases
+
+Add this line if not already present:
+
+root:youraddress@email.com
+
+//ST: !
+
+Then, rebuild aliases:
+
+ newaliases
+
+//ST: !
+== Change the SSH port
+//ST: Change the SSH port
 
 By default, loggging to the server via SSH is done on the port 22. Knowing that, attackers scan the port 22. Changing the port to a different one makes the attacker's job more difficult. To do that:
 
@@ -183,8 +224,8 @@ Save the file, then:
 [start= 2]
 2. Add your public key to `/home/myUser/.ssd/authorized_keys`
 
-- make sure you have put the keys in /home/myUser/.ssd/authorized_keys (not just in the root user folder)
-- make sure your key starts with "the "ssh-rsa" (the first "s" might be missing ...)
+- make sure you have put the public key in /home/myUser/.ssd/authorized_keys (not just in the root user folder)
+- make sure your key starts with "the "ssh-rsa" (with a space after it, check the first "s" might be missing ...)
 - triple check the key doesn't break in several lines
 - do `chmod 700 ~/.ssh` on the home folder
 
@@ -252,8 +293,11 @@ Now, we can activate the firewall
  ufw enable
 
 //ST: !
+== Use anti-intrusion defenses and audit systems
+//ST: use anti-intrusion defenses and audit systems
 
-== use Psad
+//ST: !
+==== Psad
 
 INFO:: this part builds on: http://www.pontikis.net/blog/psad-install-config-debian-wheezy
 
@@ -287,8 +331,8 @@ where I put just 2 values:
  xx.xx.xxx.xxx    0; # Server IP (replace xx.xx.xxx.xxx by your actual server IP)
 
 
-
-== use fail2ban
+//ST: !
+==== fail2ban
 
 This is an app which bans users which fail to login after a number of times - typically bots trying to break in.
 
@@ -297,6 +341,25 @@ fail2ban can actually scan logs from a list of apps you decide (MongoDB, Apache 
 I'll cover it later, when I'll have MongoDB and GlassFish installed.
 
 Documentation on failtoban: http://www.pontikis.net/blog/fail2ban-install-config-debian-wheezy
+
+//ST: !
+==== Lynis
+
+This is an application running on your machine, generating security audits and making suggestions.
+
+Install it:
+
+ apt-get install lynis
+
+ //ST: !
+Run it: (from any directory)
+
+ lynis audit system
+
+The report will appear on screen (hit Enter to move on), and in this file:
+
+ /var/log/lynis-report.dat
+
 
 == the end
 //ST: The end!

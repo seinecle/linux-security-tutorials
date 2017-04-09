@@ -12,7 +12,7 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,700italic,700' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,700,700italic' rel='stylesheet' type='text/css'>
 
-    <title>Linux Security Tutorials</title>
+    <title>Security Tutorials for Linux (Debian)</title>
 </head>
 
 <body>
@@ -22,8 +22,8 @@
         <header class="inner">
             <a id="forkme_banner" href="https://github.com/seinecle/linux-security-tutorials">View on GitHub</a>
 
-            <h1 id="project_title">Linux security tutorials</h1>
-            <h2 id="project_tagline">How to secure a linux server, for beginners</h2>
+            <h1 id="project_title">Security tutorials for Debian (Linux)</h1>
+            <h2 id="project_tagline">How to secure a Linux server, for beginners</h2>
         </header>
     </div>
 
@@ -39,18 +39,14 @@
     <div id="main_content_wrap" class="outer">
         <section id="main_content" class="inner">
 
-            <h1>Tutorials to learn how to secure a Linux server, open and collaborative </h1>
+            <h1>Tutorials to learn how to secure a Linux server (Debian), open and collaborative </h1>
             <p>These tutorials are created to help beginners setup and run their Linux servers in the most secure way. I am a beginner in Linux security, and I write these tutorials in order to teach myself the subject, and sollicitate all the help I can
-                get to develop good practices.</p>
+                get to develop good practices. Seasoned Linux administrators and security experts surely have plenty to add to these tutorials. Don't hesitate, open an issue on Github or contact me directly to add your wisdom!</p>
 
             <h2>Open</h2>
 
             <p>These tutorials are open: they can be used to teach in class or in professional training sessions. You are welcome to contribute your knowledge: by using Github, we can all collaborate and edit these documents to improve on them. Don't know
                 where to start? Authoring with Github is explained <a href="https://www.hastac.org/blogs/harrisonm/2013/10/12/github-academia-and-collaborative-writing">here</a>.</p>
-
-            <h2>Multi-languages</h2>
-
-            <p>The first tutorials will be in French and English, as these are languages I can cover. Adding new languages is easy, just add a folder in the Github repository and translate the documents.</p>
 
             <h2>Tutorials available in web pages, pdf, slides, and ebooks!</h2>
 
@@ -59,33 +55,57 @@
 
             <h2>Table of content</h2>
 
-            <h3>English</h3>
-            <ul>
+            <li><b>Server security</b>
+                <ul>
+                    <li>
+                        A bibliography (
+                        <a href="generated-html/bibliography-en.html">web</a>,
+                        <a href="generated-slides/bibliography-en.html">slides</a>,
+                        <a href="generated-pdf/bibliography-en.pdf">pdf</a>,
+                        <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/bibliography-en.adoc">source</a>)
+                    </li>
+                    <li>
+                        Step-by-step guide to Linux security for beginners (
+                        <a href="generated-html/step-by-step-guide-en.html">web</a>,
+                        <a href="generated-slides/step-by-step-guide-en.html">slides</a>,
+                        <a href="generated-pdf/step-by-step-guide-en.pdf">pdf</a>,
+                        <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/step-by-step-guide-en.adoc">source</a>)
+                    </li>
+                    <li>
+                        Just the commands - fast setup for a secure Linux server (
+                        <a href="generated-html/all-commands-in-order-en.html">web</a>,
+                        <a href="generated-slides/all-commands-in-order-en.html">slides</a>,
+                        <a href="generated-pdf/all-commands-in-order-en.pdf">pdf</a>,
+                        <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/all-commands-in-order-en.adoc">source</a>)
+                    </li>
+                </ul>
+            </li>
+            <li><b>Glassfish + Nginx + SSL (with Let's Encrypt)</b>
+                <ul>
+                    <li>
+                        Setup of Glassfish 4.1 and security measures (
+                        <a href="generated-html/gf-en.html">web</a>,
+                        <a href="generated-slides/gf-en.html">slides</a>,
+                        <a href="generated-pdf/gf-en.pdf">pdf</a>,
+                        <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/gf-en.adoc">source</a>)
+                    </li>
+                    <li>
+                        Generating SSL certificates for free and in 5 minutes with let's encrypt (
+                        <a href="generated-html/ssl-en.html">web</a>,
+                        <a href="generated-slides/ssl-en.html">slides</a>,
+                        <a href="generated-pdf/ssl-en.pdf">pdf</a>,
+                        <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/ssl-en.adoc">source</a>)
+                    </li>
+                    <li>
+                        Configuring nginx for Glassfish with SSL certificates (
+                        <a href="generated-html/nginx-en.html">web</a>,
+                        <a href="generated-slides/nginx-en.html">slides</a>,
+                        <a href="generated-pdf/nginx-en.pdf">pdf</a>,
+                        <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/nginx-en.adoc">source</a>)
+                    </li>
 
-                <li>
-                    A bibliography (
-                    <a href="generated-html/bibliography-en.html">web</a>,
-                    <a href="generated-slides/bibliography-en.html">slides</a>,
-                    <a href="generated-pdf/bibliography-en.pdf">pdf</a>,
-                    <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/bibliography-en.adoc">source</a>)
-                </li>
-                <li>
-                    Step-by-step guide to Linux security for beginners (
-                    <a href="generated-html/step-by-step-guide-en.html">web</a>,
-                    <a href="generated-slides/step-by-step-guide-en.html">slides</a>,
-                    <a href="generated-pdf/step-by-step-guide-en.pdf">pdf</a>,
-                    <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/step-by-step-guide-en.adoc">source</a>)
-                </li>
-                <li>
-                    Just the commands - fast setup for a secure Linux server (
-                    <a href="generated-html/all-commands-in-order-en.html">web</a>,
-                    <a href="generated-slides/all-commands-in-order-en.html">slides</a>,
-                    <a href="generated-pdf/all-commands-in-order-en.pdf">pdf</a>,
-                    <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/all-commands-in-order-en.adoc">source</a>)
-                </li>
-
-            </ul>
-
+                </ul>
+            </li>
         </section>
     </div>
 

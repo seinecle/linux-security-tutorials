@@ -86,14 +86,18 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .insert .insert{color:#080}
 .CodeRay .delete .delete{color:#800}
 .CodeRay .change .change{color:#66f}
-.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.1.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.1.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Just the commands - fast setup for a secure Linux server</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-04-04</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
+.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.1.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.1.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Just the commands - fast setup for a secure Linux server</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-04-05</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
 <section id="__escape_or_o_to_see_all_sides_f11_for_full_screen_s_for_speaker_notes"><h2>'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes</h2></section>
 <section><h3>What?</h3><div class="ulist"><ul><li><p>Debian jessie 8.7</p></li><li><p>vi</p></li></ul></div>
 <div class="paragraph"><p>&#8594; change for your favorite text editor, and probably valid for Ubuntu as well.</p></div></section>
 <section><h3>Make sure you have the latest version of all packages:</h3><div class="literalblock"><div class="content"><pre>sudo apt-get update &amp;&amp; sudo apt-get upgrade</pre></div></div></section>
 <section><h3>Network Time Protocol</h3><div class="literalblock"><div class="content"><pre>aptitude install ntp</pre></div></div>
 <div class="paragraph"><p>Then define your time zone (the one where your server is located):</p></div>
-<div class="literalblock"><div class="content"><pre>dpkg-reconfigure tzdata</pre></div></div></section>
+<div class="literalblock"><div class="content"><pre>dpkg-reconfigure tzdata</pre></div></div>
+<div class="literalblock"><div class="content"><pre> //ST: !
+==== harden the kernel
+ vi /etc/sysctl.d/local.conf</pre></div></div>
+<div class="ulist"><ul><li><p>Paste the contents of <a href="resources/kernel_config.txt">this file</a>:</p></li><li><p>Close the file</p></li><li><p>reboot the server</p></li></ul></div></section>
 <section><h3>changing SSH port</h3><div class="literalblock"><div class="content"><pre>vi /etc/ssh/sshd_config</pre></div></div>
 <div class="paragraph"><p>Text to change in the file:</p></div>
 <div class="ulist"><ul><li><p>change port SSH 22 by a new port (<strong>let&#8217;s say 1234</strong>), write the new port down somewhere</p></li><li><p>ChallengeResponseAuthentication no</p></li><li><p>UsePAM no</p><div class="literalblock"><div class="content"><pre>service sshd restart</pre></div></div></li></ul></div></section>
