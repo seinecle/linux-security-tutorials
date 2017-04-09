@@ -12,6 +12,7 @@ last modified: {docdate}
 :sourcedir: ../../../main/java
 
 //ST: 'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
+//ST: !
 
 == General books on Linux
 //ST: General books on Linux

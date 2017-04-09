@@ -34,7 +34,7 @@ Then define your time zone (the one where your server is located):
 
  dpkg-reconfigure tzdata
 
- //ST: !
+//ST: !
 ==== harden the kernel
  vi /etc/sysctl.d/local.conf
 

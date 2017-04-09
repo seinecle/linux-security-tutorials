@@ -228,7 +228,7 @@ Save the file, then:
 - triple check the key doesn't break in several lines
 - do `chmod 700 ~/.ssh` on the home folder
 
- //ST: !
+//ST: !
 [start= 3]
 3. What will probably happen:
 
@@ -350,7 +350,7 @@ Install it:
 
  apt-get install lynis
 
- //ST: !
+//ST: !
 Run it: (from any directory)
 
  lynis audit system

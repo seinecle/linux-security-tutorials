@@ -524,6 +524,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_what">What?</a></li>
 <li><a href="#_make_sure_you_have_the_latest_version_of_all_packages">Make sure you have the latest version of all packages:</a></li>
 <li><a href="#_network_time_protocol">Network Time Protocol</a></li>
+<li><a href="#_harden_the_kernel">harden the kernel</a></li>
 <li><a href="#_changing_ssh_port">changing SSH port</a></li>
 <li><a href="#_installing_the_sudo_command">Installing the sudo command:</a></li>
 <li><a href="#_adding_a_new_user_let_s_call_it_myuser">Adding a new user (let&#8217;s call it "myUser")</a></li>
@@ -542,7 +543,7 @@ table.CodeRay td.code>pre{padding:0}
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>last modified: 2017-04-05</p>
+<p>last modified: 2017-04-09</p>
 </div>
 </div>
 </div>
@@ -585,11 +586,12 @@ table.CodeRay td.code>pre{padding:0}
 <pre>dpkg-reconfigure tzdata</pre>
 </div>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_harden_the_kernel">harden the kernel</h4>
 <div class="literalblock">
 <div class="content">
-<pre> //ST: !
-==== harden the kernel
- vi /etc/sysctl.d/local.conf</pre>
+<pre>vi /etc/sysctl.d/local.conf</pre>
 </div>
 </div>
 <div class="ulist">
@@ -893,7 +895,7 @@ iptables -A FORWARD -j LOG</pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2017-04-05 11:52:29 CEST
+Last updated 2017-04-09 23:35:24 CEST
 </div>
 </div>
 </body>
