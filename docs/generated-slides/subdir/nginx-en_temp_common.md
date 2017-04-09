@@ -10,14 +10,17 @@ last modified: {docdate}
 :revnumber: 1.0
 :example-caption!:
 
-//ST: ! 'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
+//ST: 'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
+//ST: !
 
 == System
+//ST: !
+
 - I use Debian, version 8.7 (http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server[why?])
 - Vi is used as a text editor in the following
 
 == Why nginx?
-//ST: Why nginx?
+//ST: !
 
 When I was introduced to nginx a long time ago, it was as a convenient replacement for Apache Web Server: lighter, faster.
 
@@ -40,7 +43,7 @@ So I suppose you could do much of what nginx does via iptable and whatever app s
 
 
 == why nginx + glassfish + ssl?
-//ST: why nginx + glassfish + ssl?
+//ST: !
 
 Why a tutorial specifically on nginx used for a glassfish app with ssl certificates?
 
@@ -53,7 +56,7 @@ So, this tutorial assumes you have created certificates with letsencrypt's certb
 Let's start:
 
 == installing nginx
-//ST: installing nginx
+//ST: !
 
  apt-get install nginx
 
@@ -100,7 +103,7 @@ See the glassfish installation guide in the same series of tutorials.
 For a ssl certificate created with letsencrypt, these lines should be changed for:
 
 - ssl_certificate /etc/letsencrypt/live/yourdomain.com/cert.pem;
-- ssl_certificate_key /etc/letsencrypt/live/api.exploreyourdata.com/privkey.pem;
+- ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;
 
 //ST: !
 That's it. Restart nginx to load your config:
@@ -117,7 +120,6 @@ Test your domain can be reached with SSL, with https and a nice green OK in the 
 
 
 == the end
-//ST: The end!
 
 //ST: !
 

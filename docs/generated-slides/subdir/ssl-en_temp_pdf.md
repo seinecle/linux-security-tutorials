@@ -55,7 +55,7 @@ Then:
 
  sudo apt-get install certbot -t jessie-backports
 
- //ST: !
+//ST: !
 
 - make sure your domain already points to the IP of your server (with a DNS record)
 - make sure your firewall allows port 443 (with https://help.ubuntu.com/community/UFW[ufw]: just do sudo ufw allow 443).
@@ -66,7 +66,7 @@ Then:
 
  certbot certonly
 
--> in the interactive window, choose "standalone"
+-> in the interactive window, choose "standalone. Follow the instructions.
 
 That's it. Certificates get installed at:
 
@@ -84,9 +84,9 @@ Just check that it indeed works:
 
  certbot renew --dry-run
 
- (this will not renew them, but just simulate the action)
+(this will not renew them, but just simulate the action)
 
- //ST: !
+//ST: !
 
 This command is useful because you may realize that your port 443 needs to be open for the renewal to succeed.
 With Nginx or another reverse proxy running, 443 is already in use so the the renewal will fail.
@@ -100,7 +100,7 @@ Solution for nginx:
 
  crontab -e
 
- Add the following line:
+Add the following line:
 
 @monthly certbot renew --pre-hook "service nginx stop" --post-hook "service nginx start"
 

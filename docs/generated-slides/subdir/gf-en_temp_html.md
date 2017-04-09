@@ -69,6 +69,7 @@ make the user owner of /opt/app-server:
 
  sudo chown -R glassfish /opt/app-server
  sudo chmod -R 700 /opt/app-server
+
 //ST: !
 change to user glassfish
 
@@ -79,7 +80,7 @@ su - glassfish
 download glassfish from here: https://glassfish.java.net/download.html
 
  cd /opt/app-server
-wget http://download.java.net/glassfish/4.1.2/release/glassfish-4.1.2.zip
+ wget http://download.java.net/glassfish/4.1.2/release/glassfish-4.1.2.zip
 
 //ST: !
  unzip glassfish-4.1.2.zip
@@ -104,7 +105,7 @@ source: http://ufasoli.blogspot.fr/2013/07/glassfish-changing-master-password-an
 
 (put "changeit" when the default password is asked, then choose your own)
 
- //ST: !
+//ST: !
 
 We will now delete the default domain ("domain1") and create a new one. 2 reasons for this:
 
@@ -113,7 +114,7 @@ We will now delete the default domain ("domain1") and create a new one. 2 reason
 
 -> The "portbase" option allows for creating a set of ports different from the default ones.
 
-(blog entry on the port base option: https://blogs.oracle.com/alexismp/entry/flexible_glassfish_domain_creation_using)
+(source: https://blogs.oracle.com/alexismp/entry/flexible_glassfish_domain_creation_using)
 
 //ST: !
  delete-domain domain1
@@ -154,7 +155,7 @@ Then, in the GUI console, point to this file via:
 
  value: code=404 path=/tmp/404.html reason=Resource_not_found
 
- //ST: !
+//ST: !
 Hide the identity of the server in the headers:
 
 - In http-listeners: turn off the "XPowered By:" header with your http-listener

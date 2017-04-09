@@ -157,9 +157,9 @@ Hide the identity of the server in the headers:
 - add a JVM-Option -Dproduct.name=""
 
 
-==  ! The end!
+==  The end!
 
-==  ! !
+==  !
 
 Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
 

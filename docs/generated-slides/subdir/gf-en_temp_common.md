@@ -162,9 +162,9 @@ Hide the identity of the server in the headers:
 
 
 == the end
-//ST: ! The end!
+//ST: The end!
 
-//ST: ! !
+//ST: !
 
 Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
 

@@ -10,13 +10,16 @@ last modified: {docdate}
 :revnumber: 1.0
 :example-caption!:
 
-==  ! 'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
+==  'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
+==  !
+
+==  !
 
 - I use Debian, version 8.7 (http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server[why?])
 - Vi is used as a text editor in the following
 
 
-==  Why SSL?
+==  !
 
 For users, no SSL shows as "http://" in front of a website address, and with SSL it shows as "https://"
 
@@ -30,7 +33,7 @@ For users, no SSL shows as "http://" in front of a website address, and with SSL
 ==  !
 
 
-==  Installing the Certbot by Let's Encrypt
+==  !
 
 https://letsencrypt.org/[Let's Encrypt] is a product launched in 2015 by the https://www.eff.org/[Electronic Frontier Foundation (EFF)] providing SSL certification for free, and made easy.
 
@@ -104,9 +107,9 @@ Add the following line:
 This will test every month the need to renew certificates.
 Only when there is a need, nginx will be stopped before then restarted after the operation.
 
-==  ! The end!
+==  The end!
 
-==  ! !
+==  !
 
 Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
 

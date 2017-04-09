@@ -16,13 +16,12 @@ last modified: {docdate}
 == Installing the JDK8
 https://tecadmin.net/install-java-8-on-debian/
 
-
 == Hardening a GlassFish installation
 http://blog.eisele.net/2011/05/securing-your-glassfish-hardening-guide.html
 
 == Installing and renewing a free SSL certificate easily with Let's Encrypt's certbot:
-https://certbot.eff.org/
-
+- https://certbot.eff.org/
+- a nginx config file for a glassfish app with ssl: https://gist.github.com/halid/8fe138babedcb280c784
 
 == the end
 //ST: The end!

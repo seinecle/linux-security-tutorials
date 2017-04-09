@@ -11,6 +11,7 @@ last modified: {docdate}
 :example-caption!:
 
 ==  'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
+==  !
 
 ==  General books on Linux
 

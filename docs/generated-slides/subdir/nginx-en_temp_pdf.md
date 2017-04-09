@@ -98,7 +98,7 @@ See the glassfish installation guide in the same series of tutorials.
  ssl_certificate_key /var/certs/server.key;
 -------------------------------
 
-For a ssl certificate created with letsencrypt, thes lines should be changed for:
+For a ssl certificate created with letsencrypt, these lines should be changed for:
 
 - ssl_certificate /etc/letsencrypt/live/yourdomain.com/cert.pem;
 - ssl_certificate_key /etc/letsencrypt/live/api.exploreyourdata.com/privkey.pem;
