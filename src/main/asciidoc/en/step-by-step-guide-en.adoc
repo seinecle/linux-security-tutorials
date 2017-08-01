@@ -18,6 +18,12 @@ ifndef::sourcedir[:sourcedir: ../../../main/java]
 //ST: Ordering the server
 
 - Server ordered on Hetzner.de (based in Germany, dirt cheap, but without management.)
+- Remember to install the Linux version *not from the rescue system* but from https://robot.your-server.de/server/index
+
+(installing from the rescue system provided with the bare server causes a ssh key mess)
+
+//ST: !
+
 - I use Debian, version 8.7 (http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server[why?])
 - Vi is used as a text editor in the following
 - we are logged as root first
@@ -28,7 +34,7 @@ ifndef::sourcedir[:sourcedir: ../../../main/java]
 
 Do:
 
- sudo apt-get update && sudo apt-get upgrade
+apt-get update && sudo apt-get upgrade
 
 Because:
 
@@ -50,7 +56,9 @@ Install this package to get the clock of your server right:
 
  aptitude install ntp
 
-Then define your time zone (the one where your server is located).
+Then define your time zone (the one where your server is located):
+
+ dpkg-reconfigure tzdata
 
 This step helps when your server needs to be synchronized with other servers.
 
@@ -142,9 +150,12 @@ apt-get install sudo
 [start = 2]
 ==== 2. Adding a new user (let's call it "myUser")
 
- adduser myUser
+Have a strong password ready
 
-Have a strong password ready. Other questions (email, phone...) can be left empty by just pressing enter.
+ adduser myUser -shell /bin/bash
+ passwd myUser
+ adduser myUser sudo
+
 
 [start = 3]
 ==== 3. Enabling server connections via myUser
@@ -223,12 +234,20 @@ Save the file, then:
 
 //ST: !
 [start= 2]
-2. Add your public key to `/home/myUser/.ssd/authorized_keys`
+2. Add your public key
+
+In your user home folder:
+
+ mkdir ~/.ssh
+ chmod 700 ~/.ssh
+ cd ~/.ssh
+ vi authorized_keys
 
 - make sure you have put the public key in /home/myUser/.ssd/authorized_keys (not just in the root user folder)
 - make sure your key starts with "the "ssh-rsa" (with a space after it, check the first "s" might be missing ...)
 - triple check the key doesn't break in several lines
-- do `chmod 700 ~/.ssh` on the home folder
+- do `service sshd restart` after each modif to load your new ssh key
+
 
 //ST: !
 [start= 3]
@@ -331,6 +350,10 @@ where I put just 2 values:
  127.0.0.1    0;  # localhost
  xx.xx.xxx.xxx    0; # Server IP (replace xx.xx.xxx.xxx by your actual server IP)
 
+Restart psan with this config:
+
+ sudo psad --sig-update
+ sudo service psad restart
 
 //ST: !
 ==== fail2ban

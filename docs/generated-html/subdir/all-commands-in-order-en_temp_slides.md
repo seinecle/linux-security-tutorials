@@ -62,7 +62,14 @@ Text to change in the file:
 ==  !
 ==== Adding a new user (let's call it "myUser")
 
-  adduser myUser
+adduser myUser -s /bin/bash
+passwd myUser
+vi /etc/sudoers
+
+and place the following line:
+
+myUser    ALL=(ALL)
+
 
 ==  !
 ==== Enabling server connections via myUser

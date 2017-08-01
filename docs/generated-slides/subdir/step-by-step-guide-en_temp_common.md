@@ -140,7 +140,13 @@ apt-get install sudo
 [start = 2]
 ==== 2. Adding a new user (let's call it "myUser")
 
- adduser myUser
+ adduser myUser -s /bin/bash
+ passwd myUser
+ vi /etc/sudoers
+
+and place the following line:
+
+ myUser    ALL=(ALL)
 
 Have a strong password ready. Other questions (email, phone...) can be left empty by just pressing enter.
 

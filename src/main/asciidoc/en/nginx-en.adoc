@@ -60,9 +60,9 @@ Let's start:
 == installing nginx
 //ST: !
 
- apt-get install nginx
+ sudo apt-get install nginx
 
- vi /etc/nginx/conf.d/yourdomain.com.conf
+ sudo vi /etc/nginx/conf.d/yourdomain.com.conf
 
 (note: the ".conf" extension is necessary for the file to be loaded in nginx)
 
@@ -110,7 +110,7 @@ For a ssl certificate created with letsencrypt, these lines should be changed fo
 //ST: !
 That's it. Restart nginx to load your config:
 
-/etc/init.d/nginx restart
+sudo /etc/init.d/nginx restart
 
 Make sure the port 443 is open in your firewall.
 
