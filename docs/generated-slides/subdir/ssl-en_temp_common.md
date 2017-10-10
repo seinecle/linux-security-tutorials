@@ -9,6 +9,7 @@ last modified: {docdate}
 :iconsfont:   font-awesome
 :revnumber: 1.0
 :example-caption!:
+:sourcedir: ../../../main/java
 
 //ST: 'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
 //ST: !
@@ -46,14 +47,14 @@ So, let's install the certbot:
 
 //ST: !
 
- vi /etc/apt/sources.list.d/sources.list
+ sudo vi /etc/apt/sources.list.d/sources.list
 
 In this file, add a line `deb http://ftp.debian.org/debian jessie-backports main`
 
 //ST: !
 Then:
 
- apt-update
+  sudo apt-get update
 
  sudo apt-get install certbot -t jessie-backports
 
@@ -68,7 +69,7 @@ Then:
 
  certbot certonly
 
--> in the interactive window, choose "standalone. Follow the instructions.
+-> in the interactive window, choose "standalone". Follow the instructions.
 
 That's it. Certificates get installed at:
 
@@ -104,7 +105,7 @@ Solution for nginx:
 
 Add the following line:
 
-@monthly certbot renew --pre-hook "service nginx stop" --post-hook "service nginx start"
+@monthly certbot renew --pre-hook "sudo systemctl stop nginx" --post-hook "sudo systemctl start nginx"
 
 //ST: !
 

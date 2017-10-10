@@ -1,0 +1,43 @@
+= Run gui soft on debian without screen
+Clément Levallois <clementlevallois@gmail.com>
+2017-06-11
+
+last modified: {docdate}
+
+:icons!:
+:asciimath:
+:iconsfont:   font-awesome
+:revnumber: 1.0
+:example-caption!:
+ifndef::imagesdir[:imagesdir: ../images]
+ifndef::sourcedir[:sourcedir: ../../../main/java]
+
+//ST: 'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
+//ST: !
+
+== System
+//ST: !
+
+- I use Debian, version 8.7 (http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server[why?])
+- Vi is used as a text editor in the following
+
+== Instructions
+//ST: !
+
+source: https://kovyrin.net/2007/10/01/how-to-run-gui-programs-on-a-server-without-any-monitor/
+sudo apt-get install xvfb
+sudo Xvfb -shmem -screen 0 2048x1536x24
+
+sudo apt-get install libxtst6
+sudo apt-get install default-jre (for awt classes)
+
+== The end
+//ST: The end
+//ST: !
+
+image:round_portrait_mini_150.png[align="center", role="right"]
+Tutorial by Clement Levallois.
+
+Discover other tutorials and courses in data / tech for business: http://www.clementlevallois.net
+
+Or get in touch via Twitter: https://www.twitter.com/seinecle[@seinecle]

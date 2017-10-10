@@ -15,62 +15,71 @@ last modified: {docdate}
 ==  Ordering the server
 
 - Server ordered on Hetzner.de (based in Germany, dirt cheap, but without management.)
+- Remember to install the Linux version *not from the rescue system in the console* but from https://robot.your-server.de/server/index in the "Linux" tab.
+
+(installing from the rescue system provided with the bare server causes a ssh key mess)
+
+==  !
+
 - I use Debian, version 8.7 (http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server[why?])
 - Vi is used as a text editor in the following
 - we are logged as root first
 
-==  !
 ==  Get the latest versions of all packages
 
+==  !
 Do:
 
- sudo apt-get update && sudo apt-get upgrade
+apt-get update && sudo apt-get upgrade
 
 Because:
 
 ==  !
-
  apt-get update
 
 -> refreshes the repositories and fetches information about packages that are available online.
 
+==  !
  apt-get upgrade
 
 -> downloads and installs updates for all installed packages - as long as it doesn't bother dependencies (install new packages, remove old ones or crosses a repo source (switch a package from one repo to another)).
 
 (http://askubuntu.com/questions/639822/is-apt-get-upgrade-a-dangerous-command/639838[source])
 
+==  Set the clock of your server right:
+
 ==  !
-
-Install this package to get the clock of your server right:
-
  aptitude install ntp
 
-Then define your time zone (the one where your server is located).
+
+ //ST: !
+Then define your time zone (the one where your server is located):
+
+ dpkg-reconfigure tzdata
 
 This step helps when your server needs to be synchronized with other servers.
 
-==  !
 ==  Harden the kernel
 
+==  !
 Source: http://www.pontikis.net/blog/debian-wheezy-web-server-setup
 
 The kernel is the software at the closest of the machine: it is provided by the Linux distribution you use.
 
-A configuration file offers parameters which tune the kernel to make things harder for an intruder. Here I rely exactly on the tutorial by http://www.pontikis.net/blog/debian-wheezy-web-server-setup[Pontikis]:
+==  !
+A configuration file offers parameters which tune the kernel to make things harder for an intruder.
+Here I rely exactly on the tutorial by http://www.pontikis.net/blog/debian-wheezy-web-server-setup[Pontikis]:
 
 ==  !
-
-Create a new file, so as to preserver / not to mess up the original file:
+Create a new file, so as to preserve / not to mess up the original file:
 
  vi /etc/sysctl.d/local.conf
 
+ //ST: !
 - Paste the contents of link:resources/kernel_config.txt[this file]:
 - Close the file
 - reboot the server
 
-
-==  !
 ==  Forward root mail
 
 Source: http://www.pontikis.net/blog/debian-wheezy-web-server-setup
@@ -82,15 +91,15 @@ Add this line if not already present:
 root:youraddress@email.com
 
 ==  !
-
 Then, rebuild aliases:
 
  newaliases
 
-==  !
 ==  Change the SSH port
 
-By default, loggging to the server via SSH is done on the port 22. Knowing that, attackers scan the port 22. Changing the port to a different one makes the attacker's job more difficult. To do that:
+==  !
+By default, loggging to the server via SSH is done on the port 22. Knowing that, attackers scan the port 22.
+Changing the port to a different one makes the attacker's job more difficult. To do that:
 
  vi /etc/ssh/sshd_config
 
@@ -101,18 +110,25 @@ Text to change in the file: change port SSH 22 by a new port (*let's say 1234*),
 
 ==  Creating users and disabling SSH connections for root
 
-We should now disable root login via SSH. Why? Because attackers would know that a "root" user is available to log in, and it just remains to attack its password.
+==  !
+We should now disable root login via SSH.
+Why? Because attackers would know that a "root" user is available to log in, and it just remains to attack its password.
 
+==  !
 With the root user disabled at the SSH login step, the attackers must guess *both* the username and its password to access the connection, and that's much harder.
 
+==  !
 Of course, an attacker who aims at you or your server specifically (a "targeted" attack) would expect a series of usernames (in my case "seinecle", the name I use on all social media), so don't use it either.
 
 ==  !
+So the logic is the following: we will create a user with much less priviledges than the root user.
+Only this weak user will have the right to connect to the server.
 
-So the logic is the following: we will create a user with much less priviledges than the root user. Only this weak user will have the right to connect to the server.
+==  !
+The user will be "enough" for regular tasks on the server.
+If we need the admin rights of root to install stuff or else, we will *temporarily* switch from this weak user to root to execute what we need, but then revert back to this weak user.
 
-The user will be "enough" for regular tasks on the server. If we need the admin rights of root to install stuff or else, we will *temporarily* switch from this weak user to root to execute what we need, but then revert back to this weak user.
-
+==  !
 This way, we limit greatly the exposure of root privileges to the outside.
 
 The steps:
@@ -127,31 +143,31 @@ The steps:
 ==  !
 ==== 1. Installing the sudo command:
 
-apt-get install sudo
+==  !
+ apt-get install sudo
 
 
 ==  !
 [start = 2]
 ==== 2. Adding a new user (let's call it "myUser")
 
- adduser myUser -s /bin/bash
- passwd myUser
- vi /etc/sudoers
+Have a strong password ready
 
-and place the following line:
+ adduser myUser -shell /bin/bash
+ adduser myUser sudo
 
- myUser    ALL=(ALL)
-
-Have a strong password ready. Other questions (email, phone...) can be left empty by just pressing enter.
 
 [start = 3]
 ==== 3. Enabling server connections via myUser
-*text to add* still in the file sshd_config:
+
+ vi /etc/ssh/sshd_config
+
+
+*text to add* to this file sshd_config:
 
 AllowUsers myUser
 
 ==  !
-
 Then restart the SSH service:
 
  service sshd restart
@@ -160,14 +176,14 @@ Then restart the SSH service:
 [start = 4]
 ====  4. Disabling connection through root
 
+==  !
   vi /etc/ssh/sshd_config
 
-Text to change in the file:
+*Text to change* in the file:
 
-PermitRootLogin no
+ PermitRootLogin no
 
 From there on, you cannot login to the server from root, only from myUser!
-
 
 == !
 Let's try it. Create a new SSH session with myUser. Then:
@@ -180,16 +196,20 @@ Switch to root privileges:
 
 ==  Disabling password authentication, enabling SSH
 
-Password authentication is less secure than SSH public key. A password transits through the Internet for the auhtentication, it can be hacked at this step.
+==  !
+Password authentication is less secure than SSH public key.
+A password transits through the Internet for the auhtentication, it can be hacked at this step.
 
 A SSH private key is not transmitted on the wire. So, it can't be hacked this way.
 
+==  !
 A detailed explanation is https://security.stackexchange.com/questions/69407/why-is-using-an-ssh-key-more-secure-than-using-passwords[available here].
 
 
 ==  !
 ==== How to generate a SSH key?
 
+==  !
 - On Windows, use https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows[Puttygen].
 - On Mac, use https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-mac-os-x[the Terminal]
 - On Linux, use the https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html[ssh-keygen command]
@@ -197,9 +217,12 @@ A detailed explanation is https://security.stackexchange.com/questions/69407/why
 ==  !
 ==== How to disable password auth and enable SSH?
 
-Logging through SSH rather than passwords can be hair rising because there are so many tiny details that can go wrong. There is a good chance that if you do it for the first time you will lock yourself outside the server.
+==  !
+Logging through SSH rather than passwords can be hair rising because there are so many tiny details that can go wrong.
+There is a good chance that if you do it for the first time you will lock yourself outside the server.
 
-So, do this before you can erase the server, of if you are confortable waiting that your provider will unlock it for you.
+==  !
+So, do this when you can still erase the server, of if you are confortable waiting that your provider will unlock it for you.
 
 Steps:
 
@@ -212,6 +235,7 @@ X11Forwarding no
 
 UsePAM no
 
+==  !
 LogLevel DEBUG3 (this should be added, the parameter is not listed by default)
 
 Save the file, then:
@@ -220,12 +244,29 @@ Save the file, then:
 
 ==  !
 [start= 2]
-2. Add your public key to `/home/myUser/.ssd/authorized_keys`
+2. Add your public key
 
-- make sure you have put the public key in /home/myUser/.ssd/authorized_keys (not just in the root user folder)
+In your user home folder:
+
+ mkdir ~/.ssh
+ chmod 700 ~/.ssh
+ cd ~/.ssh
+ vi authorized_keys
+
+If you already have a .ssh directory, how to find it and the file `authorized_keys` in it?
+The `.ssh` directory is *hidden by default* because it starts with a `.`
+
+To find it, you need to navigate with root privileges directly to the `authorized_keys` file, like this:
+
+ vi /home/myUser/.ssh/authorized_keys
+
+Things to check:
+
+- make sure you have put the public key in the .ssh folder of the user in /home/myUser/.ssh/authorized_keys (not in the .ssh folder of the root user)
 - make sure your key starts with "the "ssh-rsa" (with a space after it, check the first "s" might be missing ...)
 - triple check the key doesn't break in several lines
-- do `chmod 700 ~/.ssh` on the home folder
+- do `service sshd restart` after each modif to load your new ssh key
+
 
 ==  !
 [start= 3]
@@ -279,7 +320,6 @@ The firewall is now installed, but is is not active yet.
 
 ==  !
 We add a rule to block all incoming traffic, except for SSH connections through the port we defined:
-
  ufw default deny incoming
  ufw allow 1234/tcp
 
@@ -326,6 +366,10 @@ where I put just 2 values:
  127.0.0.1    0;  # localhost
  xx.xx.xxx.xxx    0; # Server IP (replace xx.xx.xxx.xxx by your actual server IP)
 
+Restart psan with this config:
+
+ sudo psad --sig-update
+ sudo service psad restart
 
 ==  !
 ==== fail2ban

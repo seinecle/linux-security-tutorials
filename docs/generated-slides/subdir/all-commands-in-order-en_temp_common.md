@@ -9,6 +9,7 @@ last modified: {docdate}
 :iconsfont:   font-awesome
 :revnumber: 1.0
 :example-caption!:
+:sourcedir: ../../../main/java
 
 //ST: 'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
 

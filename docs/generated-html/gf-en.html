@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
 <meta name="author" content="Clément Levallois">
 <title>Setup of GlassFish and security measures</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
@@ -18,7 +18,6 @@ audio:not([controls]){display:none;height:0}
 [hidden],template{display:none}
 script{display:none!important}
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
-body{margin:0}
 a{background:transparent}
 a:focus{outline:thin dotted}
 a:active,a:hover{outline:0}
@@ -53,7 +52,7 @@ textarea{overflow:auto;vertical-align:top}
 table{border-collapse:collapse;border-spacing:0}
 *,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
 html,body{font-size:100%}
-body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
 a:hover{cursor:pointer}
 img,object,embed{max-width:100%;height:auto}
 object,embed{height:100%}
@@ -65,7 +64,6 @@ img{-ms-interpolation-mode:bicubic}
 .text-center{text-align:center!important}
 .text-justify{text-align:justify!important}
 .hide{display:none}
-body{-webkit-font-smoothing:antialiased}
 img,object,svg{display:inline-block;vertical-align:middle}
 textarea{height:auto;min-height:50px}
 select{width:100%}
@@ -92,13 +90,12 @@ strong,b{font-weight:bold;line-height:inherit}
 small{font-size:60%;line-height:inherit}
 code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
 ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
-ul,ol,ul.no-bullet,ol.no-bullet{margin-left:1.5em}
+ul,ol{margin-left:1.5em}
 ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
 ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
 ul.square{list-style-type:square}
 ul.circle{list-style-type:circle}
 ul.disc{list-style-type:disc}
-ul.no-bullet{list-style:none}
 ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
 dl dt{margin-bottom:.3125em;font-weight:bold}
 dl dd{margin-bottom:1.25em}
@@ -120,18 +117,25 @@ table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:
 table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
 table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
 table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
-body{tab-size:4}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
 h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
 .clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
 .clearfix:after,.float-group:after{clear:both}
-*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
+*:not(pre)>code.nobreak{word-wrap:normal}
+*:not(pre)>code.nowrap{white-space:nowrap}
 pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+em em{font-style:normal}
+strong strong{font-weight:400}
 .keyseq{color:rgba(51,51,51,.8)}
 kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
 .keyseq kbd:first-child{margin-left:0}
 .keyseq kbd:last-child{margin-right:0}
-.menuseq,.menu{color:rgba(0,0,0,.8)}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
 b.button:before,b.button:after{position:relative;top:-1px;font-weight:400}
 b.button:before{content:"[";padding:0 3px 0 2px}
 b.button:after{content:"]";padding:0 2px 0 3px}
@@ -198,7 +202,7 @@ table.tableblock>caption.title{white-space:nowrap;overflow:visible;max-width:0}
 table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inherit}
 .admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
 .admonitionblock>table td.icon{text-align:center;width:80px}
-.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon img{max-width:initial}
 .admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
 .admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #ddddd8;color:rgba(0,0,0,.6)}
 .admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
@@ -254,13 +258,13 @@ table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
 table.tableblock{max-width:100%;border-collapse:separate}
 table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
 table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
-table.grid-all th.tableblock,table.grid-all td.tableblock{border-width:0 1px 1px 0}
-table.grid-all tfoot>tr>th.tableblock,table.grid-all tfoot>tr>td.tableblock{border-width:1px 1px 0 0}
-table.grid-cols th.tableblock,table.grid-cols td.tableblock{border-width:0 1px 0 0}
-table.grid-all *>tr>.tableblock:last-child,table.grid-cols *>tr>.tableblock:last-child{border-right-width:0}
-table.grid-rows th.tableblock,table.grid-rows td.tableblock{border-width:0 0 1px 0}
-table.grid-all tbody>tr:last-child>th.tableblock,table.grid-all tbody>tr:last-child>td.tableblock,table.grid-all thead:last-child>tr>th.tableblock,table.grid-rows tbody>tr:last-child>th.tableblock,table.grid-rows tbody>tr:last-child>td.tableblock,table.grid-rows thead:last-child>tr>th.tableblock{border-bottom-width:0}
-table.grid-rows tfoot>tr>th.tableblock,table.grid-rows tfoot>tr>td.tableblock{border-width:1px 0 0 0}
+table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px 0}
+table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0 0}
+table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
 table.frame-all{border-width:1px}
 table.frame-sides{border-width:0 1px}
 table.frame-topbot{border-width:1px 0}
@@ -281,10 +285,12 @@ ul li ol{margin-left:1.5em}
 dl dd{margin-left:1.125em}
 dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
 ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
-ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
-ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
-ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
-ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
 ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
 ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
 ul.inline>li>*{display:block}
@@ -301,7 +307,8 @@ ol.lowergreek{list-style-type:lower-greek}
 td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
 td.hdlist1{font-weight:bold;padding-bottom:1.25em}
 .literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
-.colist>table tr>td:first-of-type{padding:0 .75em;line-height:1}
+.colist>table tr>td:first-of-type{padding:.4em .75em 0 .75em;line-height:1;vertical-align:top}
+.colist>table tr>td:first-of-type img{max-width:initial}
 .colist>table tr>td:last-of-type{padding:.25em 0}
 .thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
 .imageblock.left,.imageblock[style*="float: left"]{margin:.25em .625em 1.25em 0}
@@ -364,6 +371,7 @@ div.unbreakable{page-break-inside:avoid}
 .yellow{color:#bfbf00}
 .yellow-background{background-color:#fafa00}
 span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
 .admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
 .admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
 .admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
@@ -417,7 +425,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <style>
 /* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
 /*pre.CodeRay {background-color:#f7f7f8;}*/
@@ -525,7 +533,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_installing_the_jdk_8">Installing the JDK 8</a></li>
 <li><a href="#_installing_glassfish_4_1">Installing Glassfish 4.1</a></li>
 <li><a href="#_hardening_glassfish_4_1">Hardening Glassfish 4.1</a></li>
-<li><a href="#_the_end">the end</a></li>
+<li><a href="#_the_end">The end</a></li>
 </ul>
 </div>
 </div>
@@ -533,7 +541,7 @@ table.CodeRay td.code>pre{padding:0}
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>last modified: 2017-04-09</p>
+<p>last modified: 2017-10-10</p>
 </div>
 </div>
 </div>
@@ -558,10 +566,8 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph">
 <p>Create a new file:</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>vim /etc/apt/sources.list.d/java-8-debian.list</pre>
-</div>
+<div class="paragraph">
+<p>sudo vim /etc/apt/sources.list.d/java-8-debian.list</p>
 </div>
 <div class="paragraph">
 <p>add these lines:</p>
@@ -580,7 +586,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886</pre>
+<pre>sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -588,8 +594,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>apt-get update
-apt-get install oracle-java8-installer</pre>
+<pre>sudo apt-get update &amp;&amp; sudo apt-get install oracle-java8-installer</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -597,7 +602,7 @@ apt-get install oracle-java8-installer</pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>apt-get install oracle-java8-set-default</pre>
+<pre>sudo apt-get install oracle-java8-set-default</pre>
 </div>
 </div>
 </div>
@@ -609,40 +614,39 @@ apt-get install oracle-java8-installer</pre>
 <dl>
 <dt class="hdlist1">We will install it in /opt/app-server</dt>
 <dd>
-<p>mkdir /opt/app-server</p>
-</dd>
-</dl>
-</div>
-<div class="paragraph">
 <p>create a glassfish user (here the <code>-m</code> option creates its home directory if not already present):</p>
-</div>
-<div class="dlist">
-<dl>
+</dd>
 <dt class="hdlist1">INFO</dt>
 <dd>
 <p>maybe a good idea to choose a user name different from glassfish - default values are always to be avoided.</p>
-<div class="literalblock">
-<div class="content">
-<pre>sudo useradd -m glassfish</pre>
-</div>
-</div>
 </dd>
 </dl>
 </div>
 <div class="paragraph">
-<p>make the user owner of /opt/app-server:</p>
+<p>adduser glassfish -shell /bin/bash
+passwd glassfish
+adduser glassfish sudo</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>//ST: !
+change to user glassfish</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>su - glassfish</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>mkdir /opt/app-server
+make the user owner of /opt/app-server:</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>sudo chown -R glassfish /opt/app-server
 sudo chmod -R 700 /opt/app-server</pre>
 </div>
-</div>
-<div class="paragraph">
-<p>change to user glassfish</p>
-</div>
-<div class="paragraph">
-<p>su - glassfish</p>
 </div>
 <div class="paragraph">
 <p>download glassfish from here: <a href="https://glassfish.java.net/download.html" class="bare">https://glassfish.java.net/download.html</a></p>
@@ -653,10 +657,9 @@ sudo chmod -R 700 /opt/app-server</pre>
 wget http://download.java.net/glassfish/4.1.2/release/glassfish-4.1.2.zip</pre>
 </div>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>unzip glassfish-4.1.2.zip</pre>
-</div>
+<div class="paragraph">
+<p>sudo apt-get install zip unzip
+ unzip glassfish-4.1.2.zip</p>
 </div>
 <div class="paragraph">
 <p>Glassfish is now installed.</p>
@@ -735,7 +738,15 @@ wget http://download.java.net/glassfish/4.1.2/release/glassfish-4.1.2.zip</pre>
 <p>Add a tunnel for port 17438 in your SSH connection. Restart your SSH connection.</p>
 </div>
 <div class="paragraph">
-<p>In the browser, got to <code><a href="http://localhost:17438" class="bare">http://localhost:17438</a></code></p>
+<p>Go back to /opt/app-server/glassfish-4/glassfish/bin and ./asadmin</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>start-domain</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you tunneled the port 17438 in your SSH, you can now go to <code><a href="http://localhost:17438" class="bare">http://localhost:17438</a></code></p>
 </div>
 <div class="paragraph">
 <p>In the GUI console,</p>
@@ -782,7 +793,7 @@ wget http://download.java.net/glassfish/4.1.2/release/glassfish-4.1.2.zip</pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>value: code=404 path=/tmp/404.html reason=Resource_not_found</pre>
+<pre>value: code=404 path=/errorpages/404.html reason=Resource_not_found</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -791,7 +802,7 @@ wget http://download.java.net/glassfish/4.1.2/release/glassfish-4.1.2.zip</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>In http-listeners: turn off the "XPowered By:" header with your http-listener</p>
+<p>In Network-config &#8594; Network-listeners &#8594; http-listeners (1 et 2) &#8594; HTTP tab: turn off the "XPowered By:" header with your http-listener</p>
 </li>
 <li>
 <p>add a JVM-Option -Dproduct.name=""</p>
@@ -801,13 +812,17 @@ wget http://download.java.net/glassfish/4.1.2/release/glassfish-4.1.2.zip</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_the_end">the end</h2>
+<h2 id="_the_end">The end</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Author of this tutorial: <a href="https://twitter.com/seinecle">Clement Levallois</a></p>
+<p><span class="image right"><img src="images/round_portrait_mini_150.png" alt="round portrait mini 150"></span>
+Tutorial by Clement Levallois.</p>
 </div>
 <div class="paragraph">
-<p>All resources on linux security: <a href="https://seinecle.github.io/linux-security-tutorials/" class="bare">https://seinecle.github.io/linux-security-tutorials/</a>
+<p>Discover other tutorials and courses in data / tech for business: <a href="http://www.clementlevallois.net" class="bare">http://www.clementlevallois.net</a></p>
+</div>
+<div class="paragraph">
+<p>Or get in touch via Twitter: <a href="https://www.twitter.com/seinecle">@seinecle</a>
     <!-- Start of StatCounter Code for Default Guide -->
     <script type="text/javascript">
         var sc_project = 11304288;
@@ -832,7 +847,7 @@ wget http://download.java.net/glassfish/4.1.2/release/glassfish-4.1.2.zip</pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2017-04-09 23:18:53 CEST
+Last updated 2017-10-10 22:09:54 CEST
 </div>
 </div>
 </body>

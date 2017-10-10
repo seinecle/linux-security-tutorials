@@ -21,7 +21,7 @@ last modified: {docdate}
 
 Create a new file:
 
- vim /etc/apt/sources.list.d/java-8-debian.list
+sudo vim /etc/apt/sources.list.d/java-8-debian.list
 
 add these lines:
 
@@ -35,41 +35,45 @@ Close the file.
 
 get the certif key:
 
- apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
+ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
 
 install the JDK 8:
 
- apt-get update
- apt-get install oracle-java8-installer
+ sudo apt-get update && sudo apt-get install oracle-java8-installer
 
 ==  !
 Set the env variables straight:
 
- apt-get install oracle-java8-set-default
+ sudo apt-get install oracle-java8-set-default
 
 ==  Installing Glassfish 4.1
 
 We will install it in /opt/app-server::
 
- mkdir /opt/app-server
+
 
 ==  !
 create a glassfish user (here the `-m` option creates its home directory if not already present):
 
 INFO:: maybe a good idea to choose a user name different from glassfish - default values are always to be avoided.
 
- sudo useradd -m glassfish
+adduser glassfish -shell /bin/bash
+passwd glassfish
+adduser glassfish sudo
+
+ //ST: !
+ change to user glassfish
+
+ su - glassfish
+
 
 ==  !
+mkdir /opt/app-server
 make the user owner of /opt/app-server:
 
  sudo chown -R glassfish /opt/app-server
  sudo chmod -R 700 /opt/app-server
 
-==  !
-change to user glassfish
-
-su - glassfish
 
 ==  !
 
@@ -79,6 +83,7 @@ download glassfish from here: https://glassfish.java.net/download.html
  wget http://download.java.net/glassfish/4.1.2/release/glassfish-4.1.2.zip
 
 ==  !
+sudo apt-get install zip unzip
  unzip glassfish-4.1.2.zip
 
 Glassfish is now installed.
@@ -123,7 +128,11 @@ So, with portbase 17390 (choose your own value instead), the port for the GlassF
 
 Add a tunnel for port 17438 in your SSH connection. Restart your SSH connection.
 
-In the browser, got to `http://localhost:17438`
+Go back to /opt/app-server/glassfish-4/glassfish/bin and ./asadmin
+
+ start-domain
+
+If you tunneled the port 17438 in your SSH, you can now go to `http://localhost:17438`
 
 ==  !
 
@@ -148,22 +157,24 @@ Then, in the GUI console, point to this file via:
 
  name: send-error_1
 
- value: code=404 path=/tmp/404.html reason=Resource_not_found
+ value: code=404 path=/errorpages/404.html reason=Resource_not_found
 
 ==  !
 Hide the identity of the server in the headers:
 
-- In http-listeners: turn off the "XPowered By:" header with your http-listener
+- In Network-config -> Network-listeners -> http-listeners (1 et 2) -> HTTP tab: turn off the "XPowered By:" header with your http-listener
 - add a JVM-Option -Dproduct.name=""
 
 
-==  The end!
-
+==  The end
 ==  !
 
-Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
+image:round_portrait_mini_150.png[align="center", role="right"]
+Tutorial by Clement Levallois.
 
-All resources on linux security: https://seinecle.github.io/linux-security-tutorials/
+Discover other tutorials and courses in data / tech for business: http://www.clementlevallois.net
+
+Or get in touch via Twitter: https://www.twitter.com/seinecle[@seinecle]
 pass:[    <!-- Start of StatCounter Code for Default Guide -->
     <script type="text/javascript">
         var sc_project = 11304288;
