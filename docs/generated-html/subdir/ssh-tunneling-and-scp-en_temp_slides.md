@@ -34,33 +34,47 @@ Difficulty: SSH is pretty hard to setup for beginners.
 ==  !
 
 Prod server: A.A.A
+
 API server: B.B.B
 
+==  !
 I want the db in A.A.A to be tunneled to B.B.B. The API server on B.B.B. can query the db as if it was in localhost.
 
 From B.B.B. :
+
 - creating a pair of keys:
+
 source: https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2
 
  ssh-keygen -t rsa
 
+==  !
 This generates a private key id_rsa and a public key id_rsa.pub, both of them in the folder /home/user/.ssh/
 
 
+==  !
 On A.A.A.:
+
 - copying the id_rsa.pub made on B.B.B and pasting it as a new line in authorized_keys in A.A.A.
 - restart sshd with: service sshd restart
 
+==  !
 From B.B.B.:
-ssh -Nf -L 9200:localhost:9200 myuser@A.A.A -p 22
+
+ ssh -Nf -L 9200:localhost:9200 myuser@A.A.A -p 22
 
 (9200 is because I want to tunnel Elasticsearch)
+
 (actually replace 22 by the port you configured in sshd_config in A.A.A)
 
+==  !
 (the Nf option puts the SSH connection in the background. Indeed, we don't care about it - we don't want an interactive session in a console. Just the port 9200 to be tunneled.)
 
 (see http://stackoverflow.com/questions/25048045/elasticsearch-remote-access-through-ssh)
+
+==  !
 Closing an SSH tunnel:
+
 http://stackoverflow.com/questions/9447226/how-to-close-this-ssh-tunnel
 
 
@@ -68,18 +82,20 @@ here: make sure you have access to the file you want to move, both in origin and
 
 scp -P 1234 /var/redis/6379/dump.rdb username@destinationhost:/home/username
 
+==  !
 To copy a full directory:
 
 scp -r -P 1234 /var/folder username@destinationhost:/home/username/folder
 
-
-==  The end!
-
+==  The end
 ==  !
 
-Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
+image:round_portrait_mini_150.png[align="center", role="right"]
+Tutorial by Clement Levallois.
 
-All resources on linux security: https://seinecle.github.io/linux-security-tutorials/
+Discover other tutorials and courses in data / tech for business: http://www.clementlevallois.net
+
+Or get in touch via Twitter: https://www.twitter.com/seinecle[@seinecle]
 pass:[    <!-- Start of StatCounter Code for Default Guide -->
     <script type="text/javascript">
         var sc_project = 11304288;

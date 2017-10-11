@@ -146,7 +146,7 @@ Then:
 
  sudo /bin/systemctl enable elasticsearch.service
 
-===== 4. Config Elasticsearch
+== 4. Config Elasticsearch
 
   sudo vi /etc/elasticsearch/elasticsearch.yml
 
@@ -178,7 +178,7 @@ Add this line:
 -Djava.io.tmpdir=/var/tmp
 
 
-== 4. Install the mongo to elasticsearch connection
+== 5. Install the mongo to elasticsearch connection
 
 === a. elastic2-doc-manager
 
@@ -211,7 +211,7 @@ Then:
 
  sudo mongod --port 27017 --dbpath /data/db --replSet rs0 --fork --logpath /var/log/mongodb.mongod.log
 
-== 5. Install kibana
+== 6. Install kibana
 
 Kibana is the visualization engine for elastic.
 
@@ -224,7 +224,7 @@ Configure Kibana to start automatically at boot:
  sudo /bin/systemctl enable kibana.service
 
 
-==== 6. Install X-pack
+==== 7. Install X-pack
 
  https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html
 
@@ -240,7 +240,7 @@ cd /usr/share/kibana
 sudo bin/kibana-plugin install x-pack
 
 
-== 7. Disable the security component of X-Pack
+== 8. Disable the security component of X-Pack
 
 This security component is hard to configure, and we don't need it if we run elasticsearch behind a web server and a reverse proxy, on a single machine.
 
@@ -259,7 +259,7 @@ sudo /usr/share/elasticsearch/bin elasticsearch
 sudo /usr/share/kibana/bin kibana
 
 
-== 8. Install the Mongo-connector for ElasticSearch
+== 9. Install the Mongo-connector for ElasticSearch
 
 Source: https://blog.jixee.me/how-to-use-mongo-connector-with-elasticsearch/
 
@@ -283,7 +283,7 @@ replication:
 
  sudo mongo-connector -m localhost:27017 -t localhost:9200 -d elastic2_doc_manager  -n database1.collection1,database1.collection2
 
-== 9. Start elasticsearch and Kibana
+== 10. Start elasticsearch and Kibana
 
  sudo service elasticsearch start
   sudo systemctl start kibana.service

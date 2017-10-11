@@ -15,13 +15,13 @@ ifndef::sourcedir[:sourcedir: ../../../main/java]
 //ST: 'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
 //ST: !
 
-== System
+== 1. System
 //ST: !
 
 - I use Debian, version 8.7 (http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server[why?])
 - Vi is used as a text editor in the following
 
-== Why nginx?
+== 2. Why nginx?
 //ST: !
 
 When I was introduced to nginx a long time ago, it was as a convenient replacement for Apache Web Server: lighter, faster.
@@ -44,7 +44,7 @@ I'd describe it as *a tool doing useful stuff between your firewall and your web
 So I suppose you could do much of what nginx does via iptable and whatever app server you use, but concentring stuff in nginx makes it easier.
 
 
-== why nginx + glassfish + ssl?
+== 3. Why nginx + glassfish + ssl?
 //ST: !
 
 Why a tutorial specifically on nginx used for a glassfish app with ssl certificates?
@@ -57,7 +57,7 @@ So, this tutorial assumes you have created certificates with letsencrypt's certb
 
 Let's start:
 
-== installing nginx
+== 4. Installing nginx
 //ST: !
 
  sudo apt-get install nginx

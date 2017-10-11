@@ -141,7 +141,6 @@ Then:
 
  sudo /bin/systemctl enable elasticsearch.service
 
-===== 4. Config Elasticsearch
 
   sudo vi /etc/elasticsearch/elasticsearch.yml
 
@@ -217,7 +216,7 @@ Configure Kibana to start automatically at boot:
  sudo /bin/systemctl enable kibana.service
 
 
-==== 6. Install X-pack
+==== 7. Install X-pack
 
  https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html
 

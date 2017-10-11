@@ -415,19 +415,19 @@ Run it: (from any directory)
 
  lynis audit system
 
- //ST: !
+//ST: !
 The report will appear on screen (hit Enter to move on), and in this file:
 
  /var/log/lynis-report.dat
 
 
- == The end
- //ST: The end
- //ST: !
+== The end
+//ST: The end
+//ST: !
 
- image:round_portrait_mini_150.png[align="center", role="right"]
- Tutorial by Clement Levallois.
+image:round_portrait_mini_150.png[align="center", role="right"]
+Tutorial by Clement Levallois.
 
- Discover other tutorials and courses in data / tech for business: http://www.clementlevallois.net
+Discover other tutorials and courses in data / tech for business: http://www.clementlevallois.net
 
- Or get in touch via Twitter: https://www.twitter.com/seinecle[@seinecle]
+Or get in touch via Twitter: https://www.twitter.com/seinecle[@seinecle]

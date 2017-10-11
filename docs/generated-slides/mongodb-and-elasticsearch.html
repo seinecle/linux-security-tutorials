@@ -86,7 +86,7 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .insert .insert{color:#080}
 .CodeRay .delete .delete{color:#800}
 .CodeRay .change .change{color:#66f}
-.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.5.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.5.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Setup of mongo and elasticsearch</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-10-10</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
+.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.5.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.5.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Setup of mongo and elasticsearch</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-10-11</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
 <section id="_escape_or_o_to_see_all_sides_f11_for_full_screen_s_for_speaker_notes"><h2>'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes</h2></section>
 <section></section>
 <section id="_1_system"><h2>1. System</h2></section>
@@ -191,9 +191,9 @@ sudo pip install mongo-connector</pre></div></div>
  sudo systemctl start kibana.service</pre></div></div>
 <div class="paragraph"><p>You can check that the connection is made here, your Mongo collections should be listed on this page:</p></div>
 <div class="literalblock"><div class="content"><pre>http://localhost:9200/_cat/indices?v</pre></div></div>
-<div class="literalblock"><div class="content"><pre>== The end
-//ST: The end
-//ST: !</pre></div></div>
+<div class="literalblock"><div class="content"><pre> == The end
+==  The end
+==  !</pre></div></div>
 <div class="paragraph"><p>Find references for this lesson, and other lessons, <a href="https://seinecle.github.io/linux-security-tutorials">here</a>.</p></div>
 <div class="paragraph"><p><span class="image right"><img src="images/round_portrait_mini_150.png" alt="round portrait mini 150" /></span>
 This course is made by Clement Levallois.</p></div>

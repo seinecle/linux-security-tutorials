@@ -112,11 +112,13 @@ Add the following line:
 This will test every month the need to renew certificates.
 Only when there is a need, nginx will be stopped before then restarted after the operation.
 
-== the end
-//ST: The end!
-
+== The end
+//ST: The end
 //ST: !
 
-Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
+image:round_portrait_mini_150.png[align="center", role="right"]
+Tutorial by Clement Levallois.
 
-All resources on linux security: https://seinecle.github.io/linux-security-tutorials/
+Discover other tutorials and courses in data / tech for business: http://www.clementlevallois.net
+
+Or get in touch via Twitter: https://www.twitter.com/seinecle[@seinecle]

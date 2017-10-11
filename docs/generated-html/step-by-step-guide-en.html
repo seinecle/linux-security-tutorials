@@ -529,40 +529,44 @@ table.CodeRay td.code>pre{padding:0}
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_ordering_the_server">Ordering the server</a></li>
-<li><a href="#_get_the_latest_versions_of_all_packages">Get the latest versions of all packages</a></li>
-<li><a href="#_set_the_clock_of_your_server_right">Set the clock of your server right:</a></li>
-<li><a href="#_harden_the_kernel">Harden the kernel</a></li>
-<li><a href="#_forward_root_mail">Forward root mail</a></li>
-<li><a href="#_change_the_ssh_port">Change the SSH port</a></li>
-<li><a href="#_creating_a_user_and_disabling_logging_for_root">Creating a user and disabling logging for root</a>
+<li><a href="#_1_ordering_the_server">1. Ordering the server</a></li>
+<li><a href="#_2_get_the_latest_versions_of_all_packages">2. Get the latest versions of all packages</a></li>
+<li><a href="#_2_set_the_clock_of_your_server_right">2. Set the clock of your server right:</a></li>
+<li><a href="#_3_harden_the_kernel">3. Harden the kernel</a></li>
+<li><a href="#_3_forward_root_mail">3. Forward root mail</a></li>
+<li><a href="#_3_change_the_ssh_port">3. Change the SSH port</a></li>
+<li><a href="#_3_creating_a_user_and_disabling_logging_for_root">3. Creating a user and disabling logging for root</a>
 <ul class="sectlevel3">
-<li><a href="#_1_installing_the_sudo_command">1. Installing the sudo command:</a></li>
-<li><a href="#_2_adding_a_new_user_let_s_call_it_myuser">2. Adding a new user (let&#8217;s call it "myUser")</a></li>
-<li><a href="#_3_enabling_server_connections_via_myuser">3. Enabling server connections via myUser</a></li>
-<li><a href="#_4_disabling_connection_through_root">4. Disabling connection through root</a></li>
+<li><a href="#_a_installing_the_sudo_command">a. Installing the sudo command:</a></li>
+<li><a href="#_b_adding_a_new_user_let_s_call_it_myuser">b. Adding a new user (let&#8217;s call it "myUser")</a></li>
+<li><a href="#_c_enabling_server_connections_via_myuser">c. Enabling server connections via myUser</a></li>
+<li><a href="#_d_disabling_connection_through_root">d. Disabling connection through root</a></li>
 </ul>
 </li>
-<li><a href="#_disabling_password_authentication_enabling_ssh">Disabling password authentication, enabling SSH</a>
+<li><a href="#_4_disabling_password_authentication_enabling_ssh">4. Disabling password authentication, enabling SSH</a>
 <ul class="sectlevel3">
-<li><a href="#_how_to_generate_a_ssh_key">How to generate a SSH key?</a></li>
-<li><a href="#_how_to_disable_password_auth_and_enable_ssh">How to disable password auth and enable SSH?</a></li>
+<li><a href="#_a_how_to_generate_a_ssh_key">a. How to generate a SSH key?</a></li>
+<li><a href="#_b_precautions">b. Precautions</a></li>
+<li><a href="#_c_parameters_to_change_in_code_etc_ssh_sshd_config_code">c. Parameters to change in <code>/etc/ssh/sshd_config</code>:</a></li>
+<li><a href="#_d_add_your_public_key">d. Add your public key</a></li>
+<li><a href="#_e_what_will_probably_happen">e. What will probably happen:</a></li>
+<li><a href="#_f_when_ssh_keys_work_only_then_can_you_disable_login_via_passwords">f. When SSH keys work: only then can you disable login via passwords:</a></li>
 </ul>
 </li>
-<li><a href="#_setting_up_a_firewall">Setting up a firewall</a>
+<li><a href="#_5_setting_up_a_firewall">5. Setting up a firewall</a>
 <ul class="sectlevel3">
-<li><a href="#_ip_tables">ip tables</a></li>
-<li><a href="#_better_uncomplicated_firewall">better: uncomplicated firewall</a></li>
+<li><a href="#_a_ip_tables">a. ip tables</a></li>
+<li><a href="#_b_better_uncomplicated_firewall">b. better: uncomplicated firewall</a></li>
 </ul>
 </li>
-<li><a href="#_use_anti_intrusion_defenses_and_audit_systems">Use anti-intrusion defenses and audit systems</a>
+<li><a href="#_6_use_anti_intrusion_defenses_and_audit_systems">6. Use anti-intrusion defenses and audit systems</a>
 <ul class="sectlevel3">
-<li><a href="#_psad">Psad</a></li>
-<li><a href="#_fail2ban">fail2ban</a></li>
-<li><a href="#_lynis">Lynis</a></li>
+<li><a href="#_a_psad">a. Psad</a></li>
+<li><a href="#_b_fail2ban">b. fail2ban</a></li>
+<li><a href="#_c_lynis">c. Lynis</a></li>
 </ul>
 </li>
-<li><a href="#_the_end">the end</a></li>
+<li><a href="#_the_end">The end</a></li>
 </ul>
 </div>
 </div>
@@ -570,12 +574,12 @@ table.CodeRay td.code>pre{padding:0}
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>last modified: 2017-10-10</p>
+<p>last modified: 2017-10-11</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_ordering_the_server">Ordering the server</h2>
+<h2 id="_1_ordering_the_server">1. Ordering the server</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -606,7 +610,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
-<h2 id="_get_the_latest_versions_of_all_packages">Get the latest versions of all packages</h2>
+<h2 id="_2_get_the_latest_versions_of_all_packages">2. Get the latest versions of all packages</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Do:</p>
@@ -639,18 +643,15 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
-<h2 id="_set_the_clock_of_your_server_right">Set the clock of your server right:</h2>
+<h2 id="_2_set_the_clock_of_your_server_right">2. Set the clock of your server right:</h2>
 <div class="sectionbody">
 <div class="literalblock">
 <div class="content">
 <pre>aptitude install ntp</pre>
 </div>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre> //ST: !
-Then define your time zone (the one where your server is located):</pre>
-</div>
+<div class="paragraph">
+<p>Then define your time zone (the one where your server is located):</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -663,7 +664,7 @@ Then define your time zone (the one where your server is located):</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_harden_the_kernel">Harden the kernel</h2>
+<h2 id="_3_harden_the_kernel">3. Harden the kernel</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Source: <a href="http://www.pontikis.net/blog/debian-wheezy-web-server-setup" class="bare">http://www.pontikis.net/blog/debian-wheezy-web-server-setup</a></p>
@@ -694,7 +695,7 @@ Here I rely exactly on the tutorial by <a href="http://www.pontikis.net/blog/deb
 </div>
 </div>
 <div class="sect1">
-<h2 id="_forward_root_mail">Forward root mail</h2>
+<h2 id="_3_forward_root_mail">3. Forward root mail</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Source: <a href="http://www.pontikis.net/blog/debian-wheezy-web-server-setup" class="bare">http://www.pontikis.net/blog/debian-wheezy-web-server-setup</a></p>
@@ -721,7 +722,7 @@ Here I rely exactly on the tutorial by <a href="http://www.pontikis.net/blog/deb
 </div>
 </div>
 <div class="sect1">
-<h2 id="_change_the_ssh_port">Change the SSH port</h2>
+<h2 id="_3_change_the_ssh_port">3. Change the SSH port</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>By default, loggging to the server via SSH is done on the port 22. Knowing that, attackers scan the port 22.
@@ -743,7 +744,7 @@ Changing the port to a different one makes the attacker&#8217;s job more difficu
 </div>
 </div>
 <div class="sect1">
-<h2 id="_creating_a_user_and_disabling_logging_for_root">Creating a user and disabling logging for root</h2>
+<h2 id="_3_creating_a_user_and_disabling_logging_for_root">3. Creating a user and disabling logging for root</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>We should now disable root login via SSH.
@@ -786,7 +787,7 @@ If we need the admin rights of root to install stuff or else, we will <strong>te
 </ol>
 </div>
 <div class="sect3">
-<h4 id="_1_installing_the_sudo_command">1. Installing the sudo command:</h4>
+<h4 id="_a_installing_the_sudo_command">a. Installing the sudo command:</h4>
 <div class="literalblock">
 <div class="content">
 <pre>apt-get install sudo</pre>
@@ -794,7 +795,7 @@ If we need the admin rights of root to install stuff or else, we will <strong>te
 </div>
 </div>
 <div class="sect3">
-<h4 id="_2_adding_a_new_user_let_s_call_it_myuser">2. Adding a new user (let&#8217;s call it "myUser")</h4>
+<h4 id="_b_adding_a_new_user_let_s_call_it_myuser">b. Adding a new user (let&#8217;s call it "myUser")</h4>
 <div class="paragraph">
 <p>Have a strong password ready</p>
 </div>
@@ -806,7 +807,7 @@ adduser myUser sudo</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_3_enabling_server_connections_via_myuser">3. Enabling server connections via myUser</h4>
+<h4 id="_c_enabling_server_connections_via_myuser">c. Enabling server connections via myUser</h4>
 <div class="literalblock">
 <div class="content">
 <pre>vi /etc/ssh/sshd_config</pre>
@@ -828,7 +829,7 @@ adduser myUser sudo</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_4_disabling_connection_through_root">4. Disabling connection through root</h4>
+<h4 id="_d_disabling_connection_through_root">d. Disabling connection through root</h4>
 <div class="literalblock">
 <div class="content">
 <pre>vi /etc/ssh/sshd_config</pre>
@@ -863,7 +864,7 @@ adduser myUser sudo</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_disabling_password_authentication_enabling_ssh">Disabling password authentication, enabling SSH</h2>
+<h2 id="_4_disabling_password_authentication_enabling_ssh">4. Disabling password authentication, enabling SSH</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Password authentication is less secure than SSH public key.
@@ -876,7 +877,7 @@ A password transits through the Internet for the auhtentication, it can be hacke
 <p>A detailed explanation is <a href="https://security.stackexchange.com/questions/69407/why-is-using-an-ssh-key-more-secure-than-using-passwords">available here</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="_how_to_generate_a_ssh_key">How to generate a SSH key?</h4>
+<h4 id="_a_how_to_generate_a_ssh_key">a. How to generate a SSH key?</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -892,7 +893,7 @@ A password transits through the Internet for the auhtentication, it can be hacke
 </div>
 </div>
 <div class="sect3">
-<h4 id="_how_to_disable_password_auth_and_enable_ssh">How to disable password auth and enable SSH?</h4>
+<h4 id="_b_precautions">b. Precautions</h4>
 <div class="paragraph">
 <p>Logging through SSH rather than passwords can be hair rising because there are so many tiny details that can go wrong.
 There is a good chance that if you do it for the first time you will lock yourself outside the server.</p>
@@ -900,16 +901,9 @@ There is a good chance that if you do it for the first time you will lock yourse
 <div class="paragraph">
 <p>So, do this when you can still erase the server, of if you are confortable waiting that your provider will unlock it for you.</p>
 </div>
-<div class="paragraph">
-<p>Steps:</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Parameters to change in <code>/etc/ssh/sshd_config</code>:</p>
-</li>
-</ol>
-</div>
+<div class="sect3">
+<h4 id="_c_parameters_to_change_in_code_etc_ssh_sshd_config_code">c. Parameters to change in <code>/etc/ssh/sshd_config</code>:</h4>
 <div class="paragraph">
 <p>ChallengeResponseAuthentication no</p>
 </div>
@@ -930,13 +924,9 @@ There is a good chance that if you do it for the first time you will lock yourse
 <pre>service sshd restart</pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic" start="2">
-<li>
-<p>Add your public key</p>
-</li>
-</ol>
 </div>
+<div class="sect3">
+<h4 id="_d_add_your_public_key">d. Add your public key</h4>
 <div class="paragraph">
 <p>In your user home folder:</p>
 </div>
@@ -948,9 +938,12 @@ cd ~/.ssh
 vi authorized_keys</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>If you already have a .ssh directory, how to find it and the file <code>authorized_keys</code> in it?
-The <code>.ssh</code> directory is <strong>hidden by default</strong> because it starts with a <code>.</code></p>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+If you already have a .ssh directory, how to find it and the file `authorized_keys` in it?
+The `.ssh` directory is *hidden by default* because it starts with a `.`</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>To find it, you need to navigate with root privileges directly to the <code>authorized_keys</code> file, like this:</p>
@@ -960,8 +953,11 @@ The <code>.ssh</code> directory is <strong>hidden by default</strong> because it
 <pre>vi /home/myUser/.ssh/authorized_keys</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Things to check:</p>
+<div class="literalblock">
+<div class="content">
+<pre> //ST: !
+Things to check:</pre>
+</div>
 </div>
 <div class="ulist">
 <ul>
@@ -979,13 +975,9 @@ The <code>.ssh</code> directory is <strong>hidden by default</strong> because it
 </li>
 </ul>
 </div>
-<div class="olist arabic">
-<ol class="arabic" start="3">
-<li>
-<p>What will probably happen:</p>
-</li>
-</ol>
 </div>
+<div class="sect3">
+<h4 id="_e_what_will_probably_happen">e. What will probably happen:</h4>
 <div class="paragraph">
 <p>Your private key will probably not be recognized the first time because of some problems above not completely fixed.</p>
 </div>
@@ -1010,13 +1002,9 @@ The <code>.ssh</code> directory is <strong>hidden by default</strong> because it
 </li>
 </ul>
 </div>
-<div class="olist arabic">
-<ol class="arabic" start="4">
-<li>
-<p>Finally, when the login via SSH keys work, only then can you disable login via passwords:</p>
-</li>
-</ol>
 </div>
+<div class="sect3">
+<h4 id="_f_when_ssh_keys_work_only_then_can_you_disable_login_via_passwords">f. When SSH keys work: only then can you disable login via passwords:</h4>
 <div class="paragraph">
 <p>In <code>/etc/ssh/sshd_config</code>, you can disable password authentification:</p>
 </div>
@@ -1033,13 +1021,13 @@ The <code>.ssh</code> directory is <strong>hidden by default</strong> because it
 </div>
 </div>
 <div class="sect1">
-<h2 id="_setting_up_a_firewall">Setting up a firewall</h2>
+<h2 id="_5_setting_up_a_firewall">5. Setting up a firewall</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>A firewall gives you control on what can enter and leave your server.</p>
 </div>
 <div class="sect3">
-<h4 id="_ip_tables">ip tables</h4>
+<h4 id="_a_ip_tables">a. ip tables</h4>
 <div class="paragraph">
 <p>The rules for setting up ip tables are logical <a href="https://help.ubuntu.com/community/IptablesHowTo">but quite complicated</a>. Using an <a href="https://www.perturb.org/content/iptables-rules.html">ip tables generator</a> could help.</p>
 </div>
@@ -1048,7 +1036,7 @@ The <code>.ssh</code> directory is <strong>hidden by default</strong> because it
 </div>
 </div>
 <div class="sect3">
-<h4 id="_better_uncomplicated_firewall">better: uncomplicated firewall</h4>
+<h4 id="_b_better_uncomplicated_firewall">b. better: uncomplicated firewall</h4>
 <div class="paragraph">
 <p>Following <a href="https://twitter.com/mgilbir">@mgilbir</a>'s advice, I&#8217;ll use <a href="https://wiki.debian.org/Uncomplicated%20Firewall%20%28ufw%29">ufw: a linux package for "uncomplicated firewall"</a>. To install it:</p>
 </div>
@@ -1077,10 +1065,10 @@ The <code>.ssh</code> directory is <strong>hidden by default</strong> because it
 </div>
 </div>
 <div class="sect1">
-<h2 id="_use_anti_intrusion_defenses_and_audit_systems">Use anti-intrusion defenses and audit systems</h2>
+<h2 id="_6_use_anti_intrusion_defenses_and_audit_systems">6. Use anti-intrusion defenses and audit systems</h2>
 <div class="sectionbody">
 <div class="sect3">
-<h4 id="_psad">Psad</h4>
+<h4 id="_a_psad">a. Psad</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">INFO</dt>
@@ -1148,7 +1136,7 @@ sudo service psad restart</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_fail2ban">fail2ban</h4>
+<h4 id="_b_fail2ban">b. fail2ban</h4>
 <div class="paragraph">
 <p>This is an app which bans users which fail to login after a number of times - typically bots trying to break in.</p>
 </div>
@@ -1156,14 +1144,11 @@ sudo service psad restart</pre>
 <p>fail2ban can actually scan logs from a list of apps you decide (MongoDB, Apache server, GlassFish, etc.) and ban ips mentioned in logs showing a failed access. You need to setup a regex rule specific for each log format, though.</p>
 </div>
 <div class="paragraph">
-<p>I&#8217;ll cover it later, when I&#8217;ll have MongoDB and GlassFish installed.</p>
-</div>
-<div class="paragraph">
 <p>Documentation on failtoban: <a href="http://www.pontikis.net/blog/fail2ban-install-config-debian-wheezy" class="bare">http://www.pontikis.net/blog/fail2ban-install-config-debian-wheezy</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_lynis">Lynis</h4>
+<h4 id="_c_lynis">c. Lynis</h4>
 <div class="paragraph">
 <p>This is an application running on your machine, generating security audits and making suggestions.</p>
 </div>
@@ -1195,13 +1180,17 @@ sudo service psad restart</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_the_end">the end</h2>
+<h2 id="_the_end">The end</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Author of this tutorial: <a href="https://twitter.com/seinecle">Clement Levallois</a></p>
+<p><span class="image right"><img src="images/round_portrait_mini_150.png" alt="round portrait mini 150"></span>
+Tutorial by Clement Levallois.</p>
 </div>
 <div class="paragraph">
-<p>All resources on linux security: <a href="https://seinecle.github.io/linux-security-tutorials/" class="bare">https://seinecle.github.io/linux-security-tutorials/</a>
+<p>Discover other tutorials and courses in data / tech for business: <a href="http://www.clementlevallois.net" class="bare">http://www.clementlevallois.net</a></p>
+</div>
+<div class="paragraph">
+<p>Or get in touch via Twitter: <a href="https://www.twitter.com/seinecle">@seinecle</a>
     <!-- Start of StatCounter Code for Default Guide -->
     <script type="text/javascript">
         var sc_project = 11304288;
@@ -1226,7 +1215,7 @@ sudo service psad restart</pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2017-10-10 21:25:52 CEST
+Last updated 2017-10-11 14:03:58 CEST
 </div>
 </div>
 </body>

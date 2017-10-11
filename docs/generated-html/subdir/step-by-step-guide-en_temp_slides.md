@@ -12,7 +12,7 @@ last modified: {docdate}
 
 ==  'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
 
-==  Ordering the server
+==  1. Ordering the server
 
 - Server ordered on Hetzner.de (based in Germany, dirt cheap, but without management.)
 - Remember to install the Linux version *not from the rescue system in the console* but from https://robot.your-server.de/server/index in the "Linux" tab.
@@ -25,7 +25,7 @@ last modified: {docdate}
 - Vi is used as a text editor in the following
 - we are logged as root first
 
-==  Get the latest versions of all packages
+==  2. Get the latest versions of all packages
 
 ==  !
 Do:
@@ -46,20 +46,20 @@ Because:
 
 (http://askubuntu.com/questions/639822/is-apt-get-upgrade-a-dangerous-command/639838[source])
 
-==  Set the clock of your server right:
+==  2. Set the clock of your server right:
 
 ==  !
  aptitude install ntp
 
 
- //ST: !
+==  !
 Then define your time zone (the one where your server is located):
 
  dpkg-reconfigure tzdata
 
 This step helps when your server needs to be synchronized with other servers.
 
-==  Harden the kernel
+==  3. Harden the kernel
 
 ==  !
 Source: http://www.pontikis.net/blog/debian-wheezy-web-server-setup
@@ -80,7 +80,7 @@ Create a new file, so as to preserve / not to mess up the original file:
 - Close the file
 - reboot the server
 
-==  Forward root mail
+==  3. Forward root mail
 
 Source: http://www.pontikis.net/blog/debian-wheezy-web-server-setup
 
@@ -95,7 +95,7 @@ Then, rebuild aliases:
 
  newaliases
 
-==  Change the SSH port
+==  3. Change the SSH port
 
 ==  !
 By default, loggging to the server via SSH is done on the port 22. Knowing that, attackers scan the port 22.
@@ -108,7 +108,7 @@ Text to change in the file: change port SSH 22 by a new port (*let's say 1234*),
  service sshd restart
 
 
-==  Creating users and disabling SSH connections for root
+==  3. Creating users and disabling SSH connections for root
 
 ==  !
 We should now disable root login via SSH.
@@ -141,7 +141,7 @@ The steps:
 
 
 ==  !
-==== 1. Installing the sudo command:
+==== a. Installing the sudo command:
 
 ==  !
  apt-get install sudo
@@ -149,7 +149,7 @@ The steps:
 
 ==  !
 [start = 2]
-==== 2. Adding a new user (let's call it "myUser")
+==== b. Adding a new user (let's call it "myUser")
 
 Have a strong password ready
 
@@ -158,7 +158,7 @@ Have a strong password ready
 
 
 [start = 3]
-==== 3. Enabling server connections via myUser
+==== c. Enabling server connections via myUser
 
  vi /etc/ssh/sshd_config
 
@@ -174,7 +174,7 @@ Then restart the SSH service:
 
 ==  !
 [start = 4]
-====  4. Disabling connection through root
+====  d. Disabling connection through root
 
 ==  !
   vi /etc/ssh/sshd_config
@@ -194,7 +194,7 @@ Switch to root privileges:
 
 (you must enter the root password at this step)
 
-==  Disabling password authentication, enabling SSH
+==  4. Disabling password authentication, enabling SSH
 
 ==  !
 Password authentication is less secure than SSH public key.
@@ -207,7 +207,7 @@ A detailed explanation is https://security.stackexchange.com/questions/69407/why
 
 
 ==  !
-==== How to generate a SSH key?
+==== a. How to generate a SSH key?
 
 ==  !
 - On Windows, use https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows[Puttygen].
@@ -215,7 +215,7 @@ A detailed explanation is https://security.stackexchange.com/questions/69407/why
 - On Linux, use the https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html[ssh-keygen command]
 
 ==  !
-==== How to disable password auth and enable SSH?
+==== b. Precautions
 
 ==  !
 Logging through SSH rather than passwords can be hair rising because there are so many tiny details that can go wrong.
@@ -224,11 +224,10 @@ There is a good chance that if you do it for the first time you will lock yourse
 ==  !
 So, do this when you can still erase the server, of if you are confortable waiting that your provider will unlock it for you.
 
-Steps:
+==  !
+==== c. Parameters to change in `/etc/ssh/sshd_config`:
 
 ==  !
-1. Parameters to change in `/etc/ssh/sshd_config`:
-
 ChallengeResponseAuthentication no
 
 X11Forwarding no
@@ -243,9 +242,9 @@ Save the file, then:
  service sshd restart
 
 ==  !
-[start= 2]
-2. Add your public key
+==== d. Add your public key
 
+==  !
 In your user home folder:
 
  mkdir ~/.ssh
@@ -253,13 +252,16 @@ In your user home folder:
  cd ~/.ssh
  vi authorized_keys
 
+ //ST: !
 If you already have a .ssh directory, how to find it and the file `authorized_keys` in it?
 The `.ssh` directory is *hidden by default* because it starts with a `.`
 
+==  !
 To find it, you need to navigate with root privileges directly to the `authorized_keys` file, like this:
 
  vi /home/myUser/.ssh/authorized_keys
 
+ //ST: !
 Things to check:
 
 - make sure you have put the public key in the .ssh folder of the user in /home/myUser/.ssh/authorized_keys (not in the .ssh folder of the root user)
@@ -269,9 +271,9 @@ Things to check:
 
 
 ==  !
-[start= 3]
-3. What will probably happen:
+==== e. What will probably happen:
 
+==  !
 Your private key will probably not be recognized the first time because of some problems above not completely fixed.
 
 Keep trying to log with your SSH key. To find the cause of your issues, inspect the log for auth operations:
@@ -285,33 +287,35 @@ Some useful answers to questions from developers lost in making SSH keys works:
 - On debugging (saved my life): http://stackoverflow.com/a/20923212/798502
 
 ==  !
-[start= 4]
-4. Finally, when the login via SSH keys work, only then can you disable login via passwords:
+==== f. When SSH keys work: only then can you disable login via passwords:
 
+==  !
 In `/etc/ssh/sshd_config`, you can disable password authentification:
 
 PasswordAuthentication no
 
 Do again: `service sshd restart`
 
+==  !
 Now only connecions via a public / private key is possible.
 
-==  Setting up a firewall
+==  5. Setting up a firewall
 
+==  !
 A firewall gives you control on what can enter and leave your server.
 
 ==  !
+==== a. ip tables
 
-==== ip tables
-
+==  !
 The rules for setting up ip tables are logical https://help.ubuntu.com/community/IptablesHowTo[but quite complicated]. Using an https://www.perturb.org/content/iptables-rules.html[ip tables generator] could help.
 
 But there is an even easier alternative.
 
 ==  !
+==== b. better: uncomplicated firewall
 
-==== better: uncomplicated firewall
-
+==  !
 Following https://twitter.com/mgilbir[@mgilbir]'s advice, I'll use https://wiki.debian.org/Uncomplicated%20Firewall%20%28ufw%29[ufw: a linux package for "uncomplicated firewall"]. To install it:
 
  apt-get install ufw
@@ -329,12 +333,12 @@ Now, we can activate the firewall
 
  ufw enable
 
-==  !
-==  use anti-intrusion defenses and audit systems
+==  6. Use anti-intrusion defenses and audit systems
 
 ==  !
-==== Psad
+==== a. Psad
 
+==  !
 INFO:: this part builds on: http://www.pontikis.net/blog/psad-install-config-debian-wheezy
 
 Psad is an app which bans users which scan ports. Before installing it, we need to make sure the firewall logs traffic:
@@ -342,16 +346,17 @@ Psad is an app which bans users which scan ports. Before installing it, we need 
  iptables -A INPUT -j LOG
  iptables -A FORWARD -j LOG
 
+==  !
 Then we install Psad:
 
  apt-get install psad
 
 ==  !
-
 Now we configure Psad by modifying this file:
 
  vi /etc/psad/psad.conf
 
+==  !
 Possible values for some interesting parameters (and the source for this section), are here:
 
 http://www.pontikis.net/blog/psad-install-config-debian-wheezy
@@ -361,29 +366,31 @@ Then we must edit this file to add the address of the server to the whitelist:
 
  vi /etc/psad/auto_dl
 
+==  !
 where I put just 2 values:
 
  127.0.0.1    0;  # localhost
  xx.xx.xxx.xxx    0; # Server IP (replace xx.xx.xxx.xxx by your actual server IP)
 
+==  !
 Restart psan with this config:
 
  sudo psad --sig-update
  sudo service psad restart
 
 ==  !
-==== fail2ban
+==== b. fail2ban
 
+==  !
 This is an app which bans users which fail to login after a number of times - typically bots trying to break in.
 
 fail2ban can actually scan logs from a list of apps you decide (MongoDB, Apache server, GlassFish, etc.) and ban ips mentioned in logs showing a failed access. You need to setup a regex rule specific for each log format, though.
 
-I'll cover it later, when I'll have MongoDB and GlassFish installed.
-
+==  !
 Documentation on failtoban: http://www.pontikis.net/blog/fail2ban-install-config-debian-wheezy
 
 ==  !
-==== Lynis
+==== c. Lynis
 
 This is an application running on your machine, generating security audits and making suggestions.
 
@@ -396,18 +403,21 @@ Run it: (from any directory)
 
  lynis audit system
 
+==  !
 The report will appear on screen (hit Enter to move on), and in this file:
 
  /var/log/lynis-report.dat
 
 
-==  The end!
-
+==  The end
 ==  !
 
-Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
+image:round_portrait_mini_150.png[align="center", role="right"]
+Tutorial by Clement Levallois.
 
-All resources on linux security: https://seinecle.github.io/linux-security-tutorials/
+Discover other tutorials and courses in data / tech for business: http://www.clementlevallois.net
+
+Or get in touch via Twitter: https://www.twitter.com/seinecle[@seinecle]
 pass:[    <!-- Start of StatCounter Code for Default Guide -->
     <script type="text/javascript">
         var sc_project = 11304288;

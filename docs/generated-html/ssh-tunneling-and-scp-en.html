@@ -529,11 +529,11 @@ table.CodeRay td.code>pre{padding:0}
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_system">System</a></li>
-<li><a href="#_why_ssh">Why SSH?</a></li>
-<li><a href="#_setup">Setup</a></li>
-<li><a href="#_scp">SCP</a></li>
-<li><a href="#_the_end">the end</a></li>
+<li><a href="#_1_system">1. System</a></li>
+<li><a href="#_2_why_ssh">2. Why SSH?</a></li>
+<li><a href="#_3_setup">3. Setup</a></li>
+<li><a href="#_4_scp">4. SCP</a></li>
+<li><a href="#_the_end">The end</a></li>
 </ul>
 </div>
 </div>
@@ -541,12 +541,12 @@ table.CodeRay td.code>pre{padding:0}
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>last modified: 2017-10-10</p>
+<p>last modified: 2017-10-11</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_system">System</h2>
+<h2 id="_1_system">1. System</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -561,7 +561,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
-<h2 id="_why_ssh">Why SSH?</h2>
+<h2 id="_2_why_ssh">2. Why SSH?</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -585,19 +585,29 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
-<h2 id="_setup">Setup</h2>
+<h2 id="_3_setup">3. Setup</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Prod server: A.A.A
-API server: B.B.B</p>
+<p>Prod server: A.A.A</p>
+</div>
+<div class="paragraph">
+<p>API server: B.B.B</p>
 </div>
 <div class="paragraph">
 <p>I want the db in A.A.A to be tunneled to B.B.B. The API server on B.B.B. can query the db as if it was in localhost.</p>
 </div>
 <div class="paragraph">
-<p>From B.B.B. :
-- creating a pair of keys:
-source: <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys&#8212;&#8203;2" class="bare">https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys&#8212;&#8203;2</a></p>
+<p>From B.B.B. :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>creating a pair of keys:</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>source: <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys&#8212;&#8203;2" class="bare">https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys&#8212;&#8203;2</a></p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -608,30 +618,48 @@ source: <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-
 <p>This generates a private key id_rsa and a public key id_rsa.pub, both of them in the folder /home/user/.ssh/</p>
 </div>
 <div class="paragraph">
-<p>On A.A.A.:
-- copying the id_rsa.pub made on B.B.B and pasting it as a new line in authorized_keys in A.A.A.
-- restart sshd with: service sshd restart</p>
+<p>On A.A.A.:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>copying the id_rsa.pub made on B.B.B and pasting it as a new line in authorized_keys in A.A.A.</p>
+</li>
+<li>
+<p>restart sshd with: service sshd restart</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>From B.B.B.:
-ssh -Nf -L 9200:localhost:9200 myuser@A.A.A -p 22</p>
+<p>From B.B.B.:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>ssh -Nf -L 9200:localhost:9200 myuser@A.A.A -p 22</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>(9200 is because I want to tunnel Elasticsearch)
-(actually replace 22 by the port you configured in sshd_config in A.A.A)</p>
+<p>(9200 is because I want to tunnel Elasticsearch)</p>
+</div>
+<div class="paragraph">
+<p>(actually replace 22 by the port you configured in sshd_config in A.A.A)</p>
 </div>
 <div class="paragraph">
 <p>(the Nf option puts the SSH connection in the background. Indeed, we don&#8217;t care about it - we don&#8217;t want an interactive session in a console. Just the port 9200 to be tunneled.)</p>
 </div>
 <div class="paragraph">
-<p>(see <a href="http://stackoverflow.com/questions/25048045/elasticsearch-remote-access-through-ssh" class="bare">http://stackoverflow.com/questions/25048045/elasticsearch-remote-access-through-ssh</a>)
-Closing an SSH tunnel:
-<a href="http://stackoverflow.com/questions/9447226/how-to-close-this-ssh-tunnel" class="bare">http://stackoverflow.com/questions/9447226/how-to-close-this-ssh-tunnel</a></p>
+<p>(see <a href="http://stackoverflow.com/questions/25048045/elasticsearch-remote-access-through-ssh" class="bare">http://stackoverflow.com/questions/25048045/elasticsearch-remote-access-through-ssh</a>)</p>
+</div>
+<div class="paragraph">
+<p>Closing an SSH tunnel:</p>
+</div>
+<div class="paragraph">
+<p><a href="http://stackoverflow.com/questions/9447226/how-to-close-this-ssh-tunnel" class="bare">http://stackoverflow.com/questions/9447226/how-to-close-this-ssh-tunnel</a></p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_scp">SCP</h2>
+<h2 id="_4_scp">4. SCP</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>here: make sure you have access to the file you want to move, both in origin and dest folders!</p>
@@ -648,13 +676,17 @@ Closing an SSH tunnel:
 </div>
 </div>
 <div class="sect1">
-<h2 id="_the_end">the end</h2>
+<h2 id="_the_end">The end</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Author of this tutorial: <a href="https://twitter.com/seinecle">Clement Levallois</a></p>
+<p><span class="image right"><img src="images/round_portrait_mini_150.png" alt="round portrait mini 150"></span>
+Tutorial by Clement Levallois.</p>
 </div>
 <div class="paragraph">
-<p>All resources on linux security: <a href="https://seinecle.github.io/linux-security-tutorials/" class="bare">https://seinecle.github.io/linux-security-tutorials/</a>
+<p>Discover other tutorials and courses in data / tech for business: <a href="http://www.clementlevallois.net" class="bare">http://www.clementlevallois.net</a></p>
+</div>
+<div class="paragraph">
+<p>Or get in touch via Twitter: <a href="https://www.twitter.com/seinecle">@seinecle</a>
     <!-- Start of StatCounter Code for Default Guide -->
     <script type="text/javascript">
         var sc_project = 11304288;
@@ -679,7 +711,7 @@ Closing an SSH tunnel:
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2017-10-10 22:02:04 CEST
+Last updated 2017-10-11 14:06:16 CEST
 </div>
 </div>
 </body>

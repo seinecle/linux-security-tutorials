@@ -86,12 +86,12 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .insert .insert{color:#080}
 .CodeRay .delete .delete{color:#800}
 .CodeRay .change .change{color:#66f}
-.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.5.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.5.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Step-by-step guide to Linux security for beginners</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-10-10</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
+.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.5.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.5.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Step-by-step guide to Linux security for beginners</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-10-11</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
 <section id="_escape_or_o_to_see_all_sides_f11_for_full_screen_s_for_speaker_notes"><h2>'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes</h2></section>
-<section id="_ordering_the_server"><h2>Ordering the server</h2><div class="ulist"><ul><li><p>Server ordered on Hetzner.de (based in Germany, dirt cheap, but without management.)</p></li><li><p>Remember to install the Linux version <strong>not from the rescue system in the console</strong> but from <a href="https://robot.your-server.de/server/index" class="bare">https://robot.your-server.de/server/index</a> in the "Linux" tab.</p></li></ul></div>
+<section id="_1_ordering_the_server"><h2>1. Ordering the server</h2><div class="ulist"><ul><li><p>Server ordered on Hetzner.de (based in Germany, dirt cheap, but without management.)</p></li><li><p>Remember to install the Linux version <strong>not from the rescue system in the console</strong> but from <a href="https://robot.your-server.de/server/index" class="bare">https://robot.your-server.de/server/index</a> in the "Linux" tab.</p></li></ul></div>
 <div class="paragraph"><p>(installing from the rescue system provided with the bare server causes a ssh key mess)</p></div></section>
 <section><div class="ulist"><ul><li><p>I use Debian, version 8.7 (<a href="http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server">why?</a>)</p></li><li><p>Vi is used as a text editor in the following</p></li><li><p>we are logged as root first</p></li></ul></div></section>
-<section id="_get_the_latest_versions_of_all_packages"><h2>Get the latest versions of all packages</h2></section>
+<section id="_2_get_the_latest_versions_of_all_packages"><h2>2. Get the latest versions of all packages</h2></section>
 <section><div class="paragraph"><p>Do:</p></div>
 <div class="paragraph"><p>apt-get update &amp;&amp; sudo apt-get upgrade</p></div>
 <div class="paragraph"><p>Because:</p></div></section>
@@ -100,13 +100,12 @@ table.CodeRay td.code>pre{padding:0}
 <section><div class="literalblock"><div class="content"><pre>apt-get upgrade</pre></div></div>
 <div class="paragraph"><p>&#8594; downloads and installs updates for all installed packages - as long as it doesn&#8217;t bother dependencies (install new packages, remove old ones or crosses a repo source (switch a package from one repo to another)).</p></div>
 <div class="paragraph"><p>(<a href="http://askubuntu.com/questions/639822/is-apt-get-upgrade-a-dangerous-command/639838">source</a>)</p></div></section>
-<section id="_set_the_clock_of_your_server_right"><h2>Set the clock of your server right:</h2></section>
-<section><div class="literalblock"><div class="content"><pre>aptitude install ntp</pre></div></div>
-<div class="literalblock"><div class="content"><pre> //ST: !
-Then define your time zone (the one where your server is located):</pre></div></div>
+<section id="_2_set_the_clock_of_your_server_right"><h2>2. Set the clock of your server right:</h2></section>
+<section><div class="literalblock"><div class="content"><pre>aptitude install ntp</pre></div></div></section>
+<section><div class="paragraph"><p>Then define your time zone (the one where your server is located):</p></div>
 <div class="literalblock"><div class="content"><pre>dpkg-reconfigure tzdata</pre></div></div>
 <div class="paragraph"><p>This step helps when your server needs to be synchronized with other servers.</p></div></section>
-<section id="_harden_the_kernel"><h2>Harden the kernel</h2></section>
+<section id="_3_harden_the_kernel"><h2>3. Harden the kernel</h2></section>
 <section><div class="paragraph"><p>Source: <a href="http://www.pontikis.net/blog/debian-wheezy-web-server-setup" class="bare">http://www.pontikis.net/blog/debian-wheezy-web-server-setup</a></p></div>
 <div class="paragraph"><p>The kernel is the software at the closest of the machine: it is provided by the Linux distribution you use.</p></div></section>
 <section><div class="paragraph"><p>A configuration file offers parameters which tune the kernel to make things harder for an intruder.
@@ -117,19 +116,19 @@ Here I rely exactly on the tutorial by <a href="http://www.pontikis.net/blog/deb
 - Paste the contents of link:resources/kernel_config.txt[this file]:
 - Close the file
 - reboot the server</pre></div></div></section>
-<section id="_forward_root_mail"><h2>Forward root mail</h2><div class="paragraph"><p>Source: <a href="http://www.pontikis.net/blog/debian-wheezy-web-server-setup" class="bare">http://www.pontikis.net/blog/debian-wheezy-web-server-setup</a></p></div>
+<section id="_3_forward_root_mail"><h2>3. Forward root mail</h2><div class="paragraph"><p>Source: <a href="http://www.pontikis.net/blog/debian-wheezy-web-server-setup" class="bare">http://www.pontikis.net/blog/debian-wheezy-web-server-setup</a></p></div>
 <div class="literalblock"><div class="content"><pre>vi /etc/aliases</pre></div></div>
 <div class="paragraph"><p>Add this line if not already present:</p></div>
 <div class="paragraph"><p>root:youraddress@email.com</p></div></section>
 <section><div class="paragraph"><p>Then, rebuild aliases:</p></div>
 <div class="literalblock"><div class="content"><pre>newaliases</pre></div></div></section>
-<section id="_change_the_ssh_port"><h2>Change the SSH port</h2></section>
+<section id="_3_change_the_ssh_port"><h2>3. Change the SSH port</h2></section>
 <section><div class="paragraph"><p>By default, loggging to the server via SSH is done on the port 22. Knowing that, attackers scan the port 22.
 Changing the port to a different one makes the attacker&#8217;s job more difficult. To do that:</p></div>
 <div class="literalblock"><div class="content"><pre>vi /etc/ssh/sshd_config</pre></div></div>
 <div class="paragraph"><p>Text to change in the file: change port SSH 22 by a new port (<strong>let&#8217;s say 1234</strong>), write the new port down somewhere</p></div>
 <div class="literalblock"><div class="content"><pre>service sshd restart</pre></div></div></section>
-<section id="_creating_users_and_disabling_ssh_connections_for_root"><h2>Creating users and disabling SSH connections for root</h2></section>
+<section id="_3_creating_users_and_disabling_ssh_connections_for_root"><h2>3. Creating users and disabling SSH connections for root</h2></section>
 <section><div class="paragraph"><p>We should now disable root login via SSH.
 Why? Because attackers would know that a "root" user is available to log in, and it just remains to attack its password.</p></div></section>
 <section><div class="paragraph"><p>With the root user disabled at the SSH login step, the attackers must guess <strong>both</strong> the username and its password to access the connection, and that&#8217;s much harder.</p></div></section>
@@ -141,17 +140,17 @@ If we need the admin rights of root to install stuff or else, we will <strong>te
 <section><div class="paragraph"><p>This way, we limit greatly the exposure of root privileges to the outside.</p></div>
 <div class="paragraph"><p>The steps:</p></div></section>
 <section><div class="olist arabic"><ol class="arabic"><li><p>making sure we have installed the "sudo" command that will allow us to switch from a weak user to root.</p></li><li><p>creating a weak user</p></li><li><p>giving rights to this user to establish a connection to the server (not just act on it once logged)</p></li><li><p>removing the rights of root to connect to the server.</p></li></ol></div></section>
-<section><h3>1. Installing the sudo command:</h3></section>
+<section><h3>a. Installing the sudo command:</h3></section>
 <section><div class="literalblock"><div class="content"><pre>apt-get install sudo</pre></div></div></section>
-<section><h3>2. Adding a new user (let&#8217;s call it "myUser")</h3><div class="paragraph"><p>Have a strong password ready</p></div>
+<section><h3>b. Adding a new user (let&#8217;s call it "myUser")</h3><div class="paragraph"><p>Have a strong password ready</p></div>
 <div class="literalblock"><div class="content"><pre>adduser myUser -shell /bin/bash
 adduser myUser sudo</pre></div></div>
-<h3>3. Enabling server connections via myUser</h3><div class="literalblock"><div class="content"><pre>vi /etc/ssh/sshd_config</pre></div></div>
+<h3>c. Enabling server connections via myUser</h3><div class="literalblock"><div class="content"><pre>vi /etc/ssh/sshd_config</pre></div></div>
 <div class="paragraph"><p><strong>text to add</strong> to this file sshd_config:</p></div>
 <div class="paragraph"><p>AllowUsers myUser</p></div></section>
 <section><div class="paragraph"><p>Then restart the SSH service:</p></div>
 <div class="literalblock"><div class="content"><pre>service sshd restart</pre></div></div></section>
-<section><h3>4. Disabling connection through root</h3></section>
+<section><h3>d. Disabling connection through root</h3></section>
 <section><div class="literalblock"><div class="content"><pre>vi /etc/ssh/sshd_config</pre></div></div>
 <div class="paragraph"><p><strong>Text to change</strong> in the file:</p></div>
 <div class="literalblock"><div class="content"><pre>PermitRootLogin no</pre></div></div>
@@ -160,52 +159,56 @@ adduser myUser sudo</pre></div></div>
 <div class="paragraph"><p>Switch to root privileges:</p></div>
 <div class="literalblock"><div class="content"><pre>su -</pre></div></div>
 <div class="paragraph"><p>(you must enter the root password at this step)</p></div></section>
-<section id="_disabling_password_authentication_enabling_ssh"><h2>Disabling password authentication, enabling SSH</h2></section>
+<section id="_4_disabling_password_authentication_enabling_ssh"><h2>4. Disabling password authentication, enabling SSH</h2></section>
 <section><div class="paragraph"><p>Password authentication is less secure than SSH public key.
 A password transits through the Internet for the auhtentication, it can be hacked at this step.</p></div>
 <div class="paragraph"><p>A SSH private key is not transmitted on the wire. So, it can&#8217;t be hacked this way.</p></div></section>
 <section><div class="paragraph"><p>A detailed explanation is <a href="https://security.stackexchange.com/questions/69407/why-is-using-an-ssh-key-more-secure-than-using-passwords">available here</a>.</p></div></section>
-<section><h3>How to generate a SSH key?</h3></section>
+<section><h3>a. How to generate a SSH key?</h3></section>
 <section><div class="ulist"><ul><li><p>On Windows, use <a href="https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows">Puttygen</a>.</p></li><li><p>On Mac, use <a href="https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-mac-os-x">the Terminal</a></p></li><li><p>On Linux, use the <a href="https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html">ssh-keygen command</a></p></li></ul></div></section>
-<section><h3>How to disable password auth and enable SSH?</h3></section>
+<section><h3>b. Precautions</h3></section>
 <section><div class="paragraph"><p>Logging through SSH rather than passwords can be hair rising because there are so many tiny details that can go wrong.
 There is a good chance that if you do it for the first time you will lock yourself outside the server.</p></div></section>
-<section><div class="paragraph"><p>So, do this when you can still erase the server, of if you are confortable waiting that your provider will unlock it for you.</p></div>
-<div class="paragraph"><p>Steps:</p></div></section>
-<section><div class="olist arabic"><ol class="arabic"><li><p>Parameters to change in <code>/etc/ssh/sshd_config</code>:</p></li></ol></div>
-<div class="paragraph"><p>ChallengeResponseAuthentication no</p></div>
+<section><div class="paragraph"><p>So, do this when you can still erase the server, of if you are confortable waiting that your provider will unlock it for you.</p></div></section>
+<section><h3>c. Parameters to change in <code>/etc/ssh/sshd_config</code>:</h3></section>
+<section><div class="paragraph"><p>ChallengeResponseAuthentication no</p></div>
 <div class="paragraph"><p>X11Forwarding no</p></div>
 <div class="paragraph"><p>UsePAM no</p></div></section>
 <section><div class="paragraph"><p>LogLevel DEBUG3 (this should be added, the parameter is not listed by default)</p></div>
 <div class="paragraph"><p>Save the file, then:</p></div>
 <div class="literalblock"><div class="content"><pre>service sshd restart</pre></div></div></section>
-<section><div class="olist arabic"><ol class="arabic" start="2"><li><p>Add your public key</p></li></ol></div>
-<div class="paragraph"><p>In your user home folder:</p></div>
+<section><h3>d. Add your public key</h3></section>
+<section><div class="paragraph"><p>In your user home folder:</p></div>
 <div class="literalblock"><div class="content"><pre>mkdir ~/.ssh
 chmod 700 ~/.ssh
 cd ~/.ssh
 vi authorized_keys</pre></div></div>
-<div class="paragraph"><p>If you already have a .ssh directory, how to find it and the file <code>authorized_keys</code> in it?
-The <code>.ssh</code> directory is <strong>hidden by default</strong> because it starts with a <code>.</code></p></div>
-<div class="paragraph"><p>To find it, you need to navigate with root privileges directly to the <code>authorized_keys</code> file, like this:</p></div>
+<div class="literalblock"><div class="content"><pre> //ST: !
+If you already have a .ssh directory, how to find it and the file `authorized_keys` in it?
+The `.ssh` directory is *hidden by default* because it starts with a `.`</pre></div></div></section>
+<section><div class="paragraph"><p>To find it, you need to navigate with root privileges directly to the <code>authorized_keys</code> file, like this:</p></div>
 <div class="literalblock"><div class="content"><pre>vi /home/myUser/.ssh/authorized_keys</pre></div></div>
-<div class="paragraph"><p>Things to check:</p></div>
+<div class="literalblock"><div class="content"><pre> //ST: !
+Things to check:</pre></div></div>
 <div class="ulist"><ul><li><p>make sure you have put the public key in the .ssh folder of the user in /home/myUser/.ssh/authorized_keys (not in the .ssh folder of the root user)</p></li><li><p>make sure your key starts with "the "ssh-rsa" (with a space after it, check the first "s" might be missing &#8230;&#8203;)</p></li><li><p>triple check the key doesn&#8217;t break in several lines</p></li><li><p>do <code>service sshd restart</code> after each modif to load your new ssh key</p></li></ul></div></section>
-<section><div class="olist arabic"><ol class="arabic" start="3"><li><p>What will probably happen:</p></li></ol></div>
-<div class="paragraph"><p>Your private key will probably not be recognized the first time because of some problems above not completely fixed.</p></div>
+<section><h3>e. What will probably happen:</h3></section>
+<section><div class="paragraph"><p>Your private key will probably not be recognized the first time because of some problems above not completely fixed.</p></div>
 <div class="paragraph"><p>Keep trying to log with your SSH key. To find the cause of your issues, inspect the log for auth operations:</p></div>
 <div class="literalblock"><div class="content"><pre>tail -f /var/log/auth.log</pre></div></div></section>
 <section><div class="paragraph"><p>Some useful answers to questions from developers lost in making SSH keys works:</p></div>
 <div class="ulist"><ul><li><p>A recap of the steps: <a href="http://askubuntu.com/a/306832" class="bare">http://askubuntu.com/a/306832</a></p></li><li><p>On debugging (saved my life): <a href="http://stackoverflow.com/a/20923212/798502" class="bare">http://stackoverflow.com/a/20923212/798502</a></p></li></ul></div></section>
-<section><div class="olist arabic"><ol class="arabic" start="4"><li><p>Finally, when the login via SSH keys work, only then can you disable login via passwords:</p></li></ol></div>
-<div class="paragraph"><p>In <code>/etc/ssh/sshd_config</code>, you can disable password authentification:</p></div>
+<section><h3>f. When SSH keys work: only then can you disable login via passwords:</h3></section>
+<section><div class="paragraph"><p>In <code>/etc/ssh/sshd_config</code>, you can disable password authentification:</p></div>
 <div class="paragraph"><p>PasswordAuthentication no</p></div>
-<div class="paragraph"><p>Do again: <code>service sshd restart</code></p></div>
-<div class="paragraph"><p>Now only connecions via a public / private key is possible.</p></div></section>
-<section id="_setting_up_a_firewall"><h2>Setting up a firewall</h2><div class="paragraph"><p>A firewall gives you control on what can enter and leave your server.</p></div></section>
-<section><h3>ip tables</h3><div class="paragraph"><p>The rules for setting up ip tables are logical <a href="https://help.ubuntu.com/community/IptablesHowTo">but quite complicated</a>. Using an <a href="https://www.perturb.org/content/iptables-rules.html">ip tables generator</a> could help.</p></div>
+<div class="paragraph"><p>Do again: <code>service sshd restart</code></p></div></section>
+<section><div class="paragraph"><p>Now only connecions via a public / private key is possible.</p></div></section>
+<section id="_5_setting_up_a_firewall"><h2>5. Setting up a firewall</h2></section>
+<section><div class="paragraph"><p>A firewall gives you control on what can enter and leave your server.</p></div></section>
+<section><h3>a. ip tables</h3></section>
+<section><div class="paragraph"><p>The rules for setting up ip tables are logical <a href="https://help.ubuntu.com/community/IptablesHowTo">but quite complicated</a>. Using an <a href="https://www.perturb.org/content/iptables-rules.html">ip tables generator</a> could help.</p></div>
 <div class="paragraph"><p>But there is an even easier alternative.</p></div></section>
-<section><h3>better: uncomplicated firewall</h3><div class="paragraph"><p>Following <a href="https://twitter.com/mgilbir">@mgilbir</a>'s advice, I&#8217;ll use <a href="https://wiki.debian.org/Uncomplicated%20Firewall%20%28ufw%29">ufw: a linux package for "uncomplicated firewall"</a>. To install it:</p></div>
+<section><h3>b. better: uncomplicated firewall</h3></section>
+<section><div class="paragraph"><p>Following <a href="https://twitter.com/mgilbir">@mgilbir</a>'s advice, I&#8217;ll use <a href="https://wiki.debian.org/Uncomplicated%20Firewall%20%28ufw%29">ufw: a linux package for "uncomplicated firewall"</a>. To install it:</p></div>
 <div class="literalblock"><div class="content"><pre>apt-get install ufw</pre></div></div>
 <div class="paragraph"><p>The firewall is now installed, but is is not active yet.</p></div></section>
 <section><div class="paragraph"><p>We add a rule to block all incoming traffic, except for SSH connections through the port we defined:
@@ -213,40 +216,42 @@ The <code>.ssh</code> directory is <strong>hidden by default</strong> because it
  ufw allow 1234/tcp</p></div></section>
 <section><div class="paragraph"><p>Now, we can activate the firewall</p></div>
 <div class="literalblock"><div class="content"><pre>ufw enable</pre></div></div></section>
-<section></section>
-<section id="_use_anti_intrusion_defenses_and_audit_systems"><h2>use anti-intrusion defenses and audit systems</h2></section>
-<section><h3>Psad</h3><div class="dlist"><dl><dt class="hdlist1">INFO</dt><dd><p>this part builds on: <a href="http://www.pontikis.net/blog/psad-install-config-debian-wheezy" class="bare">http://www.pontikis.net/blog/psad-install-config-debian-wheezy</a></p></dd></dl></div>
+<section id="_6_use_anti_intrusion_defenses_and_audit_systems"><h2>6. Use anti-intrusion defenses and audit systems</h2></section>
+<section><h3>a. Psad</h3></section>
+<section><div class="dlist"><dl><dt class="hdlist1">INFO</dt><dd><p>this part builds on: <a href="http://www.pontikis.net/blog/psad-install-config-debian-wheezy" class="bare">http://www.pontikis.net/blog/psad-install-config-debian-wheezy</a></p></dd></dl></div>
 <div class="paragraph"><p>Psad is an app which bans users which scan ports. Before installing it, we need to make sure the firewall logs traffic:</p></div>
 <div class="literalblock"><div class="content"><pre>iptables -A INPUT -j LOG
-iptables -A FORWARD -j LOG</pre></div></div>
-<div class="paragraph"><p>Then we install Psad:</p></div>
+iptables -A FORWARD -j LOG</pre></div></div></section>
+<section><div class="paragraph"><p>Then we install Psad:</p></div>
 <div class="literalblock"><div class="content"><pre>apt-get install psad</pre></div></div></section>
 <section><div class="paragraph"><p>Now we configure Psad by modifying this file:</p></div>
-<div class="literalblock"><div class="content"><pre>vi /etc/psad/psad.conf</pre></div></div>
-<div class="paragraph"><p>Possible values for some interesting parameters (and the source for this section), are here:</p></div>
+<div class="literalblock"><div class="content"><pre>vi /etc/psad/psad.conf</pre></div></div></section>
+<section><div class="paragraph"><p>Possible values for some interesting parameters (and the source for this section), are here:</p></div>
 <div class="paragraph"><p><a href="http://www.pontikis.net/blog/psad-install-config-debian-wheezy" class="bare">http://www.pontikis.net/blog/psad-install-config-debian-wheezy</a></p></div></section>
 <section><div class="paragraph"><p>Then we must edit this file to add the address of the server to the whitelist:</p></div>
-<div class="literalblock"><div class="content"><pre>vi /etc/psad/auto_dl</pre></div></div>
-<div class="paragraph"><p>where I put just 2 values:</p></div>
+<div class="literalblock"><div class="content"><pre>vi /etc/psad/auto_dl</pre></div></div></section>
+<section><div class="paragraph"><p>where I put just 2 values:</p></div>
 <div class="literalblock"><div class="content"><pre>127.0.0.1    0;  # localhost
-xx.xx.xxx.xxx    0; # Server IP (replace xx.xx.xxx.xxx by your actual server IP)</pre></div></div>
-<div class="paragraph"><p>Restart psan with this config:</p></div>
+xx.xx.xxx.xxx    0; # Server IP (replace xx.xx.xxx.xxx by your actual server IP)</pre></div></div></section>
+<section><div class="paragraph"><p>Restart psan with this config:</p></div>
 <div class="literalblock"><div class="content"><pre>sudo psad --sig-update
 sudo service psad restart</pre></div></div></section>
-<section><h3>fail2ban</h3><div class="paragraph"><p>This is an app which bans users which fail to login after a number of times - typically bots trying to break in.</p></div>
-<div class="paragraph"><p>fail2ban can actually scan logs from a list of apps you decide (MongoDB, Apache server, GlassFish, etc.) and ban ips mentioned in logs showing a failed access. You need to setup a regex rule specific for each log format, though.</p></div>
-<div class="paragraph"><p>I&#8217;ll cover it later, when I&#8217;ll have MongoDB and GlassFish installed.</p></div>
-<div class="paragraph"><p>Documentation on failtoban: <a href="http://www.pontikis.net/blog/fail2ban-install-config-debian-wheezy" class="bare">http://www.pontikis.net/blog/fail2ban-install-config-debian-wheezy</a></p></div></section>
-<section><h3>Lynis</h3><div class="paragraph"><p>This is an application running on your machine, generating security audits and making suggestions.</p></div>
+<section><h3>b. fail2ban</h3></section>
+<section><div class="paragraph"><p>This is an app which bans users which fail to login after a number of times - typically bots trying to break in.</p></div>
+<div class="paragraph"><p>fail2ban can actually scan logs from a list of apps you decide (MongoDB, Apache server, GlassFish, etc.) and ban ips mentioned in logs showing a failed access. You need to setup a regex rule specific for each log format, though.</p></div></section>
+<section><div class="paragraph"><p>Documentation on failtoban: <a href="http://www.pontikis.net/blog/fail2ban-install-config-debian-wheezy" class="bare">http://www.pontikis.net/blog/fail2ban-install-config-debian-wheezy</a></p></div></section>
+<section><h3>c. Lynis</h3><div class="paragraph"><p>This is an application running on your machine, generating security audits and making suggestions.</p></div>
 <div class="paragraph"><p>Install it:</p></div>
 <div class="literalblock"><div class="content"><pre>apt-get install lynis</pre></div></div></section>
 <section><div class="paragraph"><p>Run it: (from any directory)</p></div>
-<div class="literalblock"><div class="content"><pre>lynis audit system</pre></div></div>
-<div class="paragraph"><p>The report will appear on screen (hit Enter to move on), and in this file:</p></div>
+<div class="literalblock"><div class="content"><pre>lynis audit system</pre></div></div></section>
+<section><div class="paragraph"><p>The report will appear on screen (hit Enter to move on), and in this file:</p></div>
 <div class="literalblock"><div class="content"><pre>/var/log/lynis-report.dat</pre></div></div></section>
-<section id="_the_end"><h2>The end!</h2></section>
-<section><div class="paragraph"><p>Author of this tutorial: <a href="https://twitter.com/seinecle">Clement Levallois</a></p></div>
-<div class="paragraph"><p>All resources on linux security: <a href="https://seinecle.github.io/linux-security-tutorials/" class="bare">https://seinecle.github.io/linux-security-tutorials/</a>
+<section id="_the_end"><h2>The end</h2></section>
+<section><div class="paragraph"><p><span class="image right"><img src="images/round_portrait_mini_150.png" alt="round portrait mini 150" /></span>
+Tutorial by Clement Levallois.</p></div>
+<div class="paragraph"><p>Discover other tutorials and courses in data / tech for business: <a href="http://www.clementlevallois.net" class="bare">http://www.clementlevallois.net</a></p></div>
+<div class="paragraph"><p>Or get in touch via Twitter: <a href="https://www.twitter.com/seinecle">@seinecle</a>
     <!-- Start of StatCounter Code for Default Guide -->
     <script type="text/javascript">
         var sc_project = 11304288;
