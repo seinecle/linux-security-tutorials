@@ -10,47 +10,53 @@ last modified: {docdate}
 :revnumber: 1.0
 :example-caption!:
 
-==  'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
-==  !
+//ST: 'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
+//ST: !
 
 ==  1. System
+== !
+//ST: 1. System
 
-==  !
+//ST: !
 - I use Debian, version 8.7 (http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server[why?])
 - Vi is used as a text editor in the following
 - *MongoDB 3.4 and Elasticsearch 5.x*
 
-==  2. Why MongoDB and Elasticsearch?
+== 2. Why MongoDB and Elasticsearch?
+== !
+//ST: 2. Why MongoDB and Elasticsearch?
 
-==  !
+//ST: !
 - MongoDB is a database which stores data without the need for a pre-established model ("strict description") of this data. In practice: I can save something into MongoDB without spending time creating tables and stuff. Just save a JSON doc, that's it.
 - MongoDB alone is great, but I will store gigabytes of data, with several text fields and some simple graph logic as well. Elasticsearch is known for managing well the indexes and queries related to these data types.
 
-==  !
+//ST: !
 - A blog post which details how Elasticsearch helped on performances for Mongo: http://blog.quarkslab.com/mongodb-vs-elasticsearch-the-quest-of-the-holy-performances.html
 - And Elasticsearch can then integrate with https://www.elastic.co/fr/products/kibana[Kibana], a way to visualize query results. Awesome!
 
+== 3. Installing MongoDB
+== !
 
-==  !
+//ST: !
 source: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-debian/
 
  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
  echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.4 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
 
-==  !
+//ST: !
  sudo apt-get update
 
 sudo apt-get install -y mongodb-org
 
-==  !
+//ST: !
 disable Transparent Huge Pages as per https://docs.mongodb.com/manual/tutorial/transparent-huge-pages/
 
-==  !
+//ST: !
 create a new file:
 
  sudo vi /etc/init.d/disable-transparent-hugepages
 
-==  !
+//ST: !
 paste this in the text editor:
 
 [source,bash]
@@ -119,6 +125,8 @@ And now stop it, as we will need to run it differently for elasticsearch:
 
  sudo service mongod stop
 
+== 3. Install Elasticsearch
+== !
 
 source: https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
 
@@ -141,6 +149,8 @@ Then:
 
  sudo /bin/systemctl enable elasticsearch.service
 
+== 4. Config Elasticsearch
+== !
 
   sudo vi /etc/elasticsearch/elasticsearch.yml
 
@@ -172,8 +182,11 @@ Add this line:
 -Djava.io.tmpdir=/var/tmp
 
 
+== 5. Install the mongo to elasticsearch connection
+== !
 
-=== a. elastic2-doc-manager
+==== a. elastic2-doc-manager
+== !
 
 This is a doc manager by mongodb labs.
 
@@ -184,7 +197,9 @@ Source: https://github.com/mongodb-labs/elastic2-doc-manager
  sudo pip install 'elastic2-doc-manager[elastic5]'
  sudo pip install 'mongo-connector[elastic5]'
 
-=== b. run Mongo as a replicaset
+== !
+==== b. run Mongo as a replicaset
+== !
 
  sudo service mongod stop
 
@@ -204,6 +219,8 @@ Then:
 
  sudo mongod --port 27017 --dbpath /data/db --replSet rs0 --fork --logpath /var/log/mongodb.mongod.log
 
+== 6. Install kibana
+== !
 
 Kibana is the visualization engine for elastic.
 
@@ -216,7 +233,9 @@ Configure Kibana to start automatically at boot:
  sudo /bin/systemctl enable kibana.service
 
 
+== !
 ==== 7. Install X-pack
+== !
 
  https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html
 
@@ -232,6 +251,8 @@ cd /usr/share/kibana
 sudo bin/kibana-plugin install x-pack
 
 
+== 8. Disable the security component of X-Pack
+== !
 
 This security component is hard to configure, and we don't need it if we run elasticsearch behind a web server and a reverse proxy, on a single machine.
 
@@ -250,6 +271,8 @@ sudo /usr/share/elasticsearch/bin elasticsearch
 sudo /usr/share/kibana/bin kibana
 
 
+== 9. Install the Mongo-connector for ElasticSearch
+== !
 
 Source: https://blog.jixee.me/how-to-use-mongo-connector-with-elasticsearch/
 
@@ -273,6 +296,8 @@ replication:
 
  sudo mongo-connector -m localhost:27017 -t localhost:9200 -d elastic2_doc_manager  -n database1.collection1,database1.collection2
 
+== 10. Start elasticsearch and Kibana
+== !
 
  sudo service elasticsearch start
   sudo systemctl start kibana.service
@@ -282,12 +307,12 @@ You can check that the connection is made here, your Mongo collections should be
  http://localhost:9200/_cat/indices?v
 
  == The end
-==  The end
-==  !
+//ST: The end
+//ST: !
 
 Find references for this lesson, and other lessons, https://seinecle.github.io/linux-security-tutorials[here].
 
-image:round_portrait_mini_150.png[align="center", role="right"]
+image:round_portrait_mini_150.png[align="center", role="right"][align="center", role="right"]
 This course is made by Clement Levallois.
 
 Discover my other tutorials and courses in data / tech for business: http://www.clementlevallois.net

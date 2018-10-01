@@ -529,11 +529,11 @@ table.CodeRay td.code>pre{padding:0}
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_1_system">1. System</a></li>
-<li><a href="#_2_why_nginx">2. Why nginx?</a></li>
-<li><a href="#_3_why_nginx_glassfish_ssl">3. Why nginx + glassfish + ssl?</a></li>
-<li><a href="#_4_installing_nginx">4. Installing nginx</a></li>
-<li><a href="#_the_end">The end</a></li>
+<li><a href="#_system">System</a></li>
+<li><a href="#_why_nginx">Why nginx?</a></li>
+<li><a href="#_why_nginx_glassfish_ssl">why nginx + glassfish + ssl?</a></li>
+<li><a href="#_installing_nginx">installing nginx</a></li>
+<li><a href="#_the_end">the end</a></li>
 </ul>
 </div>
 </div>
@@ -541,12 +541,12 @@ table.CodeRay td.code>pre{padding:0}
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>last modified: 2017-10-11</p>
+<p>last modified: 2018-02-04</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_1_system">1. System</h2>
+<h2 id="_system">System</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -561,7 +561,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 </div>
 <div class="sect1">
-<h2 id="_2_why_nginx">2. Why nginx?</h2>
+<h2 id="_why_nginx">Why nginx?</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>When I was introduced to nginx a long time ago, it was as a convenient replacement for Apache Web Server: lighter, faster.</p>
@@ -593,7 +593,7 @@ I&#8217;d describe it as <strong>a tool doing useful stuff between your firewall
 </div>
 </div>
 <div class="sect1">
-<h2 id="_3_why_nginx_glassfish_ssl">3. Why nginx + glassfish + ssl?</h2>
+<h2 id="_why_nginx_glassfish_ssl">why nginx + glassfish + ssl?</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Why a tutorial specifically on nginx used for a glassfish app with ssl certificates?</p>
@@ -604,7 +604,7 @@ I&#8217;d describe it as <strong>a tool doing useful stuff between your firewall
 <p>this is my personal use case</p>
 </li>
 <li>
-<p>there are no tutorials on it, though <a href="https://gist.github.com/seinecle/06bde086330264b9681d2e721d0ed19e">this file on github</a> does 99% of the job (and we&#8217;ll use it here).</p>
+<p>there are no tutorials on it, though <a href="https://gist.github.com/halid/8fe138babedcb280c784">this file on github</a> does 99% of the job (and we&#8217;ll use it here).</p>
 </li>
 </ul>
 </div>
@@ -617,8 +617,13 @@ I&#8217;d describe it as <strong>a tool doing useful stuff between your firewall
 </div>
 </div>
 <div class="sect1">
-<h2 id="_4_installing_nginx">4. Installing nginx</h2>
+<h2 id="_installing_nginx">installing nginx</h2>
 <div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre>sudo apt-get update &amp;&amp; sudo apt-get upgrade</pre>
+</div>
+</div>
 <div class="literalblock">
 <div class="content">
 <pre>sudo apt-get install nginx</pre>
@@ -633,7 +638,7 @@ I&#8217;d describe it as <strong>a tool doing useful stuff between your firewall
 <p>(note: the ".conf" extension is necessary for the file to be loaded in nginx)</p>
 </div>
 <div class="paragraph">
-<p>Paste the content of <a href="https://gist.github.com/seinecle/06bde086330264b9681d2e721d0ed19e">this file</a> in yourdomain.com.conf.</p>
+<p>Paste the content of <a href="https://gist.github.com/halid/8fe138babedcb280c784">this file</a> in yourdomain.com.conf.</p>
 </div>
 <div class="paragraph">
 <p>Explanations on the lines of this file:</p>
@@ -704,17 +709,13 @@ See the glassfish installation guide in the same series of tutorials.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_the_end">The end</h2>
+<h2 id="_the_end">the end</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><span class="image right"><img src="images/round_portrait_mini_150.png" alt="round portrait mini 150"></span>
-Tutorial by Clement Levallois.</p>
+<p>Author of this tutorial: <a href="https://twitter.com/seinecle">Clement Levallois</a></p>
 </div>
 <div class="paragraph">
-<p>Discover other tutorials and courses in data / tech for business: <a href="http://www.clementlevallois.net" class="bare">http://www.clementlevallois.net</a></p>
-</div>
-<div class="paragraph">
-<p>Or get in touch via Twitter: <a href="https://www.twitter.com/seinecle">@seinecle</a>
+<p>All resources on linux security: <a href="https://seinecle.github.io/linux-security-tutorials/" class="bare">https://seinecle.github.io/linux-security-tutorials/</a>
     <!-- Start of StatCounter Code for Default Guide -->
     <script type="text/javascript">
         var sc_project = 11304288;
@@ -739,7 +740,7 @@ Tutorial by Clement Levallois.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2017-10-11 14:07:00 CEST
+Last updated 2018-02-04 16:45:54 CET
 </div>
 </div>
 </body>

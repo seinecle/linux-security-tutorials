@@ -120,3 +120,6 @@ Only when there is a need, nginx will be stopped before then restarted after the
 Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
 
 All resources on linux security: https://seinecle.github.io/linux-security-tutorials/
+http://www.clementlevallois.net
+
+Or get in touch via Twitter: https://www.twitter.com/seinecle[@seinecle]

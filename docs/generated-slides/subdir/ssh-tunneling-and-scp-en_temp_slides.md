@@ -1,4 +1,4 @@
-= SSH tunneling and SCP between servers
+= Setup of a ssl certificate with let's encrypt
 Clément Levallois <clementlevallois@gmail.com>
 2017-04-09
 
@@ -10,17 +10,21 @@ last modified: {docdate}
 :revnumber: 1.0
 :example-caption!:
 
-==  'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
-==  !
+//ST: 'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
+//ST: !
 
-==  !
+== System
+== !
+//ST: !
 
 - I use Debian, version 8.7 (http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server[why?])
 - Vi is used as a text editor in the following
 
 
+== Why SSH?
+== !
+//ST: !
 
-==  !
 - SSH allows 2 computers to connect to each other , even with a firewall on each computer (how?).
 - The data transitting between the 2 servers is not encrypted, but it is tunnelled in a way that protects it from preying eyes (how?)
 - For this reason, SSH tunneling is a nice way to have a couple or even more computers to discuss with each other: to go from a single server to a cluster!
@@ -28,10 +32,12 @@ last modified: {docdate}
 - My use case: a prod server that does the heavy lifting, a small server which receives the API requests from the public and polls the prod server for answers.
 
 
-==  !
+//ST: !
 Difficulty: SSH is pretty hard to setup for beginners.
 
-==  !
+== Setup
+== !
+//ST: !
 
 Prod server: A.A.A
 API server: B.B.B
@@ -63,6 +69,8 @@ ssh -Nf -L 9200:localhost:9200 myuser@A.A.A -p 22
 Closing an SSH tunnel:
 http://stackoverflow.com/questions/9447226/how-to-close-this-ssh-tunnel
 
+== SCP
+== !
 
 here: make sure you have access to the file you want to move, both in origin and dest folders!
 
@@ -73,9 +81,11 @@ To copy a full directory:
 scp -r -P 1234 /var/folder username@destinationhost:/home/username/folder
 
 
-==  The end!
+== the end
+== !
+//ST: The end!
 
-==  !
+//ST: !
 
 Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
 

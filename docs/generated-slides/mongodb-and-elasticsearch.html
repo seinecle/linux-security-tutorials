@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="Clément Levallois" /><title>Setup of mongo and elasticsearch</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js-3.5.0/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js-3.5.0/css/theme/white.css" id="theme" /><style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="Clément Levallois" /><title>Setup of mongo and elasticsearch</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js-3.6.0/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js-3.6.0/css/theme/white.css" id="theme" /><style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
 /*pre.CodeRay {background-color:#f7f7f8;}*/
 .CodeRay .line-numbers{border-right:1px solid #d8d8d8;padding:0 0.5em 0 .25em}
 .CodeRay span.line-numbers{display:inline-block;margin-right:.5em;color:rgba(0,0,0,.3)}
@@ -86,23 +86,23 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .insert .insert{color:#080}
 .CodeRay .delete .delete{color:#800}
 .CodeRay .change .change{color:#66f}
-.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.5.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.5.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Setup of mongo and elasticsearch</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-10-11</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
-<section id="_escape_or_o_to_see_all_sides_f11_for_full_screen_s_for_speaker_notes"><h2>'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes</h2></section>
-<section></section>
+.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.6.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.6.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Setup of mongo and elasticsearch</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-10-11</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
 <section id="_1_system"><h2>1. System</h2></section>
 <section><div class="ulist"><ul><li><p>I use Debian, version 8.7 (<a href="http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server">why?</a>)</p></li><li><p>Vi is used as a text editor in the following</p></li><li><p><strong>MongoDB 3.4 and Elasticsearch 5.x</strong></p></li></ul></div></section>
 <section id="_2_why_mongodb_and_elasticsearch"><h2>2. Why MongoDB and Elasticsearch?</h2></section>
-<section><div class="ulist"><ul><li><p>MongoDB is a database which stores data without the need for a pre-established model ("strict description") of this data. In practice: I can save something into MongoDB without spending time creating tables and stuff. Just save a JSON doc, that&#8217;s it.</p></li><li><p>MongoDB alone is great, but I will store gigabytes of data, with several text fields and some simple graph logic as well. Elasticsearch is known for managing well the indexes and queries related to these data types.</p></li></ul></div></section>
-<section><div class="ulist"><ul><li><p>A blog post which details how Elasticsearch helped on performances for Mongo: <a href="http://blog.quarkslab.com/mongodb-vs-elasticsearch-the-quest-of-the-holy-performances.html" class="bare">http://blog.quarkslab.com/mongodb-vs-elasticsearch-the-quest-of-the-holy-performances.html</a></p></li><li><p>And Elasticsearch can then integrate with <a href="https://www.elastic.co/fr/products/kibana">Kibana</a>, a way to visualize query results. Awesome!</p></li></ul></div></section>
+<section><div class="ulist"><ul><li><p>MongoDB is a database which stores data without the need for a pre-established model ("strict description") of this data. In practice: I can save something into MongoDB without spending time creating tables and stuff. Just save a JSON doc, that&#8217;s it.</p></li><li><p>MongoDB alone is great, but I will store gigabytes of data, with several text fields and some simple graph logic as well. Elasticsearch is known for managing well the indexes and queries related to these data types.</p></li></ul></div>
+<div class="ulist"><ul><li><p>A blog post which details how Elasticsearch helped on performances for Mongo: <a href="http://blog.quarkslab.com/mongodb-vs-elasticsearch-the-quest-of-the-holy-performances.html" class="bare">http://blog.quarkslab.com/mongodb-vs-elasticsearch-the-quest-of-the-holy-performances.html</a></p></li><li><p>And Elasticsearch can then integrate with <a href="https://www.elastic.co/fr/products/kibana">Kibana</a>, a way to visualize query results. Awesome!</p></li></ul></div></section>
+<section id="_3_installing_mongodb"><h2>3. Installing MongoDB</h2></section>
 <section><div class="paragraph"><p>source: <a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-debian/" class="bare">https://docs.mongodb.com/manual/tutorial/install-mongodb-on-debian/</a></p></div>
 <div class="literalblock"><div class="content"><pre>sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
-echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.4 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list</pre></div></div></section>
-<section><div class="literalblock"><div class="content"><pre>sudo apt-get update</pre></div></div>
-<div class="paragraph"><p>sudo apt-get install -y mongodb-org</p></div></section>
-<section><div class="paragraph"><p>disable Transparent Huge Pages as per <a href="https://docs.mongodb.com/manual/tutorial/transparent-huge-pages/" class="bare">https://docs.mongodb.com/manual/tutorial/transparent-huge-pages/</a></p></div></section>
-<section><div class="paragraph"><p>create a new file:</p></div>
-<div class="literalblock"><div class="content"><pre>sudo vi /etc/init.d/disable-transparent-hugepages</pre></div></div></section>
-<section><section><div class="paragraph"><p>paste this in the text editor:</p></div><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="bash language-bash">#!/bin/bash
+echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.4 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list</pre></div></div>
+<div class="literalblock"><div class="content"><pre>sudo apt-get update</pre></div></div>
+<div class="paragraph"><p>sudo apt-get install -y mongodb-org</p></div>
+<div class="paragraph"><p>disable Transparent Huge Pages as per <a href="https://docs.mongodb.com/manual/tutorial/transparent-huge-pages/" class="bare">https://docs.mongodb.com/manual/tutorial/transparent-huge-pages/</a></p></div>
+<div class="paragraph"><p>create a new file:</p></div>
+<div class="literalblock"><div class="content"><pre>sudo vi /etc/init.d/disable-transparent-hugepages</pre></div></div>
+<div class="paragraph"><p>paste this in the text editor:</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="bash language-bash">#!/bin/bash
 ### BEGIN INIT INFO
 # Provides:          disable-transparent-hugepages
 # Required-Start:    $local_fs
@@ -141,13 +141,55 @@ case $1 in
     unset re
     unset thp_path
     ;;
-esac</code></pre></div></div><div class="paragraph"><p>Make the file executable:</p></div><div class="literalblock"><div class="content"><pre>sudo chmod 755 /etc/init.d/disable-transparent-hugepages</pre></div></div><div class="paragraph"><p>Make the file to be ran on reboot:</p></div><div class="literalblock"><div class="content"><pre>sudo update-rc.d disable-transparent-hugepages defaults</pre></div></div><div class="paragraph"><p>Start Mongo:</p></div><div class="literalblock"><div class="content"><pre>sudo service mongod start</pre></div></div><div class="paragraph"><p>Check that it runs fine:</p></div><div class="literalblock"><div class="content"><pre>sudo cat /var/log/mongodb/mongod.log</pre></div></div><div class="paragraph"><p>&#8594; There should be a line "[initandlisten] waiting for connections on port &lt;port&gt;"</p></div><div class="paragraph"><p>And now stop it, as we will need to run it differently for elasticsearch:</p></div><div class="literalblock"><div class="content"><pre>sudo service mongod stop</pre></div></div><div class="paragraph"><p>source: <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html" class="bare">https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html</a></p></div><div class="paragraph"><p>Download the public signing key:</p></div><div class="literalblock"><div class="content"><pre>wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -</pre></div></div><div class="paragraph"><p>Then:</p></div><div class="literalblock"><div class="content"><pre>sudo apt-get install apt-transport-https</pre></div></div><div class="literalblock"><div class="content"><pre>echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list</pre></div></div><div class="literalblock"><div class="content"><pre>sudo apt-get update</pre></div></div><div class="literalblock"><div class="content"><pre>sudo apt-get install elasticsearch</pre></div></div><div class="literalblock"><div class="content"><pre>sudo /bin/systemctl daemon-reload</pre></div></div><div class="literalblock"><div class="content"><pre>sudo /bin/systemctl enable elasticsearch.service</pre></div></div><div class="literalblock"><div class="content"><pre>sudo vi /etc/elasticsearch/elasticsearch.yml</pre></div></div><div class="paragraph"><p>&#8594; switch this param to true: bootstrap.memory_lock: true</p></div><div class="paragraph"><p>You then need to make sure the JVM Heap size is no more than half the RAM. First fix a memory param:</p></div><div class="literalblock"><div class="content"><pre>sudo mkdir /etc/systemd/system/elasticsearch.service.d
-cd  /etc/systemd/system/elasticsearch.service.d</pre></div></div><div class="paragraph"><p>Add these lines:</p></div><div class="paragraph"><p>LimitMEMLOCK=infinity</p></div><div class="paragraph"><p>Adjust resource limits:</p></div><div class="literalblock"><div class="content"><pre>sudo vi /etc/security/limits.conf</pre></div></div><div class="paragraph"><p>Add line:</p></div><div class="paragraph"><p>elasticsearch  -  nofile  65536</p></div><div class="paragraph"><p>Add a jvm parameter:</p></div><div class="paragraph"><p>sudo vi /etc/elasticsearch/jvm.options</p></div><div class="paragraph"><p>Add this line:</p></div><div class="paragraph"><p>-Djava.io.tmpdir=/var/tmp</p></div></section><section id="_a_elastic2_doc_manager"><h2>a. elastic2-doc-manager</h2><div class="paragraph"><p>This is a doc manager by mongodb labs.</p></div>
+esac</code></pre></div></div>
+<div class="paragraph"><p>Make the file executable:</p></div>
+<div class="literalblock"><div class="content"><pre>sudo chmod 755 /etc/init.d/disable-transparent-hugepages</pre></div></div>
+<div class="paragraph"><p>Make the file to be ran on reboot:</p></div>
+<div class="literalblock"><div class="content"><pre>sudo update-rc.d disable-transparent-hugepages defaults</pre></div></div>
+<div class="paragraph"><p>Start Mongo:</p></div>
+<div class="literalblock"><div class="content"><pre>sudo service mongod start</pre></div></div>
+<div class="paragraph"><p>Check that it runs fine:</p></div>
+<div class="literalblock"><div class="content"><pre>sudo cat /var/log/mongodb/mongod.log</pre></div></div>
+<div class="paragraph"><p>&#8594; There should be a line "[initandlisten] waiting for connections on port &lt;port&gt;"</p></div>
+<div class="paragraph"><p>And now stop it, as we will need to run it differently for elasticsearch:</p></div>
+<div class="literalblock"><div class="content"><pre>sudo service mongod stop</pre></div></div></section>
+<section id="_3_install_elasticsearch"><h2>3. Install Elasticsearch</h2></section>
+<section><div class="paragraph"><p>source: <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html" class="bare">https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html</a></p></div>
+<div class="paragraph"><p>Download the public signing key:</p></div>
+<div class="literalblock"><div class="content"><pre>wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -</pre></div></div>
+<div class="paragraph"><p>Then:</p></div>
+<div class="literalblock"><div class="content"><pre>sudo apt-get install apt-transport-https</pre></div></div>
+<div class="literalblock"><div class="content"><pre>echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list</pre></div></div>
+<div class="literalblock"><div class="content"><pre>sudo apt-get update</pre></div></div>
+<div class="literalblock"><div class="content"><pre>sudo apt-get install elasticsearch</pre></div></div>
+<div class="literalblock"><div class="content"><pre>sudo /bin/systemctl daemon-reload</pre></div></div>
+<div class="literalblock"><div class="content"><pre>sudo /bin/systemctl enable elasticsearch.service</pre></div></div></section>
+<section id="_4_config_elasticsearch"><h2>4. Config Elasticsearch</h2></section>
+<section><div class="literalblock"><div class="content"><pre>sudo vi /etc/elasticsearch/elasticsearch.yml</pre></div></div>
+<div class="paragraph"><p>&#8594; switch this param to true: bootstrap.memory_lock: true</p></div>
+<div class="paragraph"><p>You then need to make sure the JVM Heap size is no more than half the RAM. First fix a memory param:</p></div>
+<div class="literalblock"><div class="content"><pre>sudo mkdir /etc/systemd/system/elasticsearch.service.d
+cd  /etc/systemd/system/elasticsearch.service.d</pre></div></div>
+<div class="paragraph"><p>Add these lines:</p></div>
+<div class="paragraph"><p>LimitMEMLOCK=infinity</p></div>
+<div class="paragraph"><p>Adjust resource limits:</p></div>
+<div class="literalblock"><div class="content"><pre>sudo vi /etc/security/limits.conf</pre></div></div>
+<div class="paragraph"><p>Add line:</p></div>
+<div class="paragraph"><p>elasticsearch  -  nofile  65536</p></div>
+<div class="paragraph"><p>Add a jvm parameter:</p></div>
+<div class="paragraph"><p>sudo vi /etc/elasticsearch/jvm.options</p></div>
+<div class="paragraph"><p>Add this line:</p></div>
+<div class="paragraph"><p>-Djava.io.tmpdir=/var/tmp</p></div></section>
+<section id="_5_install_the_mongo_to_elasticsearch_connection"><h2>5. Install the mongo to elasticsearch connection</h2></section>
+<section><h3>a. elastic2-doc-manager</h3></section>
+<section><div class="paragraph"><p>This is a doc manager by mongodb labs.</p></div>
 <div class="paragraph"><p>Source: <a href="https://github.com/mongodb-labs/elastic2-doc-manager" class="bare">https://github.com/mongodb-labs/elastic2-doc-manager</a></p></div>
 <div class="literalblock"><div class="content"><pre>sudo apt-get install python-setuptools
 sudo easy_install pip
 sudo pip install 'elastic2-doc-manager[elastic5]'
-sudo pip install 'mongo-connector[elastic5]'</pre></div></div></section><section id="_b_run_mongo_as_a_replicaset"><h2>b. run Mongo as a replicaset</h2><div class="literalblock"><div class="content"><pre>sudo service mongod stop</pre></div></div>
+sudo pip install 'mongo-connector[elastic5]'</pre></div></div></section>
+<section><h3>b. run Mongo as a replicaset</h3></section>
+<section><div class="literalblock"><div class="content"><pre>sudo service mongod stop</pre></div></div>
 <div class="paragraph"><p>Create the path for your db (if needed)</p></div>
 <div class="paragraph"><p>sudo mkdir -p /data/db</p></div>
 <div class="literalblock"><div class="content"><pre>sudo vi /etc/mongod.conf</pre></div></div>
@@ -155,28 +197,32 @@ sudo pip install 'mongo-connector[elastic5]'</pre></div></div></section><section
 <div class="paragraph"><p>Then:</p></div>
 <div class="literalblock"><div class="content"><pre>sudo chown -R mongodb:mongodb /data/db</pre></div></div>
 <div class="literalblock"><div class="content"><pre>Then launch mongo as a replicaset:</pre></div></div>
-<div class="literalblock"><div class="content"><pre>sudo mongod --port 27017 --dbpath /data/db --replSet rs0 --fork --logpath /var/log/mongodb.mongod.log</pre></div></div>
-<div class="paragraph"><p>Kibana is the visualization engine for elastic.</p></div>
+<div class="literalblock"><div class="content"><pre>sudo mongod --port 27017 --dbpath /data/db --replSet rs0 --fork --logpath /var/log/mongodb.mongod.log</pre></div></div></section>
+<section id="_6_install_kibana"><h2>6. Install kibana</h2></section>
+<section><div class="paragraph"><p>Kibana is the visualization engine for elastic.</p></div>
 <div class="literalblock"><div class="content"><pre>sudo wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 sudo apt-get install kibana</pre></div></div>
 <div class="paragraph"><p>Configure Kibana to start automatically at boot:</p></div>
 <div class="literalblock"><div class="content"><pre>sudo /bin/systemctl daemon-reload
-sudo /bin/systemctl enable kibana.service</pre></div></div>
-<h3>7. Install X-pack</h3><div class="literalblock"><div class="content"><pre>https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html</pre></div></div>
+sudo /bin/systemctl enable kibana.service</pre></div></div></section>
+<section><h3>7. Install X-pack</h3></section>
+<section><div class="literalblock"><div class="content"><pre>https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html</pre></div></div>
 <div class="ulist"><ul><li><p>it might need to create an empty file named /et/default/elasticsearch)</p></li><li><p>see <a href="https://discuss.elastic.co/t/installing-x-pack-with-nonstandard-conf-dir/76448/3" class="bare">https://discuss.elastic.co/t/installing-x-pack-with-nonstandard-conf-dir/76448/3</a></p><div class="dlist"><dl><dt class="hdlist1">INFO</dt><dd><p>the second command (x-pack install for kibana) takes long minutes, that&#8217;s normal.</p></dd></dl></div></li></ul></div>
 <div class="paragraph"><p>cd /usr/share/elasticsearch
 sudo bin/elasticsearch-plugin install x-pack</p></div>
 <div class="paragraph"><p>cd /usr/share/kibana
-sudo bin/kibana-plugin install x-pack</p></div>
-<div class="paragraph"><p>This security component is hard to configure, and we don&#8217;t need it if we run elasticsearch behind a web server and a reverse proxy, on a single machine.</p></div>
+sudo bin/kibana-plugin install x-pack</p></div></section>
+<section id="_8_disable_the_security_component_of_x_pack"><h2>8. Disable the security component of X-Pack</h2></section>
+<section><div class="paragraph"><p>This security component is hard to configure, and we don&#8217;t need it if we run elasticsearch behind a web server and a reverse proxy, on a single machine.</p></div>
 <div class="paragraph"><p>Add xpack.security.enabled: false</p></div>
 <div class="paragraph"><p>to /etc/elasticsearch/elasticsearch.yml</p></div>
 <div class="paragraph"><p>and to /etc/kibana/kibana.yml</p></div>
 <div class="paragraph"><p>Also in the same kibana.conf file, change the default username and passwd to "elastic" and "changeme" <strong>and leave the quotes</strong></p></div>
 <div class="ulist"><ul><li><p>start Elasticsearch:
 sudo /usr/share/elasticsearch/bin elasticsearch</p></li><li><p>start Kibana:
-sudo /usr/share/kibana/bin kibana</p></li></ul></div>
-<div class="paragraph"><p>Source: <a href="https://blog.jixee.me/how-to-use-mongo-connector-with-elasticsearch/" class="bare">https://blog.jixee.me/how-to-use-mongo-connector-with-elasticsearch/</a></p></div>
+sudo /usr/share/kibana/bin kibana</p></li></ul></div></section>
+<section id="_9_install_the_mongo_connector_for_elasticsearch"><h2>9. Install the Mongo-connector for ElasticSearch</h2></section>
+<section><div class="paragraph"><p>Source: <a href="https://blog.jixee.me/how-to-use-mongo-connector-with-elasticsearch/" class="bare">https://blog.jixee.me/how-to-use-mongo-connector-with-elasticsearch/</a></p></div>
 <div class="literalblock"><div class="content"><pre>sudo apt-get install python2.7 python-pip curl
 sudo pip install mongo-connector</pre></div></div>
 <div class="paragraph"><p>Edit the conf of Mongo to turn on replicasets:</p></div>
@@ -186,16 +232,17 @@ sudo pip install mongo-connector</pre></div></div>
 <div class="listingblock"><div class="content"><pre class="CodeRay"><code>replication:
   replSetName: rs0
   oplogSizeMB: 100</code></pre></div></div>
-<div class="literalblock"><div class="content"><pre>sudo mongo-connector -m localhost:27017 -t localhost:9200 -d elastic2_doc_manager  -n database1.collection1,database1.collection2</pre></div></div>
-<div class="literalblock"><div class="content"><pre>sudo service elasticsearch start
+<div class="literalblock"><div class="content"><pre>sudo mongo-connector -m localhost:27017 -t localhost:9200 -d elastic2_doc_manager  -n database1.collection1,database1.collection2</pre></div></div></section>
+<section id="_10_start_elasticsearch_and_kibana"><h2>10. Start elasticsearch and Kibana</h2></section>
+<section><div class="literalblock"><div class="content"><pre>sudo service elasticsearch start
  sudo systemctl start kibana.service</pre></div></div>
 <div class="paragraph"><p>You can check that the connection is made here, your Mongo collections should be listed on this page:</p></div>
 <div class="literalblock"><div class="content"><pre>http://localhost:9200/_cat/indices?v</pre></div></div>
 <div class="literalblock"><div class="content"><pre> == The end
-==  The end
-==  !</pre></div></div>
+//ST: The end
+//ST: !</pre></div></div>
 <div class="paragraph"><p>Find references for this lesson, and other lessons, <a href="https://seinecle.github.io/linux-security-tutorials">here</a>.</p></div>
-<div class="paragraph"><p><span class="image right"><img src="images/round_portrait_mini_150.png" alt="round portrait mini 150" /></span>
+<div class="paragraph"><p><span class="image right"><img src="../images/round_portrait_mini_150.png" alt="round portrait mini 150" /></span>[align="center", role="right"]
 This course is made by Clement Levallois.</p></div>
 <div class="paragraph"><p>Discover my other tutorials and courses in data / tech for business: <a href="http://www.clementlevallois.net" class="bare">http://www.clementlevallois.net</a></p></div>
 <div class="paragraph"><p>Or get in touch via Twitter: <a href="https://www.twitter.com/seinecle">@seinecle</a>
@@ -215,7 +262,7 @@ This course is made by Clement Levallois.</p></div>
     class="statcounter"
     src="//c.statcounter.com/11304288/0/11304288/1/" alt="site
     stats"></a></div></noscript>
-    <!-- End of StatCounter Code for Default Guide --></p></div></section></section></div></div><script src="reveal.js-3.5.0/lib/js/head.min.js"></script><script src="reveal.js-3.5.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+    <!-- End of StatCounter Code for Default Guide --></p></div></section></div></div><script src="reveal.js-3.6.0/lib/js/head.min.js"></script><script src="reveal.js-3.6.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: true,
@@ -285,11 +332,11 @@ Reveal.initialize({
 
   // Optional libraries used to extend on reveal.js
   dependencies: [
-      { src: 'reveal.js-3.5.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      { src: 'reveal.js-3.5.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: 'reveal.js-3.5.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js-3.6.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js-3.6.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js-3.6.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-      { src: 'reveal.js-3.5.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-      { src: 'reveal.js-3.5.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+      { src: 'reveal.js-3.6.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'reveal.js-3.6.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
   ]
 });</script></body></html>

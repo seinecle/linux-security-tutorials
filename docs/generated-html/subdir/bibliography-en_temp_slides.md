@@ -10,12 +10,14 @@ last modified: {docdate}
 :revnumber: 1.0
 :example-caption!:
 
-==  'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
-==  !
+//ST: 'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes
+//ST: !
 
-==  General books on Linux
+== General books on Linux
+== !
+//ST: General books on Linux
 
-==  !
+//ST: !
 
 - Soyinka, Wale (2015). _Linux Administration: A Beginner’s Guide_, McGraw-Hill Education. 7th edition.
 -  Ward, Brian (2014). _How Linux Works: What Every Superuser Should Know_, No Starch Press. 2nd edition.
@@ -23,21 +25,27 @@ last modified: {docdate}
 
 
 
-==  Checklists
+== Checklists
+== !
+//ST: Checklists
 
-==  !
+//ST: !
 - security checklist for a linux system administrator: http://www.slashroot.in/security-checklist-linux-system-administrator
 - a step-by-step guide to setting up / securing a Debian server: http://www.pontikis.net/blog/debian-wheezy-web-server-setup
 
-==  Passwords and keys
+== Passwords and keys
+== !
+//ST: Passwords and keys
 
-==  !
+//ST: !
 - how to choose https://www.cs.cmu.edu/~help/security/choosing_passwords.html[good passwords]
 - how to create an https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows[SSH key with Puttygen on Windows]
 
-==  The end!
+== the end
+== !
+//ST: The end!
 
-==  !
+//ST: !
 
 Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
 

@@ -293,8 +293,8 @@ You can check that the connection is made here, your Mongo collections should be
  http://localhost:9200/_cat/indices?v
 
  == The end
- //ST: The end
- //ST: !
+//ST: The end
+//ST: !
 
 Find references for this lesson, and other lessons, https://seinecle.github.io/linux-security-tutorials[here].
 

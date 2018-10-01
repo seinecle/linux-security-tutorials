@@ -171,13 +171,14 @@ Hide the identity of the server in the headers:
 - add a JVM-Option -Dproduct.name=""
 
 
-== The end
-//ST: The end
+== the end
+//ST: The end!
+
 //ST: !
 
-image:round_portrait_mini_150.png[align="center", role="right"]
-Tutorial by Clement Levallois.
+Author of this tutorial: https://twitter.com/seinecle[Clement Levallois]
 
-Discover other tutorials and courses in data / tech for business: http://www.clementlevallois.net
+All resources on linux security: https://seinecle.github.io/linux-security-tutorials/
+http://www.clementlevallois.net
 
 Or get in touch via Twitter: https://www.twitter.com/seinecle[@seinecle]

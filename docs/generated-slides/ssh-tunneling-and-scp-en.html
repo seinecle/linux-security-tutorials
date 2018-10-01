@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="Clément Levallois" /><title>SSH tunneling and SCP between servers</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js-3.5.0/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js-3.5.0/css/theme/white.css" id="theme" /><style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="Clément Levallois" /><title>Setup of a ssl certificate with let&#8217;s encrypt</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js-3.6.0/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js-3.6.0/css/theme/white.css" id="theme" /><style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
 /*pre.CodeRay {background-color:#f7f7f8;}*/
 .CodeRay .line-numbers{border-right:1px solid #d8d8d8;padding:0 0.5em 0 .25em}
 .CodeRay span.line-numbers{display:inline-block;margin-right:.5em;color:rgba(0,0,0,.3)}
@@ -86,39 +86,40 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .insert .insert{color:#080}
 .CodeRay .delete .delete{color:#800}
 .CodeRay .change .change{color:#66f}
-.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.5.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.5.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>SSH tunneling and SCP between servers</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-10-11</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
-<section id="_escape_or_o_to_see_all_sides_f11_for_full_screen_s_for_speaker_notes"><h2>'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes</h2></section>
-<section></section>
+.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.6.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.6.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Setup of a ssl certificate with let&#8217;s encrypt</h1><div class="preamble"><div class="paragraph"><p>last modified: 2018-02-04</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
+<section id="_system"><h2>System</h2></section>
 <section><div class="ulist"><ul><li><p>I use Debian, version 8.7 (<a href="http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server">why?</a>)</p></li><li><p>Vi is used as a text editor in the following</p></li></ul></div></section>
-<section><div class="ulist"><ul><li><p>SSH allows 2 computers to connect to each other , even with a firewall on each computer (how?).</p></li><li><p>The data transitting between the 2 servers is not encrypted, but it is tunnelled in a way that protects it from preying eyes (how?)</p></li><li><p>For this reason, SSH tunneling is a nice way to have a couple or even more computers to discuss with each other: to go from a single server to a cluster!</p></li><li><p>My use case: a prod server that does the heavy lifting, a small server which receives the API requests from the public and polls the prod server for answers.</p></li></ul></div></section>
-<section><div class="paragraph"><p>Difficulty: SSH is pretty hard to setup for beginners.</p></div></section>
-<section><div class="paragraph"><p>Prod server: A.A.A</p></div>
-<div class="paragraph"><p>API server: B.B.B</p></div></section>
-<section><div class="paragraph"><p>I want the db in A.A.A to be tunneled to B.B.B. The API server on B.B.B. can query the db as if it was in localhost.</p></div>
-<div class="paragraph"><p>From B.B.B. :</p></div>
-<div class="ulist"><ul><li><p>creating a pair of keys:</p></li></ul></div>
-<div class="paragraph"><p>source: <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys&#8212;&#8203;2" class="bare">https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys&#8212;&#8203;2</a></p></div>
-<div class="literalblock"><div class="content"><pre>ssh-keygen -t rsa</pre></div></div></section>
-<section><div class="paragraph"><p>This generates a private key id_rsa and a public key id_rsa.pub, both of them in the folder /home/user/.ssh/</p></div></section>
-<section><div class="paragraph"><p>On A.A.A.:</p></div>
-<div class="ulist"><ul><li><p>copying the id_rsa.pub made on B.B.B and pasting it as a new line in authorized_keys in A.A.A.</p></li><li><p>restart sshd with: service sshd restart</p></li></ul></div></section>
-<section><div class="paragraph"><p>From B.B.B.:</p></div>
-<div class="literalblock"><div class="content"><pre>ssh -Nf -L 9200:localhost:9200 myuser@A.A.A -p 22</pre></div></div>
-<div class="paragraph"><p>(9200 is because I want to tunnel Elasticsearch)</p></div>
-<div class="paragraph"><p>(actually replace 22 by the port you configured in sshd_config in A.A.A)</p></div></section>
-<section><div class="paragraph"><p>(the Nf option puts the SSH connection in the background. Indeed, we don&#8217;t care about it - we don&#8217;t want an interactive session in a console. Just the port 9200 to be tunneled.)</p></div>
-<div class="paragraph"><p>(see <a href="http://stackoverflow.com/questions/25048045/elasticsearch-remote-access-through-ssh" class="bare">http://stackoverflow.com/questions/25048045/elasticsearch-remote-access-through-ssh</a>)</p></div></section>
-<section><div class="paragraph"><p>Closing an SSH tunnel:</p></div>
-<div class="paragraph"><p><a href="http://stackoverflow.com/questions/9447226/how-to-close-this-ssh-tunnel" class="bare">http://stackoverflow.com/questions/9447226/how-to-close-this-ssh-tunnel</a></p></div>
-<div class="paragraph"><p>here: make sure you have access to the file you want to move, both in origin and dest folders!</p></div>
-<div class="paragraph"><p>scp -P 1234 /var/redis/6379/dump.rdb username@destinationhost:/home/username</p></div></section>
-<section><div class="paragraph"><p>To copy a full directory:</p></div>
+<section id="_why_ssh"><h2>Why SSH?</h2></section>
+<section><div class="ulist"><ul><li><p>SSH allows 2 computers to connect to each other , even with a firewall on each computer (how?).</p></li><li><p>The data transitting between the 2 servers is not encrypted, but it is tunnelled in a way that protects it from preying eyes (how?)</p></li><li><p>For this reason, SSH tunneling is a nice way to have a couple or even more computers to discuss with each other: to go from a single server to a cluster!</p></li><li><p>My use case: a prod server that does the heavy lifting, a small server which receives the API requests from the public and polls the prod server for answers.</p></li></ul></div>
+<div class="paragraph"><p>Difficulty: SSH is pretty hard to setup for beginners.</p></div></section>
+<section id="_setup"><h2>Setup</h2></section>
+<section><div class="paragraph"><p>Prod server: A.A.A
+API server: B.B.B</p></div>
+<div class="paragraph"><p>I want the db in A.A.A to be tunneled to B.B.B. The API server on B.B.B. can query the db as if it was in localhost.</p></div>
+<div class="paragraph"><p>From B.B.B. :
+- creating a pair of keys:
+source: <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys&#8212;&#8203;2" class="bare">https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys&#8212;&#8203;2</a></p></div>
+<div class="literalblock"><div class="content"><pre>ssh-keygen -t rsa</pre></div></div>
+<div class="paragraph"><p>This generates a private key id_rsa and a public key id_rsa.pub, both of them in the folder /home/user/.ssh/</p></div>
+<div class="paragraph"><p>On A.A.A.:
+- copying the id_rsa.pub made on B.B.B and pasting it as a new line in authorized_keys in A.A.A.
+- restart sshd with: service sshd restart</p></div>
+<div class="paragraph"><p>From B.B.B.:
+ssh -Nf -L 9200:localhost:9200 myuser@A.A.A -p 22</p></div>
+<div class="paragraph"><p>(9200 is because I want to tunnel Elasticsearch)
+(actually replace 22 by the port you configured in sshd_config in A.A.A)</p></div>
+<div class="paragraph"><p>(the Nf option puts the SSH connection in the background. Indeed, we don&#8217;t care about it - we don&#8217;t want an interactive session in a console. Just the port 9200 to be tunneled.)</p></div>
+<div class="paragraph"><p>(see <a href="http://stackoverflow.com/questions/25048045/elasticsearch-remote-access-through-ssh" class="bare">http://stackoverflow.com/questions/25048045/elasticsearch-remote-access-through-ssh</a>)
+Closing an SSH tunnel:
+<a href="http://stackoverflow.com/questions/9447226/how-to-close-this-ssh-tunnel" class="bare">http://stackoverflow.com/questions/9447226/how-to-close-this-ssh-tunnel</a></p></div></section>
+<section id="_scp"><h2>SCP</h2></section>
+<section><div class="paragraph"><p>here: make sure you have access to the file you want to move, both in origin and dest folders!</p></div>
+<div class="paragraph"><p>scp -P 1234 /var/redis/6379/dump.rdb username@destinationhost:/home/username</p></div>
+<div class="paragraph"><p>To copy a full directory:</p></div>
 <div class="paragraph"><p>scp -r -P 1234 /var/folder username@destinationhost:/home/username/folder</p></div></section>
-<section id="_the_end"><h2>The end</h2></section>
-<section><div class="paragraph"><p><span class="image right"><img src="images/round_portrait_mini_150.png" alt="round portrait mini 150" /></span>
-Tutorial by Clement Levallois.</p></div>
-<div class="paragraph"><p>Discover other tutorials and courses in data / tech for business: <a href="http://www.clementlevallois.net" class="bare">http://www.clementlevallois.net</a></p></div>
-<div class="paragraph"><p>Or get in touch via Twitter: <a href="https://www.twitter.com/seinecle">@seinecle</a>
+<section id="_the_end"><h2>the end</h2></section>
+<section><div class="paragraph"><p>Author of this tutorial: <a href="https://twitter.com/seinecle">Clement Levallois</a></p></div>
+<div class="paragraph"><p>All resources on linux security: <a href="https://seinecle.github.io/linux-security-tutorials/" class="bare">https://seinecle.github.io/linux-security-tutorials/</a>
     <!-- Start of StatCounter Code for Default Guide -->
     <script type="text/javascript">
         var sc_project = 11304288;
@@ -135,7 +136,7 @@ Tutorial by Clement Levallois.</p></div>
     class="statcounter"
     src="//c.statcounter.com/11304288/0/11304288/1/" alt="site
     stats"></a></div></noscript>
-    <!-- End of StatCounter Code for Default Guide --></p></div></section></div></div><script src="reveal.js-3.5.0/lib/js/head.min.js"></script><script src="reveal.js-3.5.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+    <!-- End of StatCounter Code for Default Guide --></p></div></section></div></div><script src="reveal.js-3.6.0/lib/js/head.min.js"></script><script src="reveal.js-3.6.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: true,
@@ -205,11 +206,11 @@ Reveal.initialize({
 
   // Optional libraries used to extend on reveal.js
   dependencies: [
-      { src: 'reveal.js-3.5.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      { src: 'reveal.js-3.5.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: 'reveal.js-3.5.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js-3.6.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js-3.6.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js-3.6.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-      { src: 'reveal.js-3.5.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-      { src: 'reveal.js-3.5.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+      { src: 'reveal.js-3.6.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'reveal.js-3.6.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
   ]
 });</script></body></html>

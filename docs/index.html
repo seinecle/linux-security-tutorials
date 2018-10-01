@@ -2,142 +2,138 @@
 <html>
 
 <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Linux security tutorials" />
+  <meta charset='utf-8' />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Linux security tutorials" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,700italic,700' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,700,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,700italic,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,700,700italic' rel='stylesheet' type='text/css'>
 
-    <title>Security Tutorials for Linux (Debian)</title>
+  <title>Security Tutorials for Linux (Debian)</title>
 </head>
 
 <body>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-            <a id="forkme_banner" href="https://github.com/seinecle/linux-security-tutorials">View on GitHub</a>
+  <!-- HEADER -->
+  <div id="header_wrap" class="outer">
+    <header class="inner">
+      <a id="forkme_banner" href="https://github.com/seinecle/linux-security-tutorials">View on GitHub</a>
 
-            <h1 id="project_title">Security tutorials for Linux (Debian)</h1>
-            <h2 id="project_tagline">How to secure a Linux server, for beginners</h2>
-        </header>
+      <h1 id="project_title">Security tutorials for Linux (Debian)</h1>
+      <h2 id="project_tagline">How to secure a Linux server, for beginners</h2>
+    </header>
+  </div>
+
+  <section class="outer">
+    <div class="downloads inner">
+      <a class="zip_download_link" href="https://github.com/seinecle/linux-security-tutorials/archive/master.zip">Download .zip</a>
+      <a class="tar_download_link" href="https://github.com/seinecle/linux-security-tutorials/archive/master.tar.gz">Download .tar.gz</a>
     </div>
+  </section>
 
-    <section class="outer">
-        <div class="downloads inner">
-            <a class="zip_download_link" href="https://github.com/seinecle/linux-security-tutorials/archive/master.zip">Download .zip</a>
-            <a class="tar_download_link" href="https://github.com/seinecle/linux-security-tutorials/archive/master.tar.gz">Download .tar.gz</a>
-        </div>
+
+  <!-- MAIN CONTENT -->
+  <div id="main_content_wrap" class="outer">
+    <section id="main_content" class="inner">
+
+      <h1>Tutorials to learn how to secure a Linux server (Debian), open and collaborative </h1>
+      <p>These tutorials are created to help beginners setup and run their Linux servers in the most secure way. I am a beginner in Linux security, and I write these tutorials in order to teach myself the subject, and sollicitate all the help I can get to
+        develop good practices. <strong>Seasoned Linux administrators and security experts surely have plenty to add to these tutorials. Don't hesitate, open an issue on Github <a href="https://github.com/seinecle/linux-security-tutorials/issues">here</a> to add your tips!</strong></p>
+
+      <h2>Open</h2>
+
+      <p>These tutorials are open: they can be used to teach in class or in professional training sessions. You are welcome to contribute your knowledge: by using Github, we can all collaborate and edit these documents to improve on them. Don't know where
+        to start? Authoring with Github is explained <a href="https://www.hastac.org/blogs/harrisonm/2013/10/12/github-academia-and-collaborative-writing">here</a>.</p>
+
+      <h2>Tutorials available in web pages, pdf, slides, and ebooks!</h2>
+
+      <p>The tutorials are not written with MS Word or with PowerPoint. We choose instead <a href="http://asciidoctor.org/docs/what-is-asciidoc/">asciidoc</a>, a slightly technical way of writing, in plain text files (files ending with .txt). Why? Because
+        then, it is easier to convert these tutorials in slides, web pages, ebooks, pdf and MS Word docx as well. Basically, sharing and collaborating online becomes easier, without being blocked by a proprietary file format.</p>
+
+      <h2>Table of content</h2>
+
+      <li><b>Server security</b>
+        <ul>
+          <li>
+            A bibliography (
+            <a href="generated-html/bibliography-en.html">web</a>,
+            <a href="generated-slides/bibliography-en.html">slides</a>,
+            <a href="generated-pdf/bibliography-en.pdf">pdf</a>,
+            <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/bibliography-en.adoc">source</a>)
+          </li>
+          <li>
+            Step-by-step guide to Linux security for beginners (
+            <a href="generated-html/step-by-step-guide-en.html">web</a>,
+            <a href="generated-slides/step-by-step-guide-en.html">slides</a>,
+            <a href="generated-pdf/step-by-step-guide-en.pdf">pdf</a>,
+            <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/step-by-step-guide-en.adoc">source</a>)
+          </li>
+          <li>
+            Just the commands - fast setup for a secure Linux server (
+            <a href="generated-html/all-commands-in-order-en.html">web</a>,
+            <a href="generated-slides/all-commands-in-order-en.html">slides</a>,
+            <a href="generated-pdf/all-commands-in-order-en.pdf">pdf</a>,
+            <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/all-commands-in-order-en.adoc">source</a>)
+          </li>
+        </ul>
+      </li>
+      <li><b>Glassfish + Nginx + SSL (with Let's Encrypt)</b>
+        <ul>
+          <li>
+            Setup of Glassfish 4.1 and security measures (
+            <a href="generated-html/gf-en.html">web</a>,
+            <a href="generated-slides/gf-en.html">slides</a>,
+            <a href="generated-pdf/gf-en.pdf">pdf</a>,
+            <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/gf-en.adoc">source</a>)
+          </li>
+          <li>
+            Generating SSL certificates for free and in 5 minutes with let's encrypt (
+            <a href="generated-html/ssl-en.html">web</a>,
+            <a href="generated-slides/ssl-en.html">slides</a>,
+            <a href="generated-pdf/ssl-en.pdf">pdf</a>,
+            <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/ssl-en.adoc">source</a>)
+          </li>
+          <li>
+            Configuring nginx for Glassfish with SSL certificates (
+            <a href="generated-html/nginx-en.html">web</a>,
+            <a href="generated-slides/nginx-en.html">slides</a>,
+            <a href="generated-pdf/nginx-en.pdf">pdf</a>,
+            <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/nginx-en.adoc">source</a>)
+          </li>
+
+        </ul>
+      </li>
     </section>
+  </div>
 
+  <!-- FOOTER  -->
+  <div id="footer_wrap" class="outer">
+    <footer class="inner">
+      <p class="copyright">Linux security tutorials maintained by <a href="https://github.com/seinecle">Clément Levallois</a></p>
+      <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+    </footer>
+  </div>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-        <section id="main_content" class="inner">
-
-            <h1>Tutorials to learn how to secure a Linux server (Debian), open and collaborative </h1>
-            <p>These tutorials are created to help beginners setup and run their Linux servers in the most secure way. I am a beginner in Linux security, and I write these tutorials in order to teach myself the subject, and sollicitate all the help I can
-                get to develop good practices. <strong>Seasoned Linux administrators and security experts surely have plenty to add to these tutorials. Don't hesitate, open an issue on Github <a href="https://github.com/seinecle/linux-security-tutorials/issues">here</a> to add your tips!</strong></p>
-
-            <h2>Open</h2>
-
-            <p>These tutorials are open: they can be used to teach in class or in professional training sessions. You are welcome to contribute your knowledge: by using Github, we can all collaborate and edit these documents to improve on them. Don't know
-                where to start? Authoring with Github is explained <a href="https://www.hastac.org/blogs/harrisonm/2013/10/12/github-academia-and-collaborative-writing">here</a>.</p>
-
-            <h2>Tutorials available in web pages, pdf, slides, and ebooks!</h2>
-
-            <p>The tutorials are not written with MS Word or with PowerPoint. We choose instead <a href="http://asciidoctor.org/docs/what-is-asciidoc/">asciidoc</a>, a slightly technical way of writing, in plain text files (files ending with .txt). Why?
-                Because then, it is easier to convert these tutorials in slides, web pages, ebooks, pdf and MS Word docx as well. Basically, sharing and collaborating online becomes easier, without being blocked by a proprietary file format.</p>
-
-            <h2>Table of content</h2>
-
-            <li><b>Server security</b>
-                <ul>
-                    <li>
-                        Step-by-step guide to Linux security for beginners (
-                        <a href="generated-html/step-by-step-guide-en.html">web</a>,
-                        <a href="generated-pdf/step-by-step-guide-en.pdf">pdf</a>,
-                        <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/step-by-step-guide-en.adoc">source</a>)
-                    </li>
-                </ul>
-            </li>
-            <li><b>Mongo and Elasticsearch</b>
-                <ul>
-                    <li>
-                        Set up (
-                        <a href="generated-html/mongodb-and-elasticsearch.html">web</a>,
-                        <a href="generated-pdf/mongodb-and-elasticsearch.pdf">pdf</a>,
-                        <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/mongodb-and-elasticsearch.adoc">source</a>)
-                    </li>
-                </ul>
-            </li>
-            <li><b>SSH tunneling and SCP between servers</b>
-                <ul>
-                    <li>
-                        SSH tunneling and SCP between servers (
-                        <a href="generated-html/ssh-tunneling-and-scp-en.html">web</a>,
-                        <a href="generated-pdf/ssh-tunneling-and-scp-en.pdf">pdf</a>,
-                        <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/ssh-tunneling-and-scp-en.adoc">source</a>)
-                    </li>
-                </ul>
-            </li>
-
-            <li><b>Glassfish + Nginx + SSL (with Let's Encrypt)</b>
-                <ul>
-                    <li>
-                        Setup of Glassfish 4.1 and security measures (
-                        <a href="generated-html/gf-en.html">web</a>,
-                        <a href="generated-pdf/gf-en.pdf ">pdf</a>,
-                        <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/gf-en.adoc ">source</a>)
-                    </li>
-                    <li>
-                        Generating SSL certificates for free and in 5 minutes with let's encrypt (
-                        <a href="generated-html/ssl-en.html ">web</a>,
-                        <a href="generated-slides/ssl-en.html ">slides</a>,
-                        <a href="generated-pdf/ssl-en.pdf ">pdf</a>,
-                        <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/ssl-en.adoc ">source</a>)
-                    </li>
-                    <li>
-                        Configuring nginx for Glassfish with SSL certificates (
-                        <a href="generated-html/nginx-en.html ">web</a>,
-                        <a href="generated-slides/nginx-en.html ">slides</a>,
-                        <a href="generated-pdf/nginx-en.pdf ">pdf</a>,
-                        <a href="https://github.com/seinecle/linux-security-tutorials/blob/master/src/main/asciidoc/en/nginx-en.adoc ">source</a>)
-                    </li>
-                </ul>
-            </li>
-        </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap " class="outer ">
-        <footer class="inner ">
-            <p class="copyright ">Linux security tutorials maintained by <a href="https://github.com/seinecle ">Clément Levallois</a></p>
-            <p>Published with <a href="http://pages.github.com ">GitHub Pages</a></p>
-        </footer>
-    </div>
-
-    <!-- Start of StatCounter Code for Default Guide -->
-    <script type="text/javascript ">
-        var sc_project = 11304288;
-        var sc_invisible = 1;
-        var sc_security = "4ace8383 ";
-        var scJsHost = (("https: " == document.location.protocol) ?
-            "https://secure. " : "http://www. ");
-        document.write("<sc " + "ript type='text/javascript' src='" +
-            scJsHost +
-            "statcounter.com/counter/counter.js'></ " + "script>");
-    </script>
-    <noscript><div class="statcounter"><a title="site stats"
-	href="http://statcounter.com/" target="_blank"><img
-	class="statcounter"
-	src="//c.statcounter.com/11304288/0/4ace8383/1/" alt="site
-	stats"></a></div></noscript>
-    <!-- End of StatCounter Code for Default Guide -->
+  <!-- Start of StatCounter Code for Default Guide -->
+  <script type="text/javascript">
+    var sc_project = 11238920;
+    var sc_invisible = 1;
+    var sc_security = "8dac6cd5";
+    var scJsHost = (("https:" == document.location.protocol) ?
+      "https://secure." : "http://www.");
+    document.write("<sc" + "ript type='text/javascript' src='" +
+      scJsHost +
+      "statcounter.com/counter/counter.js'></" + "script>");
+  </script>
+  <noscript><div class="statcounter"><a title="site stats"
+    href="http://statcounter.com/" target="_blank"><img
+    class="statcounter"
+    src="//c.statcounter.com/11238920/0/8dac6cd5/1/" alt="site
+    stats"></a></div></noscript>
+  <!-- End of StatCounter Code for Default Guide -->
 
 </body>
 

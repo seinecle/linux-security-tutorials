@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="Clément Levallois" /><title>Setup of GlassFish and security measures</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js-3.5.0/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js-3.5.0/css/theme/white.css" id="theme" /><style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="Clément Levallois" /><title>Setup of GlassFish and security measures</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js-3.6.0/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js-3.6.0/css/theme/white.css" id="theme" /><style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
 /*pre.CodeRay {background-color:#f7f7f8;}*/
 .CodeRay .line-numbers{border-right:1px solid #d8d8d8;padding:0 0.5em 0 .25em}
 .CodeRay span.line-numbers{display:inline-block;margin-right:.5em;color:rgba(0,0,0,.3)}
@@ -86,73 +86,74 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .insert .insert{color:#080}
 .CodeRay .delete .delete{color:#800}
 .CodeRay .change .change{color:#66f}
-.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.5.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.5.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Setup of GlassFish and security measures</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-10-10</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
-<section id="_escape_or_o_to_see_all_sides_f11_for_full_screen_s_for_speaker_notes"><h2>! 'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes</h2><div class="ulist"><ul><li><p>I use Debian, version 8.7 (<a href="http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server">why?</a>)</p></li><li><p>Vi is used as a text editor in the following</p></li></ul></div></section>
-<section id="_installing_the_jdk_8"><h2>Installing the JDK 8</h2><div class="paragraph"><p>Create a new file:</p></div>
+.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.6.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.6.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Setup of GlassFish and security measures</h1><div class="preamble"><div class="paragraph"><p>last modified: 2018-02-04</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
+<section id="_system"><h2>System</h2></section>
+<section><div class="ulist"><ul><li><p>I use Debian, version 8.7 (<a href="http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server">why?</a>)</p></li><li><p>Vi is used as a text editor in the following</p></li></ul></div></section>
+<section id="_installing_the_jdk_8"><h2>Installing the JDK 8</h2></section>
+<section><div class="paragraph"><p>Create a new file:</p></div>
 <div class="paragraph"><p>sudo vim /etc/apt/sources.list.d/java-8-debian.list</p></div>
 <div class="paragraph"><p>add these lines:</p></div>
 <div class="paragraph"><p>deb <a href="http://ppa.launchpad.net/webupd8team/java/ubuntu" class="bare">http://ppa.launchpad.net/webupd8team/java/ubuntu</a> trusty main</p></div>
 <div class="paragraph"><p>deb-src <a href="http://ppa.launchpad.net/webupd8team/java/ubuntu" class="bare">http://ppa.launchpad.net/webupd8team/java/ubuntu</a> trusty main</p></div>
-<div class="paragraph"><p>Close the file.</p></div></section>
-<section><div class="paragraph"><p>get the certif key:</p></div>
+<div class="paragraph"><p>Close the file.</p></div>
+<div class="paragraph"><p>get the certif key:</p></div>
 <div class="literalblock"><div class="content"><pre>sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886</pre></div></div>
 <div class="paragraph"><p>install the JDK 8:</p></div>
-<div class="literalblock"><div class="content"><pre>sudo apt-get update &amp;&amp; sudo apt-get install oracle-java8-installer</pre></div></div></section>
-<section><div class="paragraph"><p>Set the env variables straight:</p></div>
+<div class="literalblock"><div class="content"><pre>sudo apt-get update &amp;&amp; sudo apt-get install oracle-java8-installer</pre></div></div>
+<div class="paragraph"><p>Set the env variables straight:</p></div>
 <div class="literalblock"><div class="content"><pre>sudo apt-get install oracle-java8-set-default</pre></div></div></section>
-<section id="_installing_glassfish_4_1"><h2>Installing Glassfish 4.1</h2><div class="dlist"><dl><dt class="hdlist1">We will install it in /opt/app-server</dt><dd><p>==  !
-create a glassfish user (here the <code>-m</code> option creates its home directory if not already present):</p></dd><dt class="hdlist1">INFO</dt><dd><p>maybe a good idea to choose a user name different from glassfish - default values are always to be avoided.</p></dd></dl></div>
+<section id="_installing_glassfish_4_1"><h2>Installing Glassfish 4.1</h2></section>
+<section><div class="dlist"><dl><dt class="hdlist1">We will install it in /opt/app-server</dt><dd><p>create a glassfish user (here the <code>-m</code> option creates its home directory if not already present):</p></dd><dt class="hdlist1">INFO</dt><dd><p>maybe a good idea to choose a user name different from glassfish - default values are always to be avoided.</p></dd></dl></div>
 <div class="paragraph"><p>adduser glassfish -shell /bin/bash
 passwd glassfish
 adduser glassfish sudo</p></div>
 <div class="literalblock"><div class="content"><pre>//ST: !
 change to user glassfish</pre></div></div>
-<div class="literalblock"><div class="content"><pre>su - glassfish</pre></div></div></section>
-<section><div class="paragraph"><p>mkdir /opt/app-server
+<div class="literalblock"><div class="content"><pre>su - glassfish</pre></div></div>
+<div class="paragraph"><p>mkdir /opt/app-server
 make the user owner of /opt/app-server:</p></div>
 <div class="literalblock"><div class="content"><pre>sudo chown -R glassfish /opt/app-server
-sudo chmod -R 700 /opt/app-server</pre></div></div></section>
-<section><div class="paragraph"><p>download glassfish from here: <a href="https://glassfish.java.net/download.html" class="bare">https://glassfish.java.net/download.html</a></p></div>
+sudo chmod -R 700 /opt/app-server</pre></div></div>
+<div class="paragraph"><p>download glassfish from here: <a href="https://glassfish.java.net/download.html" class="bare">https://glassfish.java.net/download.html</a></p></div>
 <div class="literalblock"><div class="content"><pre>cd /opt/app-server
-wget http://download.java.net/glassfish/4.1.2/release/glassfish-4.1.2.zip</pre></div></div></section>
-<section><div class="paragraph"><p>sudo apt-get install zip unzip
+wget http://download.java.net/glassfish/4.1.2/release/glassfish-4.1.2.zip</pre></div></div>
+<div class="paragraph"><p>sudo apt-get install zip unzip
  unzip glassfish-4.1.2.zip</p></div>
 <div class="paragraph"><p>Glassfish is now installed.</p></div></section>
-<section id="_hardening_glassfish_4_1"><h2>Hardening Glassfish 4.1</h2><div class="paragraph"><p>We can  access glassfish commande line by doing:</p></div>
+<section id="_hardening_glassfish_4_1"><h2>Hardening Glassfish 4.1</h2></section>
+<section><div class="paragraph"><p>We can  access glassfish commande line by doing:</p></div>
 <div class="paragraph"><p>cd glassfish4/glassfish/bin</p></div>
-<div class="literalblock"><div class="content"><pre>./asadmin</pre></div></div></section>
-<section><div class="paragraph"><p>Change the masterpassword:</p></div>
+<div class="literalblock"><div class="content"><pre>./asadmin</pre></div></div>
+<div class="paragraph"><p>Change the masterpassword:</p></div>
 <div class="paragraph"><p>source: <a href="http://ufasoli.blogspot.fr/2013/07/glassfish-changing-master-password-and.html" class="bare">http://ufasoli.blogspot.fr/2013/07/glassfish-changing-master-password-and.html</a></p></div>
 <div class="literalblock"><div class="content"><pre>change-master-password --savemasterpassword</pre></div></div>
-<div class="paragraph"><p>(put "changeit" when the default password is asked, then choose your own)</p></div></section>
-<section><div class="paragraph"><p>We will now delete the default domain ("domain1") and create a new one. 2 reasons for this:</p></div>
+<div class="paragraph"><p>(put "changeit" when the default password is asked, then choose your own)</p></div>
+<div class="paragraph"><p>We will now delete the default domain ("domain1") and create a new one. 2 reasons for this:</p></div>
 <div class="ulist"><ul><li><p>We will create a domain with a custom name, to avoid using the default value.</p></li><li><p>Create a domain from scratch allows to make use of the nice "portbase" option:</p></li></ul></div>
 <div class="paragraph"><p>&#8594; The "portbase" option allows for creating a set of ports different from the default ones.</p></div>
-<div class="paragraph"><p>(source: <a href="https://blogs.oracle.com/alexismp/entry/flexible_glassfish_domain_creation_using" class="bare">https://blogs.oracle.com/alexismp/entry/flexible_glassfish_domain_creation_using</a>)</p></div></section>
-<section><div class="literalblock"><div class="content"><pre>delete-domain domain1</pre></div></div>
+<div class="paragraph"><p>(source: <a href="https://blogs.oracle.com/alexismp/entry/flexible_glassfish_domain_creation_using" class="bare">https://blogs.oracle.com/alexismp/entry/flexible_glassfish_domain_creation_using</a>)</p></div>
+<div class="literalblock"><div class="content"><pre>delete-domain domain1</pre></div></div>
 <div class="literalblock"><div class="content"><pre>create-domain --portbase 17390 yourcustomdomain</pre></div></div>
-<div class="dlist"><dl><dt class="hdlist1">NOTE</dt><dd><p>just letters and numbers in the domain name.</p></dd></dl></div></section>
-<section><div class="paragraph"><p>So, with portbase 17390 (choose your own value instead), the port for the GlassFish GUI console will be 17390+ 48 = 17438</p></div>
+<div class="dlist"><dl><dt class="hdlist1">NOTE</dt><dd><p>just letters and numbers in the domain name.</p></dd></dl></div>
+<div class="paragraph"><p>So, with portbase 17390 (choose your own value instead), the port for the GlassFish GUI console will be 17390+ 48 = 17438</p></div>
 <div class="paragraph"><p>Add a tunnel for port 17438 in your SSH connection. Restart your SSH connection.</p></div>
 <div class="paragraph"><p>Go back to /opt/app-server/glassfish-4/glassfish/bin and ./asadmin</p></div>
 <div class="literalblock"><div class="content"><pre>start-domain</pre></div></div>
-<div class="paragraph"><p>If you tunneled the port 17438 in your SSH, you can now go to <code><a href="http://localhost:17438" class="bare">http://localhost:17438</a></code></p></div></section>
-<section><div class="paragraph"><p>In the GUI console,</p></div>
-<div class="ulist"><ul><li><p>change the admin password</p></li><li><p>change the "Address field" in http-listener-2 sub menu to the IP of the server.</p></li></ul></div></section>
-<section><div class="paragraph"><p>The following tips are directly taken from <a href="http://blog.eisele.net/2011/05/securing-your-glassfish-hardening-guide.html" class="bare">http://blog.eisele.net/2011/05/securing-your-glassfish-hardening-guide.html</a></p></div>
-<div class="ulist"><ul><li><p>change the content of /domains/yourcustomdomain/docroot/index.html &#8594; "my server is online"</p></li></ul></div></section>
-<section><div class="ulist"><ul><li><p>create an "errorpages" subdir in your domain root folder and an error page in /domains/yourcustomdomain/errorpages/404.html</p></li></ul></div>
+<div class="paragraph"><p>If you tunneled the port 17438 in your SSH, you can now go to <code><a href="http://localhost:17438" class="bare">http://localhost:17438</a></code></p></div>
+<div class="paragraph"><p>In the GUI console,</p></div>
+<div class="ulist"><ul><li><p>change the admin password</p></li><li><p>change the "Address field" in http-listener-2 sub menu to the IP of the server.</p></li></ul></div>
+<div class="paragraph"><p>The following tips are directly taken from <a href="http://blog.eisele.net/2011/05/securing-your-glassfish-hardening-guide.html" class="bare">http://blog.eisele.net/2011/05/securing-your-glassfish-hardening-guide.html</a></p></div>
+<div class="ulist"><ul><li><p>change the content of /domains/yourcustomdomain/docroot/index.html &#8594; "my server is online"</p></li></ul></div>
+<div class="ulist"><ul><li><p>create an "errorpages" subdir in your domain root folder and an error page in /domains/yourcustomdomain/errorpages/404.html</p></li></ul></div>
 <div class="paragraph"><p>Then, in the GUI console, point to this file via:</p></div>
 <div class="literalblock"><div class="content"><pre>Configuration|Virtual Server|server</pre></div></div>
 <div class="literalblock"><div class="content"><pre>name: send-error_1</pre></div></div>
-<div class="literalblock"><div class="content"><pre>value: code=404 path=/errorpages/404.html reason=Resource_not_found</pre></div></div></section>
-<section><div class="paragraph"><p>Hide the identity of the server in the headers:</p></div>
+<div class="literalblock"><div class="content"><pre>value: code=404 path=/errorpages/404.html reason=Resource_not_found</pre></div></div>
+<div class="paragraph"><p>Hide the identity of the server in the headers:</p></div>
 <div class="ulist"><ul><li><p>In Network-config &#8594; Network-listeners &#8594; http-listeners (1 et 2) &#8594; HTTP tab: turn off the "XPowered By:" header with your http-listener</p></li><li><p>add a JVM-Option -Dproduct.name=""</p></li></ul></div></section>
-<section id="_the_end"><h2>The end</h2></section>
-<section><div class="paragraph"><p><span class="image right"><img src="images/round_portrait_mini_150.png" alt="round portrait mini 150" /></span>
-Tutorial by Clement Levallois.</p></div>
-<div class="paragraph"><p>Discover other tutorials and courses in data / tech for business: <a href="http://www.clementlevallois.net" class="bare">http://www.clementlevallois.net</a></p></div>
-<div class="paragraph"><p>Or get in touch via Twitter: <a href="https://www.twitter.com/seinecle">@seinecle</a>
+<section id="_the_end"><h2>the end</h2></section>
+<section><div class="paragraph"><p>Author of this tutorial: <a href="https://twitter.com/seinecle">Clement Levallois</a></p></div>
+<div class="paragraph"><p>All resources on linux security: <a href="https://seinecle.github.io/linux-security-tutorials/" class="bare">https://seinecle.github.io/linux-security-tutorials/</a>
     <!-- Start of StatCounter Code for Default Guide -->
     <script type="text/javascript">
         var sc_project = 11304288;
@@ -169,7 +170,7 @@ Tutorial by Clement Levallois.</p></div>
     class="statcounter"
     src="//c.statcounter.com/11304288/0/11304288/1/" alt="site
     stats"></a></div></noscript>
-    <!-- End of StatCounter Code for Default Guide --></p></div></section></div></div><script src="reveal.js-3.5.0/lib/js/head.min.js"></script><script src="reveal.js-3.5.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+    <!-- End of StatCounter Code for Default Guide --></p></div></section></div></div><script src="reveal.js-3.6.0/lib/js/head.min.js"></script><script src="reveal.js-3.6.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: true,
@@ -239,11 +240,11 @@ Reveal.initialize({
 
   // Optional libraries used to extend on reveal.js
   dependencies: [
-      { src: 'reveal.js-3.5.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      { src: 'reveal.js-3.5.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: 'reveal.js-3.5.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js-3.6.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js-3.6.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js-3.6.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-      { src: 'reveal.js-3.5.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-      { src: 'reveal.js-3.5.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+      { src: 'reveal.js-3.6.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'reveal.js-3.6.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
   ]
 });</script></body></html>

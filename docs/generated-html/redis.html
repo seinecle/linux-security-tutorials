@@ -531,9 +531,31 @@ table.CodeRay td.code>pre{padding:0}
 <ul class="sectlevel1">
 <li><a href="#_system">System</a></li>
 <li><a href="#_why_redis">Why Redis?</a></li>
-<li><a href="#_installing_redis">Installing Redis</a></li>
+<li><a href="#_installing_redis">Installing Redis</a>
+<ul class="sectlevel3">
 <li><a href="#_moving_redis_from_one_server_to_another">moving redis from one server to another</a></li>
-<li><a href="#_the_end">The end</a></li>
+</ul>
+</li>
+<li><a href="#_install_elasticsearch">Install Elasticsearch</a>
+<ul class="sectlevel4">
+<li><a href="#_config">Config</a></li>
+</ul>
+</li>
+<li><a href="#_install_the_mongo_to_elasticsearch_connection">Install the mongo to elasticsearch connection</a>
+<ul class="sectlevel3">
+<li><a href="#_elastic2_doc_manager">elastic2-doc-manager</a></li>
+<li><a href="#_run_mongo_as_a_replicaset">run Mongo as a replicaset:</a></li>
+</ul>
+</li>
+<li><a href="#_install_kibana">Install kibana</a>
+<ul class="sectlevel3">
+<li><a href="#_install_x_pack">Install X-pack</a></li>
+</ul>
+</li>
+<li><a href="#_disable_the_security_component_of_x_pack">Disable the security component of X-Pack</a></li>
+<li><a href="#_install_the_mongo_connector_for_elasticsearch">Install the Mongo-connector for ElasticSearch:</a></li>
+<li><a href="#_start_elasticsearch_and_kibana">Start elasticsearch and Kibana</a></li>
+<li><a href="#_the_end">the end</a></li>
 </ul>
 </div>
 </div>
@@ -541,7 +563,7 @@ table.CodeRay td.code>pre{padding:0}
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>last modified: 2017-10-10</p>
+<p>last modified: 2018-02-04</p>
 </div>
 </div>
 </div>
@@ -700,13 +722,10 @@ sudo mkdir /var/redis/6379</p>
 <div class="paragraph">
 <p>sudo /etc/init.d/redis_6379 start</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_moving_redis_from_one_server_to_another">moving redis from one server to another</h2>
-<div class="sectionbody">
+<div class="sect3">
+<h4 id="_moving_redis_from_one_server_to_another">moving redis from one server to another</h4>
 <div class="paragraph">
-<p>Do scp as described in the tutorial on ssh</p>
+<p>Do scp as described in ssh hell.</p>
 </div>
 <div class="paragraph">
 <p>Make sure sure redis is stopped and appendonly mode is OFF in the config file.</p>
@@ -723,18 +742,327 @@ Start redis.</p>
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="_the_end">The end</h2>
+<h2 id="_install_elasticsearch">Install Elasticsearch</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><span class="image right"><img src="images/round_portrait_mini_150.png" alt="round portrait mini 150"></span>
-Tutorial by Clement Levallois.</p>
+<p>source: <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html" class="bare">https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html</a></p>
 </div>
 <div class="paragraph">
-<p>Discover other tutorials and courses in data / tech for business: <a href="http://www.clementlevallois.net" class="bare">http://www.clementlevallois.net</a></p>
+<p>Download the public signing key:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Or get in touch via Twitter: <a href="https://www.twitter.com/seinecle">@seinecle</a>
+<p>Then:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo apt-get install apt-transport-https</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo apt-get update</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo apt-get install elasticsearch</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo /bin/systemctl daemon-reload</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo /bin/systemctl enable elasticsearch.service</pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_config">Config</h5>
+<div class="literalblock">
+<div class="content">
+<pre>sudo vi /etc/elasticsearch/elasticsearch.yml</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#8594; switch this param to true: bootstrap.memory_lock: true</p>
+</div>
+<div class="paragraph">
+<p>You then need to make sure the JVM Heap size is no more than half the RAM. First fix a memory param:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo mkdir /etc/systemd/system/elasticsearch.service.d
+cd  /etc/systemd/system/elasticsearch.service.d
+sudo vi elasticsearch.conf</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add these lines:</p>
+</div>
+<div class="paragraph">
+<p>LimitMEMLOCK=infinity</p>
+</div>
+<div class="paragraph">
+<p>Adjust resource limits:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo vi /etc/security/limits.conf</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add line:</p>
+</div>
+<div class="paragraph">
+<p>elasticsearch  -  nofile  65536</p>
+</div>
+<div class="paragraph">
+<p>Add a jvm parameter:</p>
+</div>
+<div class="paragraph">
+<p>sudo vi /etc/elasticsearch/jvm.options</p>
+</div>
+<div class="paragraph">
+<p>Add this line:</p>
+</div>
+<div class="paragraph">
+<p>-Djava.io.tmpdir=/var/tmp</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_install_the_mongo_to_elasticsearch_connection">Install the mongo to elasticsearch connection</h2>
+<div class="sectionbody">
+<div class="sect3">
+<h4 id="_elastic2_doc_manager">elastic2-doc-manager</h4>
+<div class="paragraph">
+<p>This is a doc manager by mongodb labs.</p>
+</div>
+<div class="paragraph">
+<p>Source: <a href="https://github.com/mongodb-labs/elastic2-doc-manager" class="bare">https://github.com/mongodb-labs/elastic2-doc-manager</a></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo apt-get install python-setuptools
+sudo easy_install pip
+sudo pip install 'elastic2-doc-manager[elastic5]'
+sudo pip install 'mongo-connector[elastic5]'</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_run_mongo_as_a_replicaset">run Mongo as a replicaset:</h4>
+<div class="literalblock">
+<div class="content">
+<pre>sudo service mongod stop</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Create the path for your db (if needed)</p>
+</div>
+<div class="paragraph">
+<p>sudo mkdir -p /data/db</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo vi /etc/mongod.conf</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Change dbPath to /data/db</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo chown -R mongodb:mongodb /data/db</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Then launch mongo as a replicaset:</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo mongod --port 27017 --dbpath /data/db --replSet rs0 --fork --logpath /var/log/mongodb.mongod.log</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_install_kibana">Install kibana</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Kibana is the visualization engine for elastic.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+sudo apt-get install kibana</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Configure Kibana to start automatically at boot:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable kibana.service</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_install_x_pack">Install X-pack</h4>
+<div class="literalblock">
+<div class="content">
+<pre>https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>it might need to create an empty file named /et/default/elasticsearch)</p>
+</li>
+<li>
+<p>see <a href="https://discuss.elastic.co/t/installing-x-pack-with-nonstandard-conf-dir/76448/3" class="bare">https://discuss.elastic.co/t/installing-x-pack-with-nonstandard-conf-dir/76448/3</a></p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">INFO</dt>
+<dd>
+<p>the second command (x-pack install for kibana) takes long minutes, that&#8217;s normal.</p>
+</dd>
+</dl>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>cd /usr/share/elasticsearch
+sudo bin/elasticsearch-plugin install x-pack</p>
+</div>
+<div class="paragraph">
+<p>cd /usr/share/kibana
+sudo bin/kibana-plugin install x-pack</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_disable_the_security_component_of_x_pack">Disable the security component of X-Pack</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This security component is hard to configure, and we don&#8217;t need it if we run elasticsearch behind a web server and a reverse proxy, on a single machine.</p>
+</div>
+<div class="paragraph">
+<p>Add xpack.security.enabled: false</p>
+</div>
+<div class="paragraph">
+<p>to /etc/elasticsearch/elasticsearch.yml</p>
+</div>
+<div class="paragraph">
+<p>and to /etc/kibana/kibana.yml</p>
+</div>
+<div class="paragraph">
+<p>Also in the same kibana.conf file, change the default username and passwd to "elastic" and "changeme" <strong>and leave the quotes</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>start Elasticsearch:
+sudo /usr/share/elasticsearch/bin elasticsearch</p>
+</li>
+<li>
+<p>start Kibana:
+sudo /usr/share/kibana/bin kibana</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_install_the_mongo_connector_for_elasticsearch">Install the Mongo-connector for ElasticSearch:</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Source: <a href="https://blog.jixee.me/how-to-use-mongo-connector-with-elasticsearch/" class="bare">https://blog.jixee.me/how-to-use-mongo-connector-with-elasticsearch/</a></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo apt-get install python2.7 python-pip curl
+sudo pip install mongo-connector</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Edit the conf of Mongo to turn on replicasets:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre> sudo vi /etc/mongo.conf
+(can also be: sudo vi /etc/mongod.conf)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Uncomment "replication", add two lines:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>replication:
+  replSetName: rs0
+  oplogSizeMB: 100</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo mongo-connector -m localhost:27017 -t localhost:9200 -d elastic2_doc_manager  -n database1.collection1,database1.collection2</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_start_elasticsearch_and_kibana">Start elasticsearch and Kibana</h2>
+<div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre>sudo service elasticsearch start
+sudo systemctl start kibana.service</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can check that the connection is made here, your Mongo collections should be listed on this page:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>http://localhost:9200/_cat/indices?v</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_end">the end</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Author of this tutorial: <a href="https://twitter.com/seinecle">Clement Levallois</a></p>
+</div>
+<div class="paragraph">
+<p>All resources on linux security: <a href="https://seinecle.github.io/linux-security-tutorials/" class="bare">https://seinecle.github.io/linux-security-tutorials/</a>
     <!-- Start of StatCounter Code for Default Guide -->
     <script type="text/javascript">
         var sc_project = 11304288;
@@ -759,7 +1087,7 @@ Tutorial by Clement Levallois.</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2017-10-10 21:52:28 CEST
+Last updated 2018-02-04 16:45:54 CET
 </div>
 </div>
 </body>

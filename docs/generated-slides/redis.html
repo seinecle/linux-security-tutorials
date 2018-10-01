@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="Clément Levallois" /><title>Setup of redis</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js-3.5.0/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js-3.5.0/css/theme/white.css" id="theme" /><style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="Clément Levallois" /><title>Setup of redis</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js-3.6.0/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js-3.6.0/css/theme/white.css" id="theme" /><style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
 /*pre.CodeRay {background-color:#f7f7f8;}*/
 .CodeRay .line-numbers{border-right:1px solid #d8d8d8;padding:0 0.5em 0 .25em}
 .CodeRay span.line-numbers{display:inline-block;margin-right:.5em;color:rgba(0,0,0,.3)}
@@ -86,12 +86,14 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .insert .insert{color:#080}
 .CodeRay .delete .delete{color:#800}
 .CodeRay .change .change{color:#66f}
-.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.5.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.5.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Setup of redis</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-10-10</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
-<section id="_escape_or_o_to_see_all_sides_f11_for_full_screen_s_for_speaker_notes"><h2>'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes</h2></section>
-<section></section>
+.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.6.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.6.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Setup of redis</h1><div class="preamble"><div class="paragraph"><p>last modified: 2018-02-04</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
+<section id="_system"><h2>System</h2></section>
 <section><div class="ulist"><ul><li><p>I use Debian, version 8.7 (<a href="http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server">why?</a>)</p></li><li><p>Vi is used as a text editor in the following</p></li></ul></div></section>
-<section><div class="ulist"><ul><li><p>I need a data store of the kind: key &#8594; multiple values. Millions of keys, with hundreds or thousands of values for each key.</p></li><li><p>If in RAM, these queries on key-values than scanning tables in a db - I think.</p></li><li><p>Redis offers join / intersection / &#8230;&#8203; operations on sets of keys, which are useful in my use case.</p><div class="literalblock"><div class="content"><pre>sudo apt-get update &amp;&amp; sudo apt-get upgrade
-sudo apt-get install software-properties-common</pre></div></div></li></ul></div>
+<section id="_why_redis"><h2>Why Redis?</h2></section>
+<section><div class="ulist"><ul><li><p>I need a data store of the kind: key &#8594; multiple values. Millions of keys, with hundreds or thousands of values for each key.</p></li><li><p>If in RAM, these queries on key-values than scanning tables in a db - I think.</p></li><li><p>Redis offers join / intersection / &#8230;&#8203; operations on sets of keys, which are useful in my use case.</p></li></ul></div></section>
+<section id="_installing_redis"><h2>Installing Redis</h2></section>
+<section><div class="literalblock"><div class="content"><pre>sudo apt-get update &amp;&amp; sudo apt-get upgrade
+sudo apt-get install software-properties-common</pre></div></div>
 <div class="paragraph"><p>DO
 (source: <a href="https://www.linode.com/docs/databases/redis/deploy-redis-on-ubuntu-or-debian" class="bare">https://www.linode.com/docs/databases/redis/deploy-redis-on-ubuntu-or-debian</a>)</p></div>
 <div class="literalblock"><div class="content"><pre>sudo vi /etc/apt/sources.list.d/dotdeb.list</pre></div></div>
@@ -133,8 +135,9 @@ sudo mkdir /var/redis/6379</p></div>
 <div class="ulist"><ul><li><p>Edit the configuration file, making sure to perform the following changes:</p></li><li><p>Set daemonize to yes (by default it is set to no).</p></li><li><p>Set the pidfile to /var/run/redis_6379.pid (modify the port if needed).</p></li><li><p>Change the port accordingly. In our example it is not needed as the default port is already 6379.</p></li><li><p>Set your preferred loglevel.</p></li><li><p>Set the logfile to /var/log/redis_6379.log</p></li><li><p>Set the dir to /var/redis/6379 (very important step!)</p></li></ul></div>
 <div class="paragraph"><p>sudo update-rc.d redis_6379 defaults</p></div>
 <div class="paragraph"><p>Starting reddis:</p></div>
-<div class="paragraph"><p>sudo /etc/init.d/redis_6379 start</p></div>
-<div class="paragraph"><p>Do scp as described in the tutorial on ssh</p></div>
+<div class="paragraph"><p>sudo /etc/init.d/redis_6379 start</p></div></section>
+<section><h3>moving redis from one server to another</h3></section>
+<section><div class="paragraph"><p>Do scp as described in ssh hell.</p></div>
 <div class="paragraph"><p>Make sure sure redis is stopped and appendonly mode is OFF in the config file.</p></div>
 <div class="paragraph"><p>Move dump.rdb to /var/lib/redis
 Change ownership and permission:
@@ -142,11 +145,94 @@ Change ownership and permission:
  chmod 644 dump.rdb
 Start redis.</p></div>
 <div class="paragraph"><p>Change back appendonly to yes when redis has launched.</p></div></section>
-<section id="_the_end"><h2>The end</h2></section>
-<section><div class="paragraph"><p><span class="image right"><img src="images/round_portrait_mini_150.png" alt="round portrait mini 150" /></span>
-Tutorial by Clement Levallois.</p></div>
-<div class="paragraph"><p>Discover other tutorials and courses in data / tech for business: <a href="http://www.clementlevallois.net" class="bare">http://www.clementlevallois.net</a></p></div>
-<div class="paragraph"><p>Or get in touch via Twitter: <a href="https://www.twitter.com/seinecle">@seinecle</a>
+<section id="_install_elasticsearch"><h2>Install Elasticsearch</h2></section>
+<section><div class="paragraph"><p>source: <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html" class="bare">https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html</a></p></div>
+<div class="paragraph"><p>Download the public signing key:</p></div>
+<div class="literalblock"><div class="content"><pre>wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -</pre></div></div>
+<div class="paragraph"><p>Then:</p></div>
+<div class="literalblock"><div class="content"><pre>sudo apt-get install apt-transport-https</pre></div></div>
+<div class="literalblock"><div class="content"><pre>echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list</pre></div></div>
+<div class="literalblock"><div class="content"><pre>sudo apt-get update</pre></div></div>
+<div class="literalblock"><div class="content"><pre>sudo apt-get install elasticsearch</pre></div></div>
+<div class="literalblock"><div class="content"><pre>sudo /bin/systemctl daemon-reload</pre></div></div>
+<div class="literalblock"><div class="content"><pre>sudo /bin/systemctl enable elasticsearch.service</pre></div></div>
+<h4>Config</h4><div class="literalblock"><div class="content"><pre>sudo vi /etc/elasticsearch/elasticsearch.yml</pre></div></div>
+<div class="paragraph"><p>&#8594; switch this param to true: bootstrap.memory_lock: true</p></div>
+<div class="paragraph"><p>You then need to make sure the JVM Heap size is no more than half the RAM. First fix a memory param:</p></div>
+<div class="literalblock"><div class="content"><pre>sudo mkdir /etc/systemd/system/elasticsearch.service.d
+cd  /etc/systemd/system/elasticsearch.service.d
+sudo vi elasticsearch.conf</pre></div></div>
+<div class="paragraph"><p>Add these lines:</p></div>
+<div class="paragraph"><p>LimitMEMLOCK=infinity</p></div>
+<div class="paragraph"><p>Adjust resource limits:</p></div>
+<div class="literalblock"><div class="content"><pre>sudo vi /etc/security/limits.conf</pre></div></div>
+<div class="paragraph"><p>Add line:</p></div>
+<div class="paragraph"><p>elasticsearch  -  nofile  65536</p></div>
+<div class="paragraph"><p>Add a jvm parameter:</p></div>
+<div class="paragraph"><p>sudo vi /etc/elasticsearch/jvm.options</p></div>
+<div class="paragraph"><p>Add this line:</p></div>
+<div class="paragraph"><p>-Djava.io.tmpdir=/var/tmp</p></div></section>
+<section id="_install_the_mongo_to_elasticsearch_connection"><h2>Install the mongo to elasticsearch connection</h2></section>
+<section><h3>elastic2-doc-manager</h3></section>
+<section><div class="paragraph"><p>This is a doc manager by mongodb labs.</p></div>
+<div class="paragraph"><p>Source: <a href="https://github.com/mongodb-labs/elastic2-doc-manager" class="bare">https://github.com/mongodb-labs/elastic2-doc-manager</a></p></div>
+<div class="literalblock"><div class="content"><pre>sudo apt-get install python-setuptools
+sudo easy_install pip
+sudo pip install 'elastic2-doc-manager[elastic5]'
+sudo pip install 'mongo-connector[elastic5]'</pre></div></div></section>
+<section><h3>run Mongo as a replicaset:</h3></section>
+<section><div class="literalblock"><div class="content"><pre>sudo service mongod stop</pre></div></div>
+<div class="paragraph"><p>Create the path for your db (if needed)</p></div>
+<div class="paragraph"><p>sudo mkdir -p /data/db</p></div>
+<div class="literalblock"><div class="content"><pre>sudo vi /etc/mongod.conf</pre></div></div>
+<div class="literalblock"><div class="content"><pre>Change dbPath to /data/db</pre></div></div>
+<div class="paragraph"><p>Then:</p></div>
+<div class="literalblock"><div class="content"><pre>sudo chown -R mongodb:mongodb /data/db</pre></div></div>
+<div class="literalblock"><div class="content"><pre>Then launch mongo as a replicaset:</pre></div></div>
+<div class="literalblock"><div class="content"><pre>sudo mongod --port 27017 --dbpath /data/db --replSet rs0 --fork --logpath /var/log/mongodb.mongod.log</pre></div></div></section>
+<section id="_install_kibana"><h2>Install kibana</h2></section>
+<section><div class="paragraph"><p>Kibana is the visualization engine for elastic.</p></div>
+<div class="literalblock"><div class="content"><pre>sudo wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+sudo apt-get install kibana</pre></div></div>
+<div class="paragraph"><p>Configure Kibana to start automatically at boot:</p></div>
+<div class="literalblock"><div class="content"><pre>sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable kibana.service</pre></div></div></section>
+<section><h3>Install X-pack</h3></section>
+<section><div class="literalblock"><div class="content"><pre>https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html</pre></div></div>
+<div class="ulist"><ul><li><p>it might need to create an empty file named /et/default/elasticsearch)</p></li><li><p>see <a href="https://discuss.elastic.co/t/installing-x-pack-with-nonstandard-conf-dir/76448/3" class="bare">https://discuss.elastic.co/t/installing-x-pack-with-nonstandard-conf-dir/76448/3</a></p><div class="dlist"><dl><dt class="hdlist1">INFO</dt><dd><p>the second command (x-pack install for kibana) takes long minutes, that&#8217;s normal.</p></dd></dl></div></li></ul></div>
+<div class="paragraph"><p>cd /usr/share/elasticsearch
+sudo bin/elasticsearch-plugin install x-pack</p></div>
+<div class="paragraph"><p>cd /usr/share/kibana
+sudo bin/kibana-plugin install x-pack</p></div></section>
+<section id="_disable_the_security_component_of_x_pack"><h2>Disable the security component of X-Pack</h2></section>
+<section><div class="paragraph"><p>This security component is hard to configure, and we don&#8217;t need it if we run elasticsearch behind a web server and a reverse proxy, on a single machine.</p></div>
+<div class="paragraph"><p>Add xpack.security.enabled: false</p></div>
+<div class="paragraph"><p>to /etc/elasticsearch/elasticsearch.yml</p></div>
+<div class="paragraph"><p>and to /etc/kibana/kibana.yml</p></div>
+<div class="paragraph"><p>Also in the same kibana.conf file, change the default username and passwd to "elastic" and "changeme" <strong>and leave the quotes</strong></p></div>
+<div class="ulist"><ul><li><p>start Elasticsearch:
+sudo /usr/share/elasticsearch/bin elasticsearch</p></li><li><p>start Kibana:
+sudo /usr/share/kibana/bin kibana</p></li></ul></div></section>
+<section id="_install_the_mongo_connector_for_elasticsearch"><h2>Install the Mongo-connector for ElasticSearch:</h2></section>
+<section><div class="paragraph"><p>Source: <a href="https://blog.jixee.me/how-to-use-mongo-connector-with-elasticsearch/" class="bare">https://blog.jixee.me/how-to-use-mongo-connector-with-elasticsearch/</a></p></div>
+<div class="literalblock"><div class="content"><pre>sudo apt-get install python2.7 python-pip curl
+sudo pip install mongo-connector</pre></div></div>
+<div class="paragraph"><p>Edit the conf of Mongo to turn on replicasets:</p></div>
+<div class="literalblock"><div class="content"><pre> sudo vi /etc/mongo.conf
+(can also be: sudo vi /etc/mongod.conf)</pre></div></div>
+<div class="paragraph"><p>Uncomment "replication", add two lines:</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code>replication:
+  replSetName: rs0
+  oplogSizeMB: 100</code></pre></div></div>
+<div class="literalblock"><div class="content"><pre>sudo mongo-connector -m localhost:27017 -t localhost:9200 -d elastic2_doc_manager  -n database1.collection1,database1.collection2</pre></div></div></section>
+<section id="_start_elasticsearch_and_kibana"><h2>Start elasticsearch and Kibana</h2></section>
+<section><div class="literalblock"><div class="content"><pre>sudo service elasticsearch start
+sudo systemctl start kibana.service</pre></div></div>
+<div class="paragraph"><p>You can check that the connection is made here, your Mongo collections should be listed on this page:</p></div>
+<div class="literalblock"><div class="content"><pre>http://localhost:9200/_cat/indices?v</pre></div></div></section>
+<section id="_the_end"><h2>the end</h2></section>
+<section><div class="paragraph"><p>Author of this tutorial: <a href="https://twitter.com/seinecle">Clement Levallois</a></p></div>
+<div class="paragraph"><p>All resources on linux security: <a href="https://seinecle.github.io/linux-security-tutorials/" class="bare">https://seinecle.github.io/linux-security-tutorials/</a>
     <!-- Start of StatCounter Code for Default Guide -->
     <script type="text/javascript">
         var sc_project = 11304288;
@@ -163,7 +249,7 @@ Tutorial by Clement Levallois.</p></div>
     class="statcounter"
     src="//c.statcounter.com/11304288/0/11304288/1/" alt="site
     stats"></a></div></noscript>
-    <!-- End of StatCounter Code for Default Guide --></p></div></section></div></div><script src="reveal.js-3.5.0/lib/js/head.min.js"></script><script src="reveal.js-3.5.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+    <!-- End of StatCounter Code for Default Guide --></p></div></section></div></div><script src="reveal.js-3.6.0/lib/js/head.min.js"></script><script src="reveal.js-3.6.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: true,
@@ -233,11 +319,11 @@ Reveal.initialize({
 
   // Optional libraries used to extend on reveal.js
   dependencies: [
-      { src: 'reveal.js-3.5.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      { src: 'reveal.js-3.5.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: 'reveal.js-3.5.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js-3.6.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js-3.6.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js-3.6.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-      { src: 'reveal.js-3.5.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-      { src: 'reveal.js-3.5.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+      { src: 'reveal.js-3.6.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'reveal.js-3.6.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
   ]
 });</script></body></html>

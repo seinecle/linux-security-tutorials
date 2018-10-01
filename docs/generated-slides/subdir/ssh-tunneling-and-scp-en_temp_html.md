@@ -1,4 +1,4 @@
-= SSH tunneling and SCP between servers
+= Setup of a ssl certificate with let's encrypt
 Clément Levallois <clementlevallois@gmail.com>
 2017-04-09
 
@@ -22,8 +22,8 @@ last modified: {docdate}
 
 
 == Why SSH?
-
 //ST: !
+
 - SSH allows 2 computers to connect to each other , even with a firewall on each computer (how?).
 - The data transitting between the 2 servers is not encrypted, but it is tunnelled in a way that protects it from preying eyes (how?)
 - For this reason, SSH tunneling is a nice way to have a couple or even more computers to discuss with each other: to go from a single server to a cluster!

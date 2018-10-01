@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="Clément Levallois" /><title>Setup nginx for a glassfish app with ssl</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js-3.5.0/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js-3.5.0/css/theme/white.css" id="theme" /><style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta name="author" content="Clément Levallois" /><title>Setup nginx for a glassfish app with ssl</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js-3.6.0/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js-3.6.0/css/theme/white.css" id="theme" /><style>/* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
 /*pre.CodeRay {background-color:#f7f7f8;}*/
 .CodeRay .line-numbers{border-right:1px solid #d8d8d8;padding:0 0.5em 0 .25em}
 .CodeRay span.line-numbers{display:inline-block;margin-right:.5em;color:rgba(0,0,0,.3)}
@@ -86,52 +86,53 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .insert .insert{color:#080}
 .CodeRay .delete .delete{color:#800}
 .CodeRay .change .change{color:#66f}
-.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.5.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.5.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Setup nginx for a glassfish app with ssl</h1><div class="preamble"><div class="paragraph"><p>last modified: 2017-10-11</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
-<section id="_escape_or_o_to_see_all_sides_f11_for_full_screen_s_for_speaker_notes"><h2>'Escape' or 'o' to see all sides, F11 for full screen, 's' for speaker notes</h2></section>
-<section></section>
+.CodeRay .head .head{color:#f4f}</style><link href="reveal.js-3.6.0/lib/css/zenburn.css" rel="stylesheet" /><script>document.write( '<link rel="stylesheet" href="reveal.js-3.6.0/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section class="title"><h1>Setup nginx for a glassfish app with ssl</h1><div class="preamble"><div class="paragraph"><p>last modified: 2018-02-04</p></div></div><p class="author"><small>Clément Levallois</small></p></section>
+<section id="_system"><h2>System</h2></section>
 <section><div class="ulist"><ul><li><p>I use Debian, version 8.7 (<a href="http://www.pontikis.net/blog/five-reasons-to-use-debian-as-a-server">why?</a>)</p></li><li><p>Vi is used as a text editor in the following</p></li></ul></div></section>
+<section id="_why_nginx"><h2>Why nginx?</h2></section>
 <section><div class="paragraph"><p>When I was introduced to nginx a long time ago, it was as a convenient replacement for Apache Web Server: lighter, faster.</p></div>
-<div class="paragraph"><p>Indeed, nginx can help you direct the traffic received by your domain www.example.com to the html / php / js files or Java apps sitting on your server.</p></div></section>
-<section><div class="paragraph"><p>But it can do more than being a web server.
+<div class="paragraph"><p>Indeed, nginx can help you direct the traffic received by your domain www.example.com to the html / php / js files or Java apps sitting on your server.</p></div>
+<div class="paragraph"><p>But it can do more than being a web server.
 Nginx is a "reverse proxy", quite a barbaric term.
-I&#8217;d describe it as <strong>a tool doing useful stuff between your firewall and your web app</strong>. For security, it helps you with:</p></div></section>
-<section><div class="ulist"><ul><li><p>dealing with SSL certificates</p></li><li><p>help you mitigate DDOS attacks, and generally, controlling traffic in an easier way than using iptables</p></li><li><p>hide the server from view</p></li></ul></div></section>
-<section><div class="paragraph"><p>So I suppose you could do much of what nginx does via iptable and whatever app server you use, but concentring stuff in nginx makes it easier.</p></div></section>
+I&#8217;d describe it as <strong>a tool doing useful stuff between your firewall and your web app</strong>. For security, it helps you with:</p></div>
+<div class="ulist"><ul><li><p>dealing with SSL certificates</p></li><li><p>help you mitigate DDOS attacks, and generally, controlling traffic in an easier way than using iptables</p></li><li><p>hide the server from view</p></li></ul></div>
+<div class="paragraph"><p>So I suppose you could do much of what nginx does via iptable and whatever app server you use, but concentring stuff in nginx makes it easier.</p></div></section>
+<section id="_why_nginx_glassfish_ssl"><h2>why nginx + glassfish + ssl?</h2></section>
 <section><div class="paragraph"><p>Why a tutorial specifically on nginx used for a glassfish app with ssl certificates?</p></div>
-<div class="ulist"><ul><li><p>this is my personal use case</p></li><li><p>there are no tutorials on it, though <a href="https://gist.github.com/seinecle/06bde086330264b9681d2e721d0ed19e">this file on github</a> does 99% of the job (and we&#8217;ll use it here).</p></li></ul></div></section>
-<section><div class="paragraph"><p>So, this tutorial assumes you have created certificates with letsencrypt&#8217;s certbot, as explained in a previous tutorial.</p></div>
+<div class="ulist"><ul><li><p>this is my personal use case</p></li><li><p>there are no tutorials on it, though <a href="https://gist.github.com/halid/8fe138babedcb280c784">this file on github</a> does 99% of the job (and we&#8217;ll use it here).</p></li></ul></div>
+<div class="paragraph"><p>So, this tutorial assumes you have created certificates with letsencrypt&#8217;s certbot, as explained in a previous tutorial.</p></div>
 <div class="paragraph"><p>Let&#8217;s start:</p></div></section>
-<section><div class="literalblock"><div class="content"><pre>sudo apt-get install nginx</pre></div></div>
+<section id="_installing_nginx"><h2>installing nginx</h2></section>
+<section><div class="literalblock"><div class="content"><pre>sudo apt-get update &amp;&amp; sudo apt-get upgrade</pre></div></div>
+<div class="literalblock"><div class="content"><pre>sudo apt-get install nginx</pre></div></div>
 <div class="literalblock"><div class="content"><pre>sudo vi /etc/nginx/conf.d/yourdomain.com.conf</pre></div></div>
 <div class="paragraph"><p>(note: the ".conf" extension is necessary for the file to be loaded in nginx)</p></div>
-<div class="paragraph"><p>Paste the content of <a href="https://gist.github.com/seinecle/06bde086330264b9681d2e721d0ed19e">this file</a> in yourdomain.com.conf.</p></div></section>
-<section><div class="paragraph"><p>Explanations on the lines of this file:</p></div></section>
-<section><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="nginx language-nginx">upstream glassfish_server {
+<div class="paragraph"><p>Paste the content of <a href="https://gist.github.com/halid/8fe138babedcb280c784">this file</a> in yourdomain.com.conf.</p></div>
+<div class="paragraph"><p>Explanations on the lines of this file:</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="nginx language-nginx">upstream glassfish_server {
         server 127.0.0.1:8080 fail_timeout=0;
-    }</code></pre></div></div></section>
-<section><div class="paragraph"><p>This tells on which port the glassfish server can be reached.
+    }</code></pre></div></div>
+<div class="paragraph"><p>This tells on which port the glassfish server can be reached.
 Remember that the default port 8080 can be changed to a more random port.
-See the glassfish installation guide in the same series of tutorials.</p></div></section>
-<section><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="nginx language-nginx">    server {
+See the glassfish installation guide in the same series of tutorials.</p></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="nginx language-nginx">    server {
            listen         80;
            server_name    berat.com;
            return         301 https://$server_name$request_uri;<b>(1)</b>
     }</code></pre></div></div>
-<div class="colist arabic"><ol><li><p>This means you can still be contacted through <strong>http</strong>, it will simply be redirected to <strong>https</strong>. Nice!</p></li></ol></div></section>
-<section><div class="listingblock"><div class="content"><pre class="CodeRay"><code class="nginx language-nginx"> ssl_certificate /var/certs/server.crt;
- ssl_certificate_key /var/certs/server.key;</code></pre></div></div></section>
-<section><div class="paragraph"><p>For a ssl certificate created with letsencrypt, these lines should be changed for:</p></div>
-<div class="ulist"><ul><li><p>ssl_certificate /etc/letsencrypt/live/yourdomain.com/cert.pem;</p></li><li><p>ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;</p></li></ul></div></section>
-<section><div class="paragraph"><p>That&#8217;s it. Restart nginx to load your config:</p></div>
+<div class="colist arabic"><ol><li><p>This means you can still be contacted through <strong>http</strong>, it will simply be redirected to <strong>https</strong>. Nice!</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="CodeRay"><code class="nginx language-nginx"> ssl_certificate /var/certs/server.crt;
+ ssl_certificate_key /var/certs/server.key;</code></pre></div></div>
+<div class="paragraph"><p>For a ssl certificate created with letsencrypt, these lines should be changed for:</p></div>
+<div class="ulist"><ul><li><p>ssl_certificate /etc/letsencrypt/live/yourdomain.com/cert.pem;</p></li><li><p>ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;</p></li></ul></div>
+<div class="paragraph"><p>That&#8217;s it. Restart nginx to load your config:</p></div>
 <div class="paragraph"><p>sudo /etc/init.d/nginx restart</p></div>
-<div class="paragraph"><p>Make sure the port 443 is open in your firewall.</p></div></section>
-<section><div class="paragraph"><p>Test your domain can be reached with SSL, with https and a nice green OK in the url bar: <a href="https://yourdomain.com" class="bare">https://yourdomain.com</a></p></div>
+<div class="paragraph"><p>Make sure the port 443 is open in your firewall.</p></div>
+<div class="paragraph"><p>Test your domain can be reached with SSL, with https and a nice green OK in the url bar: <a href="https://yourdomain.com" class="bare">https://yourdomain.com</a></p></div>
 <div class="paragraph"><p>(don&#8217;t write <a href="https://yourdomain.com:8080" class="bare">https://yourdomain.com:8080</a>, it&#8217;s silly but it blocked me a long time&#8230;&#8203;)</p></div></section>
-<section id="_the_end"><h2>The end</h2></section>
-<section><div class="paragraph"><p><span class="image right"><img src="images/round_portrait_mini_150.png" alt="round portrait mini 150" /></span>
-Tutorial by Clement Levallois.</p></div>
-<div class="paragraph"><p>Discover other tutorials and courses in data / tech for business: <a href="http://www.clementlevallois.net" class="bare">http://www.clementlevallois.net</a></p></div>
-<div class="paragraph"><p>Or get in touch via Twitter: <a href="https://www.twitter.com/seinecle">@seinecle</a>
+<section id="_the_end"><h2>the end</h2></section>
+<section><div class="paragraph"><p>Author of this tutorial: <a href="https://twitter.com/seinecle">Clement Levallois</a></p></div>
+<div class="paragraph"><p>All resources on linux security: <a href="https://seinecle.github.io/linux-security-tutorials/" class="bare">https://seinecle.github.io/linux-security-tutorials/</a>
     <!-- Start of StatCounter Code for Default Guide -->
     <script type="text/javascript">
         var sc_project = 11304288;
@@ -148,7 +149,7 @@ Tutorial by Clement Levallois.</p></div>
     class="statcounter"
     src="//c.statcounter.com/11304288/0/11304288/1/" alt="site
     stats"></a></div></noscript>
-    <!-- End of StatCounter Code for Default Guide --></p></div></section></div></div><script src="reveal.js-3.5.0/lib/js/head.min.js"></script><script src="reveal.js-3.5.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+    <!-- End of StatCounter Code for Default Guide --></p></div></section></div></div><script src="reveal.js-3.6.0/lib/js/head.min.js"></script><script src="reveal.js-3.6.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: true,
@@ -218,11 +219,11 @@ Reveal.initialize({
 
   // Optional libraries used to extend on reveal.js
   dependencies: [
-      { src: 'reveal.js-3.5.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      { src: 'reveal.js-3.5.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: 'reveal.js-3.5.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js-3.6.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js-3.6.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js-3.6.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-      { src: 'reveal.js-3.5.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-      { src: 'reveal.js-3.5.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+      { src: 'reveal.js-3.6.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'reveal.js-3.6.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
   ]
 });</script></body></html>

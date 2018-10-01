@@ -30,14 +30,3 @@ sudo Xvfb -shmem -screen 0 2048x1536x24
 
 sudo apt-get install libxtst6
 sudo apt-get install default-jre (for awt classes)
-
-== The end
-//ST: The end
-//ST: !
-
-image:round_portrait_mini_150.png[align="center", role="right"]
-Tutorial by Clement Levallois.
-
-Discover other tutorials and courses in data / tech for business: http://www.clementlevallois.net
-
-Or get in touch via Twitter: https://www.twitter.com/seinecle[@seinecle]
